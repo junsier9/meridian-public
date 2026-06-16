@@ -55,6 +55,48 @@
 | `tests/` | Contract + behavior test suite |
 | `docs/` | Architecture, research-design docs, and the governance model |
 
+### 🗺️ Architecture
+
+```mermaid
+flowchart TB
+    subgraph providers[Data Providers]
+        BIN[Binance USD-M and 1m archive]
+        CG[CoinGlass / funding / OI / basis]
+    end
+
+    subgraph agent[Agent Control Framework]
+        SHADOW[Controlled shadow ingestion]
+        RUNTIME[Governed runtime execution]
+        VERIFY[Operator verification and leases]
+    end
+
+    subgraph research[Research and Alpha Platform]
+        FEAT[PIT-safe feature pipelines]
+        SCORE[12-factor frontier scoring]
+        VAL[Walk-forward validation + leakage audits]
+        PROM[Governance-backed promotion]
+    end
+
+    GATES[Governance spine<br/>5-stage gate model<br/>contract-pinned, computed from evidence]
+
+    subgraph live[Live-Trading Engine]
+        PLAN[Execution planner]
+        EPOCH[Unattended epoch controller<br/>budget + terminal-disarm safety]
+        RISK[Wallet-compounding risk policy]
+    end
+
+    BIN --> SHADOW
+    CG --> SHADOW
+    SHADOW --> FEAT
+    FEAT --> SCORE --> VAL --> PROM
+    PROM --> GATES
+    RUNTIME --> GATES
+    VERIFY --> RUNTIME
+    GATES -->|arm / fail-closed| PLAN
+    PLAN --> EPOCH --> RISK
+    RISK -->|orders| EX[(Binance USD-M)]
+```
+
 > ℹ️ This is a **sanitized public mirror** — see the banner above and [`PUBLIC_MIRROR.md`](PUBLIC_MIRROR.md).
 
 ---
