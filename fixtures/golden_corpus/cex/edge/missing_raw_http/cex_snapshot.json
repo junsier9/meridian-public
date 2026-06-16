@@ -1,0 +1,56 @@
+{
+  "provider": "binance-public-cex",
+  "retrieved_at": "2026-04-07T10:10:00Z",
+  "scenario_tag": "missing_raw_http",
+  "instrument": "AIXUSDT",
+  "events": [
+    {
+      "event_id": "missing-raw-http-1",
+      "event_name": "spot_24h_momentum",
+      "payload": {
+        "asset": "AIX",
+        "summary": "24h price change is 1.20% with quote volume 120000; last price 1.120000 vs open 1.106700",
+        "metrics": {
+          "price_change_pct": 1.2,
+          "quote_volume": 120000.0,
+          "last_price": 1.12
+        }
+      },
+      "mapping": {
+        "claimKind": "measurement",
+        "bias": "bullish",
+        "evidence": "E4",
+        "confidenceScore": 58,
+        "horizon": "intraday"
+      },
+      "extra": {
+        "venue": "Binance",
+        "market_type": "spot"
+      }
+    },
+    {
+      "event_id": "missing-raw-http-2",
+      "event_name": "market_structure_support",
+      "payload": {
+        "asset": "AIX",
+        "summary": "latest 5m candle is holding above the prior close with taker buy ratio 0.57",
+        "metrics": {
+          "previous_close": 1.11,
+          "latest_close": 1.12,
+          "taker_buy_ratio": 0.57
+        }
+      },
+      "mapping": {
+        "claimKind": "market_structure",
+        "bias": "bullish",
+        "evidence": "E4",
+        "confidenceScore": 63,
+        "horizon": "intraday"
+      },
+      "extra": {
+        "venue": "Binance",
+        "market_type": "spot"
+      }
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v77",
+  "entries": [
+    {
+      "candidate_id": "xs_dual_regime_filter_v11_h5d",
+      "base_mechanism_id": "xs_dual_regime_filter_v11",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_dual_regime_filter_v11",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "range_position_20",
+        "return_1",
+        "coinglass_taker_imbalance_5d_sum",
+        "coinglass_global_account_long_pct",
+        "coinglass_liquidation_imbalance_24h",
+        "coinglass_top_trader_long_pct",
+        "coinglass_liq_intraday_concentration_24h",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "coinglass_top_trader_intraday_volatility_24h",
+        "coinglass_orderbook_imb_persistence_24h"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_dual_regime_filter_v11_h5d",
+        "thesis_family": "hypothesis_xs_dual_regime_filter_v11_h5d",
+        "market_mechanism": "isolated test of path E from v76: keep v74 architecture (xs_dual_regime_filter_v9) unchanged on liquid_perp_core_20 universe, only inject 4 new intraday-derived daily features at the rank_screen stage. v76 combined universe expansion + intraday features and saw regime regression; v77 isolates feature impact only to determine whether intraday signals add value when universe is held constant",
+        "directional_claim": "rank top-20 liquid perp-covered names by blending v74 v64-base + 4-quadrant CoinGlass composite (8% weight) with 4 additional intraday-quality terms in rank_screen at small weights (+0.03, -0.03, -0.02, +0.02); universe unchanged from v74 to isolate the pure feature-injection effect",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "range_position_20",
+          "return_1",
+          "coinglass_taker_imbalance_5d_sum",
+          "coinglass_global_account_long_pct",
+          "coinglass_liquidation_imbalance_24h",
+          "coinglass_top_trader_long_pct",
+          "coinglass_liq_intraday_concentration_24h",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "coinglass_top_trader_intraday_volatility_24h",
+          "coinglass_orderbook_imb_persistence_24h"
+        ],
+        "factor_formula": "v74 architecture (xs_dual_regime_filter_v9_score logic with composite_weight=0.08) on liquid_perp_core_20 universe; rank_screen additionally includes 4 intraday-derived percentile-rank terms with weights (+0.03, -0.03, -0.02, +0.02) for liq_concentration, taker_dispersion, top_trader_volatility, orderbook_persistence respectively. Same code path as v76 but universe constraint reverted to top-20 with 0.85 coverage threshold.",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "94dd06de34801ab3c566cdfb5948cb59fccb9df120e17778cef821e2692ff84f"
+    }
+  ]
+}

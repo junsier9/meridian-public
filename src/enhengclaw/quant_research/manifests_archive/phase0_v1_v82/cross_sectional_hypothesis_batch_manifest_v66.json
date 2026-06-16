@@ -1,0 +1,97 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v66",
+  "entries": [
+    {
+      "candidate_id": "xs_dual_regime_filter_v2_h5d",
+      "base_mechanism_id": "xs_dual_regime_filter_v2",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_dual_regime_filter_v2",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "range_position_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_dual_regime_filter_v2_h5d",
+        "thesis_family": "hypothesis_xs_dual_regime_filter_v2_h5d",
+        "market_mechanism": "in the liquid perp-covered core, leader-continuation alpha works in dispersed regimes but its internal composition must shift between momentum-heavy in dispersed-up and defensive low-vol grinder in broad-up; carry-dislocation alpha works in dispersed-down and compressed regimes; contrarian laggard tilt works only in broad-down regimes and must be strictly gated there to avoid diluting the dispersed-regime signals",
+        "directional_claim": "rank liquid perp-covered names higher by blending two adaptive sub-signals (regime-adaptive leader and carry-dislocation) plus a strictly-gated contrarian tilt: leader internal composition shifts from momentum-heavy to defensive low-vol grinder as cross-sectional dispersion falls in positive median regimes, carry receives weight in dispersed-down and compressed regimes, and contrarian is activated only when dispersion is low and median momentum is negative",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "range_position_20",
+          "return_1"
+        ],
+        "factor_formula": "compute two name-level sub-scores (a regime-adaptive leader sub-score that smoothly blends momentum-heavy and defensive-quality forms based on broad-up regime intensity, plus a carry-dislocation sub-score) and a strictly-gated contrarian sub-score; allocate weights using per-timestamp dispersion of |momentum_20| and sign of median momentum_20 with contrarian only firing in low-dispersion negative-median regimes",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "9a9872d3c97a634b46c2b54e408ef4e773e3e64c2d56db18273b983dbb41ff69"
+    }
+  ]
+}

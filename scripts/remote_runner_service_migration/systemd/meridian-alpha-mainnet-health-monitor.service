@@ -1,0 +1,15 @@
+# Draft only. Install disabled in a future approved remote apply window.
+[Unit]
+Description=Meridian Alpha hv_balanced mainnet health monitor for live-capable multiphase supervisor timer
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/root/meridian_alpha_live_runner/repo
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/root/meridian_alpha_live_runner/bin/with-live-env /root/meridian_alpha_live_runner/venv/bin/python scripts/live_trading/run_hv_balanced_mainnet_health_monitor.py --config config/live_trading/hv_balanced_binance_usdm_live_supervisor_multiphase_wallet2_reserve200_meridian_remote_runner.yaml --systemd-timer-name meridian-alpha-mainnet-supervisor-live.timer
+TimeoutStartSec=180
+StandardOutput=journal
+StandardError=journal
+

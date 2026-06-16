@@ -1,0 +1,73 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v85",
+  "entries": [
+    {
+      "candidate_id": "xs_minimal_v3_h1d",
+      "base_mechanism_id": "xs_minimal_v3",
+      "horizon_id": "h1d",
+      "target_horizon_bars": 1,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_minimal_v3",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives"
+      ],
+      "required_feature_columns": [
+        "realized_volatility_20",
+        "intraday_realized_vol_4h_to_1d",
+        "distance_to_high_20",
+        "coinglass_top_trader_long_pct"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_minimal_v3_h1d",
+        "thesis_family": "hypothesis_xs_minimal_v3_h1d",
+        "market_mechanism": "identical 4-feature linear baseline (Tier-1 stable-sign IC features) as v83 but evaluated at 1-day forward horizon instead of 5-day. Tests whether shorter holding period reduces exposure to multi-week regime shifts that caused 5-day variant to fail regime_holdout. Hypothesis: structural break (2025-08+) primarily impacts strategies whose holding period spans regime transitions; 1-day horizon captures intraday alpha cleanly with minimal regime exposure.",
+        "directional_claim": "rank top-20 liquid perp-covered names by 4-feature linear z-score: -0.30*z(rv) -0.25*z(iv) +0.25*z(dh) -0.20*z(tt). Expected: factor_evidence_lite PASS via stable-sign IC; regime_holdout_lite is the decisive test — if 1-day horizon also FAILS regime, the structural break is feature-level not horizon-level.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "realized_volatility_20",
+          "intraday_realized_vol_4h_to_1d",
+          "distance_to_high_20",
+          "coinglass_top_trader_long_pct"
+        ],
+        "factor_formula": "final = tanh((percentile_rank(-0.30*z_rv -0.25*z_iv +0.25*z_dh -0.20*z_tt) - 0.5) * 1.80)",
+        "intended_holding_horizon_bars": 1,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "f62744bcddec94031503ca56a218d9d5ae2c0a7dc817b4695498313c535959ca"
+    }
+  ]
+}

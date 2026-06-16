@@ -1,0 +1,69 @@
+{
+  "contract_version": "quant_validation_contract.v10",
+  "required_sections": [
+    "split_integrity",
+    "feature_admission",
+    "reproducibility",
+    "factor_evidence",
+    "walk_forward_assessment",
+    "execution_stress",
+    "regime_holdout"
+  ],
+  "validation_contract_statuses": [
+    "passed",
+    "failed",
+    "incomplete",
+    "falsification_required"
+  ],
+  "walk_forward_assessment": {
+    "window_count_min": 10,
+    "median_oos_sharpe_min": 0.8,
+    "loss_window_fraction_max": 0.4
+  },
+  "execution_stress": {
+    "reference_capital_usd_by_profile": {
+      "conservative": 100000.0,
+      "balanced": 250000.0,
+      "aggressive": 500000.0
+    },
+    "test_net_return_min_exclusive": 0.0,
+    "walk_forward_median_oos_sharpe_min_exclusive": 0.0,
+    "max_trade_participation_rate_max": 0.005,
+    "max_inventory_participation_rate_max": 0.02,
+    "max_participation_rate_max": 0.005
+  },
+  "regime_holdout": {
+    "regime_coverage_min": 3,
+    "positive_regime_fraction_min": 0.30,
+    "worst_regime_median_oos_sharpe_min": -2.0
+  },
+  "split_integrity": {
+    "require_split_realization_contract": true,
+    "split_boundary_contamination_total_max": 0,
+    "walk_forward_boundary_contamination_total_max": 0
+  },
+  "feature_admission": {
+    "require_feature_admission_policy": true,
+    "require_non_empty_selected_feature_columns": true,
+    "allow_banned_proxy_columns_in_selected": false,
+    "allow_unknown_numeric_columns_in_selected": false,
+    "require_selected_feature_columns_subset_of_numeric_feature_columns": true
+  },
+  "reproducibility": {
+    "require_source_commit_sha": true,
+    "require_dataset_fingerprint": true,
+    "require_feature_hash": true,
+    "require_dataset_manifest_path": true,
+    "require_feature_manifest_path": true
+  },
+  "factor_evidence": {
+    "rank_ic_mean_abs_min": 0.01,
+    "rank_ic_positive_rate_min": 0.52,
+    "top_minus_bottom_return_min_exclusive": 0.0,
+    "max_trade_participation_rate_max": 0.005,
+    "max_inventory_participation_rate_max": 0.02,
+    "positive_quarter_count_min": 2,
+    "max_single_quarter_edge_contribution_ratio_max": 0.65
+  },
+  "sharpe_anomaly_quarantine_threshold": 20.0
+}

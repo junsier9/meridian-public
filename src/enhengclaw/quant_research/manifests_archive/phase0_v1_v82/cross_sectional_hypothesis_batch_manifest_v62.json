@@ -1,0 +1,97 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v62",
+  "entries": [
+    {
+      "candidate_id": "xs_vol_regime_blend_v1_h5d",
+      "base_mechanism_id": "xs_vol_regime_blend_v1",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_vol_regime_blend_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "range_position_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_vol_regime_blend_v1_h5d",
+        "thesis_family": "hypothesis_xs_vol_regime_blend_v1_h5d",
+        "market_mechanism": "in the liquid perp-covered core, leader-continuation alpha and derivatives carry-dislocation alpha fail in different market regimes that can be discriminated by realized volatility at the name level: low-vol orderly trends favor carry-stabilized leadership, high-vol rotation favors residualized carry-dislocation",
+        "directional_claim": "rank liquid perp-covered names higher by blending a leader-continuation sub-signal and a carry-dislocation sub-signal where the blend weight is driven by name-level realized volatility: low-vol names lean toward leader continuation, high-vol names lean toward carry dislocation",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "range_position_20",
+          "return_1"
+        ],
+        "factor_formula": "compute a v9-style leader-continuation sub-score and a v61-style carry-dislocation sub-score at the name level, then blend them using a smooth realized-volatility regime weight that shifts toward leader continuation when realized_volatility_20 is low and toward carry dislocation when it is high; apply common quality screens for distress, blow-up volatility, and broken-tape setups",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "05d9da9ff0cc7653c644bbb7dde500bb7c13b8b67ee596fecd54308468b3c974"
+    }
+  ]
+}

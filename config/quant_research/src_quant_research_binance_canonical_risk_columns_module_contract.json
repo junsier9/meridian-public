@@ -1,0 +1,27 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_risk_columns_module_contract.v1",
+  "source_module": "enhengclaw.quant_research._binance_canonical_risk_columns",
+  "source_path": "src/enhengclaw/quant_research/_binance_canonical_risk_columns.py",
+  "facade_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "facade_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only risk-column registry internal-module importability, root-facade re-export identity, and tuple contents delegated to the existing universe-membership writer contract. This contract does not freeze risk-brake formulas or full artifact schemas.",
+  "validation_mode": "internal_module_facade_registry_identity_existing_contract_samples",
+  "approved_by_review": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_risk_column_registry_post_extraction_review_2026_05_15.md",
+  "signature_source_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_universe_membership_writer_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_universe_membership_writer_contract.v1",
+    "required_approved_registry_module_after_move": "enhengclaw.quant_research._binance_canonical_risk_columns"
+  },
+  "risk_column_registry_target": "BINANCE_RISK_BRAKE_COLUMNS",
+  "excluded_surfaces": [
+    "source migration",
+    "risk-brake formula behavior",
+    "full universe membership schema",
+    "empty-frame full schema behavior",
+    "validation artifact path selection",
+    "strategy pass/fail metrics",
+    "feature subset behavior",
+    "generic repo-wide risk column registry migration",
+    "caller counts"
+  ]
+}

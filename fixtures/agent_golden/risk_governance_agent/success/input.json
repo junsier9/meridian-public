@@ -1,0 +1,8 @@
+{
+  "case_id": "risk_governance_agent_success",
+  "expected_status": "success",
+  "governance_text": "Restricted monitoring should remain active and publish suppressed.",
+  "object_id": "golden-risk-governance-agent-aix",
+  "scope": "spot+perp",
+  "subject": "AIX"
+}

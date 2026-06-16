@@ -1,0 +1,51 @@
+{
+  "contract_version": "quant_publication_contract.v2",
+  "publication_statuses": [
+    "blocked",
+    "archived_only",
+    "publishable_to_incoming",
+    "publishable_to_incoming_auto"
+  ],
+  "validation_states": [
+    "passed",
+    "failed",
+    "leakage_audit_required",
+    "insufficient_track_record",
+    "deterministic_only"
+  ],
+  "minimum_stage_for_incoming": "stage_2_manual_export_human_review",
+  "archive_only_stages": [
+    "stage_0_sandbox_framework_only",
+    "stage_1_research_readiness_only"
+  ],
+  "backend_modes": {
+    "live": {
+      "publishable": true
+    },
+    "deterministic": {
+      "publishable": false
+    }
+  },
+  "thresholds": {
+    "daily_pass_streak_min": {
+      "last_reviewed_utc": "2026-04-22T00:00:00Z",
+      "rationale": "Normal publication still requires repeated independent daily passes after the research-validity contract has already cleared.",
+      "value": 5
+    },
+    "bootstrap_daily_pass_streak_min": {
+      "last_reviewed_utc": "2026-04-22T00:00:00Z",
+      "rationale": "Bootstrap tasks still need a materially longer longitudinal record before any publishable handling is allowed.",
+      "value": 20
+    },
+    "bootstrap_walk_forward_window_count_min": {
+      "last_reviewed_utc": "2026-04-22T00:00:00Z",
+      "rationale": "Bootstrap tasks must still show at least two independent walk-forward windows before they can escape archive-only handling on publication semantics.",
+      "value": 2
+    }
+  },
+  "contract_guardrails": {
+    "research_validity_thresholds_live_in_validation_contract": true,
+    "thresholds_not_derivable_from_pipeline_output": true
+  },
+  "bootstrap_requires_daily_pass_streak_min": 20
+}

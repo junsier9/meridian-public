@@ -1,0 +1,78 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v80",
+  "entries": [
+    {
+      "candidate_id": "xs_minimal_v1_h5d",
+      "base_mechanism_id": "xs_minimal_v1",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_minimal_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "realized_volatility_20",
+        "intraday_realized_vol_4h_to_1d",
+        "distance_to_high_20",
+        "coinglass_top_trader_long_pct",
+        "relative_strength_20",
+        "momentum_20"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_minimal_v1_h5d",
+        "thesis_family": "hypothesis_xs_minimal_v1_h5d",
+        "market_mechanism": "minimal 6-feature model derived from v79 single-factor cross-sectional IC analysis: 4 Tier-1 features with stable signs across regimes (realized_vol, intraday_realized_vol, distance_to_high, coinglass_top_trader_long_pct) plus 2 Tier-2 momentum features (relative_strength_20, momentum_20) with regime-conditional sign flip driven by per-timestamp cross-sectional median of momentum_20; reduces v74's 19-feature complexity to its IC-validated core, eliminating 13 noise / weakly-correlated features (basis_*, funding_*, oi_change, return_1, range_position, ema_slope, quote_volume_expansion, 3 weak CoinGlass features)",
+        "directional_claim": "rank top-20 liquid perp-covered names by linear combination of 6 IC-validated features: -0.30*z(realized_vol) -0.20*z(intraday_vol) +0.20*z(distance_to_high) -0.15*z(top_trader_long) + sign_regime*(0.15*z(relative_strength) + 0.10*z(momentum_20)) where sign_regime = clip(cross_sectional_median(momentum_20)/0.06, -1, +1)",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "realized_volatility_20",
+          "intraday_realized_vol_4h_to_1d",
+          "distance_to_high_20",
+          "coinglass_top_trader_long_pct",
+          "relative_strength_20",
+          "momentum_20"
+        ],
+        "factor_formula": "z = per-timestamp cross-sectional zscore. raw_score = (-0.30*z_realized_volatility_20 - 0.20*z_intraday_realized_vol_4h_to_1d + 0.20*z_distance_to_high_20 - 0.15*z_coinglass_top_trader_long_pct + sign_regime*(0.15*z_relative_strength_20 + 0.10*z_momentum_20)). sign_regime = clip(per_timestamp_median(momentum_20)/0.06, -1, +1) — continuous in [-1, +1]: positive in dispersed-up regime, negative in rotation/drawdown regime. Final = tanh((percentile_rank(raw_score) - 0.5) * 1.80).",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "c4399988b3c427cc4b26a62f9ff86b390e4a1c9a4c6017e058b5e4d3ef4dce9a"
+    }
+  ]
+}

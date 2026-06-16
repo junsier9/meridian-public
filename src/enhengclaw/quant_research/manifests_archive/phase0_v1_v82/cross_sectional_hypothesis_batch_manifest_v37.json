@@ -1,0 +1,92 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v37",
+  "entries": [
+    {
+      "candidate_id": "xs_pair_spread_book_v10_h5d",
+      "base_mechanism_id": "xs_pair_spread_book_v10",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_pair_spread_book_v10",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 0.4,
+        "pair_construction": "quality_bucket_pairs",
+        "pair_bucket_count": 3,
+        "pair_count": 1,
+        "pair_score_spread_min": 0.14,
+        "pair_quality_floor": 0.40
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_pair_spread_book_v10_h5d",
+        "thesis_family": "hypothesis_xs_pair_spread_book_v10_h5d",
+        "market_mechanism": "inside the liquid perp-covered core, keep the v35 flipped single-pair book exactly as-is but tighten pair admissibility and turnover so only the cleanest dislocations survive, with the goal of improving walk-forward stability and reducing strict-level sharpe spikes",
+        "directional_claim": "if the v35 edge is real but still too noisy, stricter pair selection and lower turnover should preserve the pair-book signal while smoothing the trend-up and outlier-window instability that keeps it from becoming a strict survivor",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "return_1"
+        ],
+        "factor_formula": "reuse the v35 smoothed flipped pair-book score unchanged, but require a cleaner pair spread, a higher quality floor and a lower turnover cap before the explicit two-leg pair book is constructed",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "dcb2747faace2490b4647afce1158339a898ab7f543b2fee5752a0c8a8786e5b"
+    }
+  ]
+}

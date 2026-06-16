@@ -1,0 +1,95 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v56",
+  "entries": [
+    {
+      "candidate_id": "xs_relative_value_spread_v6_h5d",
+      "base_mechanism_id": "xs_relative_value_spread_v6",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_relative_value_spread_v6",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_relative_value_spread_v6_h5d",
+        "thesis_family": "hypothesis_xs_relative_value_spread_v6_h5d",
+        "market_mechanism": "inside the liquid perp-covered core, the better medium-horizon longs should be persistent leaders with only a narrow carry discount; carry is now a tie-breaker around fair value, while the main engine is still leadership, orderly reset, and stable participation",
+        "directional_claim": "rank liquid perp-covered names higher when leadership remains intact, the reset is orderly, and derivatives are slightly but not extremely cheap; both rich carry and deep capitulation should be penalized",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "return_1"
+        ],
+        "factor_formula": "make leadership and orderly reset dominant, use only a narrow balanced-carry reward, and penalize both rich carry and capitulative cheapness alongside stress, chase, and broken support",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "ebd6d5c7d93cc078a0f1a2ae7f23eaf6288270d188d98c49c40afff847abfb1c"
+    }
+  ]
+}

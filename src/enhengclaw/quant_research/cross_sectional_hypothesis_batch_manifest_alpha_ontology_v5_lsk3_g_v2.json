@@ -1,0 +1,143 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.alpha_ontology_v5_lsk3_g_v2",
+  "lineage": {
+    "doc": "docs/quant_research/00_roadmap_state/alpha_ontology_and_factor_library.md",
+    "doc_context_version": "2026-04-29.1",
+    "predecessor_baseline": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v1_lsk3_g_v2.json",
+    "scoring_family": "xs_alpha_ontology_v5",
+    "overlay_id": "alpha_ontology_regime_gating_v2",
+    "method": "v_alpha_v1_lsk3 11-factor + M2.3 F62 settlement_cycle_premium_60d (per-subject pre-settlement-hour drift in 1h perp returns, 60d rolling). Stacked with W3.5 v2 regime-gating overlay.",
+    "f62_admission_2026_04_29": {
+      "factor_id": "settlement_cycle_premium_60d",
+      "settlement_window_hours_utc": [23, 7, 15],
+      "settlement_window_interpretation": "PRE-settlement (1h before each UTC 0/8/16 settlement). Doc E.10 mechanism: longs unwind to avoid funding payment → systematic drift down at pre-settlement hour.",
+      "rolling_window_days": 60,
+      "doc_e10_falsification_test": {
+        "pooled_settlement_mean_return": -0.000193,
+        "pooled_non_settlement_mean_return": -0.000016,
+        "mean_diff": -0.000178,
+        "t_stat": -3.67,
+        "doc_threshold": "t < 2 → reject mechanism",
+        "result": "PASS — t=-3.67 strongly significant"
+      },
+      "variant_scan_2026_04_29": {
+        "settlement_bar_{0,8,16}_30d": {"raw_ic": -0.0023, "raw_t": -0.23, "resid_ic_lsk3": -0.0268, "resid_t": -2.65},
+        "settlement_bar_{0,8,16}_60d": {"raw_ic": -0.0127, "raw_t": -1.27, "resid_ic_lsk3": -0.0332, "resid_t": -3.27},
+        "settlement_bar_{0,8,16}_90d": {"raw_ic": -0.0022, "raw_t": -0.22, "resid_ic_lsk3": -0.0406, "resid_t": -4.07},
+        "pre_settlement_{23,7,15}_30d": {"raw_ic": -0.0450, "raw_t": -4.81, "resid_ic_lsk3": -0.0393, "resid_t": -4.27},
+        "pre_settlement_{23,7,15}_60d": {"raw_ic": -0.0432, "raw_t": -4.64, "resid_ic_lsk3": -0.0449, "resid_t": -4.79, "selected": true, "g1_g6_double_pass": true},
+        "pre_settlement_{23,7,15}_90d": {"raw_ic": -0.0266, "raw_t": -2.79, "resid_ic_lsk3": -0.0276, "resid_t": -2.98},
+        "post_settlement_{1,9,17}_any": "weak (raw IC ~ 0)"
+      },
+      "post_panel_merge_admission": {
+        "context": "After merging settlement_cycle_panel into the cross-sectional features panel via build_cross_sectional_feature_bundle, NaN values for non-1h-data subjects (~70 of 99) get filled with 0 by the bundle's final fillna step (features.py:629). The cross-sectional rank IC therefore gets dampened by the 0-mass.",
+        "raw_ic_post_merge": -0.0241,
+        "raw_t_post_merge": -5.04,
+        "g1_post_merge_strict_pass": false,
+        "g3_post_merge_same_sign_fraction": 1.0,
+        "g3_pass": true,
+        "g6_residual_ic_post_merge_vs_lsk3": -0.0437,
+        "g6_t_post_merge": -7.21,
+        "g6_pass": true
+      },
+      "weight": -0.08,
+      "weight_calibration": "Initial weight = -0.024 (post-merge raw IC) × 3.25 (v91 |w|/|IC| ratio) ≈ -0.08 (sign negative). Subject to weight scan against walk-forward + regime gates."
+    }
+  },
+  "entries": [
+    {
+      "candidate_id": "xs_alpha_ontology_v5_lsk3_g_v2_h5d",
+      "base_mechanism_id": "xs_alpha_ontology_v5_lsk3_g_v2",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_alpha_ontology_v5",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "downside_upside_vol_ratio_30",
+        "funding_basis_residual_implied_repo_30",
+        "settlement_cycle_premium_60d"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.0,
+        "top_long_count": 3,
+        "bottom_short_count": 3,
+        "position_multiplier_overlay_id": "alpha_ontology_regime_gating_v2"
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_alpha_ontology_v5_lsk3_g_v2_h5d",
+        "thesis_family": "hypothesis_xs_alpha_ontology_v5_lsk3_g_v2_h5d",
+        "market_mechanism": "M2.3 v5 score: extends v_alpha_v1_lsk3 by adding F62 settlement_cycle_premium_60d (rolling 60d mean of 1h perp log return at pre-settlement hours UTC 23/7/15 minus mean at other hours, per subject). Doc §E.10 mechanism: longs unwind to avoid funding payment → systematic drift down at pre-settlement hour. Cross-sectionally, assets with stronger pre-settlement unwind pressure UNDERPERFORM in the next 5 days (more crowded with funding-arbitrage capital). Sign empirical: NEGATIVE (LONG low-pressure / SHORT high-pressure). Stacked with W3.5 v2 regime-gating overlay.",
+        "directional_claim": "Same long-short top-3 perp construction. Score adds -0.08 * z(settlement_cycle_premium_60d). Position size multiplied by W3.5 v2 regime-gating overlay. Falsified if (a) walk_forward median sharpe drops more than 0.3 below v_alpha_v1_lsk3_g_v2 (+2.147) without compensating regime improvement; OR (b) regime_holdout fails (worst regime below -2.0 OR positive_regime_fraction below 1/3); OR (c) doc E.10 universe-mean settlement-vs-non-settlement t-stat falls below 2.0 on this panel.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "downside_upside_vol_ratio_30",
+          "funding_basis_residual_implied_repo_30",
+          "settlement_cycle_premium_60d"
+        ],
+        "factor_formula": "raw = -0.20*z(iv_smooth_60) -0.10*z(rv_5) +0.18*z(dh_60) +0.15*z(dh_5) -0.07*z(tt_smooth_5) -0.10*z(liquidity_stress_qv_iv) -0.06*z(momentum_decay_5_20) +0.05*z(taker_imb_dispersion) -0.05*z(quality_funding_oi) +0.10*z(downside_upside_vol_ratio_30) +0.07*z(funding_basis_residual_implied_repo_30) -0.08*z(settlement_cycle_premium_60d); final_score = tanh((percentile_rank(raw)-0.5)*1.80); target_weight_per_name = (long_leverage/top_K - short_leverage/bottom_K) * regime_gating_v2_multiplier(t)",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed",
+          "v5_walk_forward_median_drops_more_than_0_3_below_lsk3_g_v2_without_regime_improvement",
+          "doc_e10_settlement_vs_nonsettlement_t_stat_below_2"
+        ]
+      },
+      "spec_hash": "9df1207bd66372d7d4987e286073acc8128e71ca217cfad96abf83f94f65b0a7"
+    }
+  ],
+  "lifecycle": "experimental",
+  "experimental_marker_set_at": "2026-04-29",
+  "experimental_reason": "M2.3 v5 score: lsk3 11-factor + F62 settlement_cycle_premium_60d. F62 admission: G6 PASS vs lsk3 (residual IC -0.044, t=-7.21 post-merge); G3 PASS (same-sign 1.00 across vol regimes); doc E.10 falsification PASS (pooled t=-3.67); G1 borderline post-merge (raw IC -0.024 below 0.04 strict but pre-merge IC was -0.043 t=-4.64 on the 1h-data overlap window). Lifecycle 'experimental' until cycle verifies walk_forward / regime metrics vs v1_lsk3_g_v2 baseline."
+}

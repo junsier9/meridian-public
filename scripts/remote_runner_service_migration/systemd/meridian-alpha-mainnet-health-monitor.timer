@@ -1,0 +1,15 @@
+# Draft only. Install disabled in a future approved remote apply window.
+[Unit]
+Description=Run Meridian Alpha mainnet health monitor every 10 minutes
+
+[Timer]
+OnActiveSec=5min
+OnUnitActiveSec=10min
+AccuracySec=30s
+RandomizedDelaySec=30s
+Persistent=false
+Unit=meridian-alpha-mainnet-health-monitor.service
+
+[Install]
+WantedBy=timers.target
+

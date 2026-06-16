@@ -1,0 +1,95 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v60",
+  "entries": [
+    {
+      "candidate_id": "xs_reversal_quality_v1_h5d",
+      "base_mechanism_id": "xs_reversal_quality_v1",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_reversal_quality_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "momentum_5",
+        "return_1",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "range_position_20"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_reversal_quality_v1_h5d",
+        "thesis_family": "hypothesis_xs_reversal_quality_v1_h5d",
+        "market_mechanism": "inside the liquid perp-covered core, names whose medium-horizon leadership is still intact but which have been washed out short-term tend to mean-revert higher when derivatives positioning is capitulatively cheap, OI is stable, and the structural position sits in the lower-middle of the 20-bar range rather than at distress lows",
+        "directional_claim": "rank liquid perp-covered names higher when medium-horizon trend remains positive, short-horizon return and momentum are negative (orderly shake-out), funding and basis are capitulatively discounted, OI is stable or growing, and structural position is in the lower-middle quality reset zone rather than at terminal distress",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "momentum_5",
+          "return_1",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "range_position_20"
+        ],
+        "factor_formula": "switch from leader-continuation to leader-pullback: reward names where medium-horizon trend is still positive but short-horizon return/momentum is mildly negative, derivatives are capitulatively discounted with stable OI, and structural position is in the lower-middle of the range; penalize terminal distress, blow-up volatility, and bottom-chasing into broken tape",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "ad9cd2f8af6c66bb09747afa62698ebe41af151e2bc858a5b8762096bf2e32fa"
+    }
+  ]
+}

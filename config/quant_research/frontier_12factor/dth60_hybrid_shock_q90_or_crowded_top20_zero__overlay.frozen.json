@@ -1,0 +1,57 @@
+{
+  "contract_version": "hv_balanced_dth60_shock_q90_or_crowded_top20_overlay.v1",
+  "overlay_id": "dth60_hybrid_shock_q90_or_crowded_top20_zero",
+  "derived_and_pinned_at_utc": "2026-06-09T12:21:38Z",
+  "has_own_factor_weights": false,
+  "target_factor": "distance_to_high_60",
+  "multiplier_on_trigger": 0.0,
+  "multiplier_off_trigger": 1.0,
+  "gauges": {
+    "shock_co_occurrence_index": {
+      "level": "timestamp",
+      "collapse": "groupby_timestamp_first",
+      "compare": ">=",
+      "threshold_key": "shock_co_occurrence_index_q90"
+    },
+    "co_jump_count_3d": {
+      "level": "timestamp",
+      "collapse": "groupby_timestamp_first",
+      "compare": ">=",
+      "threshold_key": "co_jump_count_3d_q90"
+    },
+    "distance_to_high_60": {
+      "level": "row",
+      "near_high_rank_pct_gate": 0.75
+    },
+    "coinglass_top_trader_long_pct_smooth_5": {
+      "level": "row",
+      "crowded_rank_pct_gate": 0.8
+    }
+  },
+  "trigger_rule": "(shock_co_occurrence_index >= shock_co_occurrence_index_q90 OR co_jump_count_3d >= co_jump_count_3d_q90) OR (rank_pct(distance_to_high_60) >= 0.75 AND rank_pct(coinglass_top_trader_long_pct_smooth_5) >= 0.80)",
+  "threshold_source": "pit_train_window",
+  "threshold_contract": {
+    "builder": "hv_balanced_dth60_shock_phase2b_pit_builder.v1",
+    "train_window_days": 60,
+    "min_train_timestamps": 20,
+    "shock_quantile": 0.9,
+    "pit_exclusion": "current_row_excluded AND train_excludes_decision_row",
+    "safe_quantile_fallbacks": {
+      "shock_co_occurrence_index_q90": 0.1,
+      "co_jump_count_3d_q90": 20.0
+    },
+    "requires_input_panel": true,
+    "synthetic_panel_thresholds_forbidden": true,
+    "note": "recorded frozen thresholds shock_q90=0.0/co_jump_q90=2.0 came from a SYNTHETIC panel and are NOT valid for live; must re-derive from a real PIT panel before enable."
+  },
+  "provenance": {
+    "research_sources": [
+      "docs/quant_research/03_alpha_branches/dth60_q90_top20_overlay_preregistration_2026_06_03.md",
+      "scripts/quant_research/h10d_current_diagnostics/run_dth60_overlay_robustness_validation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_dth60_frozen_q90_top20_forward_validation.py",
+      "scripts/live_trading/run_hv_balanced_dth60_shock_phase2b_builder.py"
+    ],
+    "applies_to_frontier": "v5_rw_bridge_no_overlay_h10d__2026-05-02-54814da2622b__frozen_frontier_weights.json"
+  },
+  "overlay_spec_hash": "a7229db28d98695586402ce311d020932f7fe5fc1b14029394a9de2c3a898bd4"
+}

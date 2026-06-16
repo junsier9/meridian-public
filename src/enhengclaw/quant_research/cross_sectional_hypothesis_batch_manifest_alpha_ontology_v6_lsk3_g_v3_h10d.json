@@ -1,0 +1,139 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.alpha_ontology_v6_lsk3_g_v3_h10d",
+  "lineage": {
+    "doc": "docs/quant_research/00_roadmap_state/alpha_ontology_and_factor_library.md",
+    "doc_context_version": "2026-04-29.1",
+    "predecessor_baseline": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v6_lsk3_g_v2_h10d.json",
+    "scoring_family": "xs_alpha_ontology_v6",
+    "overlay_id": "alpha_ontology_regime_gating_v3",
+    "method": "SP-E + SP-G bundle: same v6 score (lsk3 + F-cascade w=0.025) at h10d as v6_lsk3_g_v2_h10d, swap regime-gating overlay v2 -> v3. v3 = v2 components × DVOL range z90 throttle (BTC + ETH). SP-E correlation regime gate (doc §E.17) DROPPED — empirically falsified per threshold_provenance.md SP-E section.",
+    "sub_path": "SP-E + SP-G (data_utilization_roadmap.md)",
+    "overlay_v3_construction": {
+      "v2_components": [
+        "F49 shock_co_occurrence_index throttle",
+        "F26 co_jump_count_3d throttle",
+        "F44 dispersion_of_returns floor",
+        "F55 BTC vol regime quantile throttle",
+        "trailing 30-bar universe mean return throttle"
+      ],
+      "v3_additions": [
+        "btc_dvol_range_z90 throttle (z>1.5: ramp; z>=2.5: floor 0.7)",
+        "eth_dvol_range_z90 throttle (z>1.5: ramp; z>=2.5: floor 0.7)"
+      ],
+      "v3_droppped": "SP-E btc_eth_realized_corr_30d gate (tertile-stratified IC ratio bottom/top = 0.93 / 0.90 at h5d/h10d, REVERSED vs doc §E.17 prediction of >=1.20)",
+      "throttle_frequency_2026_04_29": {
+        "v3_differs_from_v2_fraction": 0.047,
+        "v3_max_extra_throttle": -0.403,
+        "interpretation": "v3 throttles harder than v2 on ~4.7% of days (DVOL anomaly days). Calm days unchanged."
+      }
+    },
+    "sp_e_e17_falsification_2026_04_30": {
+      "test": "lsk3 score per-timestamp rank IC, partitioned by btc_eth_corr_30d regime, tertile split for statistical power",
+      "n_total_timestamps_h10d": 1093,
+      "tertile_split_h10d": {
+        "bottom_tertile_corr_max": 0.777,
+        "bottom_tertile_abs_mean_ic": 0.2396,
+        "top_tertile_corr_min": 0.884,
+        "top_tertile_abs_mean_ic": 0.2678,
+        "ratio_bottom_over_top": 0.895,
+        "doc_threshold": 1.20,
+        "result": "FAIL — high-corr regime has HIGHER IC than low-corr (sign reversed vs doc prediction)"
+      }
+    }
+  },
+  "entries": [
+    {
+      "candidate_id": "xs_alpha_ontology_v6_lsk3_g_v3_h10d",
+      "base_mechanism_id": "xs_alpha_ontology_v6_lsk3_g_v3",
+      "horizon_id": "h10d",
+      "target_horizon_bars": 10,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_alpha_ontology_v6_h10d",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "downside_upside_vol_ratio_30",
+        "funding_basis_residual_implied_repo_30",
+        "liq_cascade_recency_score_5d"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.0,
+        "top_long_count": 3,
+        "bottom_short_count": 3,
+        "position_multiplier_overlay_id": "alpha_ontology_regime_gating_v3"
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_alpha_ontology_v6_lsk3_g_v3_h10d",
+        "thesis_family": "hypothesis_xs_alpha_ontology_v6_lsk3_g_v3_h10d",
+        "market_mechanism": "SP-E + SP-G bundle: identical v6 score (lsk3 + F-cascade w=0.025) at h10d, but with regime-gating overlay upgraded from v2 to v3. v3 adds DVOL range z90 throttle (SP-G G2 component, doc-untested) on top of v2's 5 components. SP-E correlation regime gate was DROPPED — empirically falsified per tertile-stratified IC analysis (high-corr regime has HIGHER IC, sign-reversed vs doc §E.17 prediction).",
+        "directional_claim": "Same long-short top-3 perp construction as v6_lsk3_g_v2_h10d. Identical score function. Position size multiplied by W3.5 v3 regime-gating overlay = v2 multiplier × DVOL range z90 throttle (BTC + ETH). Throttles harder on ~4.7% of days when implied vol-of-vol enters its top quantile. Falsified if (a) walk_forward median sharpe drops below v6_lsk3_g_v2_h10d (+2.832) by more than 0.2 without compensating regime improvement; OR (b) regime_holdout fails (worst regime below -2.828 OR positive_regime_fraction below 1/3).",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "downside_upside_vol_ratio_30",
+          "funding_basis_residual_implied_repo_30",
+          "liq_cascade_recency_score_5d"
+        ],
+        "factor_formula": "raw = -0.20*z(iv_smooth_60) -0.10*z(rv_5) +0.18*z(dh_60) +0.15*z(dh_5) -0.07*z(tt_smooth_5) -0.10*z(liquidity_stress_qv_iv) -0.06*z(momentum_decay_5_20) +0.05*z(taker_imb_dispersion) -0.05*z(quality_funding_oi) +0.10*z(downside_upside_vol_ratio_30) +0.07*z(funding_basis_residual_implied_repo_30) +0.025*z(liq_cascade_recency_score_5d); final_score = tanh((percentile_rank(raw)-0.5)*1.80); target_weight_per_name = (long_leverage/top_K - short_leverage/bottom_K) * regime_gating_v3_multiplier(t)",
+        "intended_holding_horizon_bars": 10,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed",
+          "v6_v3_walk_forward_median_drops_more_than_0_2_below_v6_v2_h10d_without_regime_improvement"
+        ]
+      },
+      "spec_hash": "bcd0ceb2e341ca194a731e28b6460cfa5de3174d993195839c69efde797c08ac"
+    }
+  ],
+  "lifecycle": "experimental",
+  "experimental_marker_set_at": "2026-04-30",
+  "experimental_reason": "SP-G overlay enrichment test: v6_h10d under v3 (DVOL extensions) vs v2 baseline. Pending cycle outcome decision; if v3 walk_forward median >= v2 +2.832 with regime preserved, promote to active_alternative."
+}

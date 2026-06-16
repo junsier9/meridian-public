@@ -1,0 +1,1 @@
+{"provider":"snapshot-safety-lab","retrieved_at":"2026-04-07T08:00:30Z","incident":{"asset":"VRTX","code":"critical_exploit","summary":"high-confidence exploit evidence has been detected"},"classification":{"claim":"invalidation","direction":"invalidating","evidence_level":"E5","confidence":90,"horizon":"short"},"extra":{"bridge":"core-router","severity":"critical"}}

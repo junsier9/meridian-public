@@ -1,0 +1,59 @@
+{
+  "contract_version": "quant_data_readiness.v2",
+  "cross_sectional_daily_4h": {
+    "executable_subject_count_min": 30,
+    "executable_coverage_fraction_min": 0.85,
+    "daily_lane_coverage_fraction_min": 0.85,
+    "required_spot_intervals": [
+      "1d",
+      "4h"
+    ]
+  },
+  "cross_sectional_intraday_1h": {
+    "executable_subject_count_min": 30,
+    "executable_coverage_fraction_min": 0.85,
+    "daily_lane_coverage_fraction_min": 0.85,
+    "required_spot_intervals": [
+      "1h"
+    ]
+  },
+  "single_asset": {
+    "required_spot_intervals": [
+      "4h",
+      "1d"
+    ]
+  },
+  "derivatives_required": {
+    "train_ready_row_fraction_min": 0.8,
+    "validation_ready_row_fraction_min": 0.8,
+    "test_ready_row_fraction_min": 0.8
+  },
+  "blocked_discovery_model_families": [
+    "carry_funding",
+    "basis_divergence",
+    "event_drift"
+  ],
+  "future_derivatives_data_spec": {
+    "required_fields": [
+      "funding_rate",
+      "open_interest",
+      "open_interest_value",
+      "perp_close"
+    ],
+    "required_intervals": [
+      "4h",
+      "1d"
+    ],
+    "minimum_lookback_days": 730,
+    "requires_as_of_replay": true,
+    "requires_evidence_snapshot": true
+  },
+  "future_event_tape_spec": {
+    "required_fields": [
+      "subject",
+      "event_time_utc",
+      "event_type",
+      "event_direction"
+    ]
+  }
+}

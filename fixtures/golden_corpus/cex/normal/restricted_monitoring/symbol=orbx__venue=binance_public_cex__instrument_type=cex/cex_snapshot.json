@@ -1,0 +1,54 @@
+{
+  "provider": "snapshot-cex-lab",
+  "retrieved_at": "2026-04-07T07:00:00Z",
+  "scenario_tag": "restricted_monitoring",
+  "instrument": "ORBXUSDT",
+  "events": [
+    {
+      "event_id": "cex-breakout-2",
+      "event_name": "spot_breakout",
+      "payload": {
+        "asset": "ORBX",
+        "summary": "spot volume remains strong",
+        "metrics": {
+          "price_change_pct": 9.1,
+          "volume_ratio_7d": 2.2
+        }
+      },
+      "mapping": {
+        "claimKind": "measurement",
+        "bias": "bullish",
+        "evidence": "E4",
+        "confidenceScore": 80,
+        "horizon": "intraday"
+      },
+      "extra": {
+        "venue": "Binance",
+        "market_type": "spot"
+      }
+    },
+    {
+      "event_id": "cex-funding-2",
+      "event_name": "funding_risk",
+      "payload": {
+        "asset": "ORBX",
+        "summary": "funding and OI are elevated",
+        "metrics": {
+          "oi_change_pct": 31,
+          "funding_8h": 0.061
+        }
+      },
+      "mapping": {
+        "claimKind": "risk_flag",
+        "bias": "risk",
+        "evidence": "E3",
+        "confidenceScore": 62,
+        "horizon": "short"
+      },
+      "extra": {
+        "venue": "OKX",
+        "market_type": "perp"
+      }
+    }
+  ]
+}

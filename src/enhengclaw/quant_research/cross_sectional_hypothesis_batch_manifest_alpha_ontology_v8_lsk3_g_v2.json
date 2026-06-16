@@ -1,0 +1,107 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.alpha_ontology_v8_lsk3_g_v2",
+  "lineage": {
+    "doc": "docs/quant_research/00_roadmap_state/alpha_ontology_and_factor_library.md",
+    "doc_context_version": "2026-04-29.1",
+    "predecessor_baseline": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v1_lsk3_g_v2.json",
+    "scoring_family": "xs_alpha_ontology_v8",
+    "overlay_id": "alpha_ontology_regime_gating_v2",
+    "method": "v_alpha_v1_lsk3 11-factor + SP-C F47 funding_flip_decay_phase (W3.1 idle factor unlocked at h5d via multi-horizon audit). Stacked with W3.5 v2 regime-gating overlay.",
+    "sub_path": "SP-C (data_utilization_roadmap.md)",
+    "sp_c_audit_2026_04_29": {
+      "audit_artifact": "artifacts/quant_research/factor_reports/2026-04-29/multi_horizon_audit.json",
+      "primary_finding": "All 5 score-integrated factors (F12, F33, F62, F-cascade, F29) have residual t monotonically INCREASING with horizon, peaking at h10d. The doc-default 5d horizon is empirically suboptimal for every factor in any current score.",
+      "f47_per_horizon": {
+        "h1d": {"residual_ic": -0.0076, "residual_t": -1.45, "g6_pass": false},
+        "h3d": {"residual_ic": -0.0137, "residual_t": -2.67, "g6_pass": false},
+        "h5d": {"residual_ic": -0.0202, "residual_t": -3.89, "g6_pass": true, "borderline": true},
+        "h10d": {"residual_ic": -0.0264, "residual_t": -5.61, "g6_pass": true, "best_horizon": true}
+      },
+      "f47_admission_at_h5d_via_lsk3": "borderline G6 PASS (residual IC -0.020, t=-3.89, just above 0.02 floor)",
+      "f47_admission_stacked_with_v5_or_v6": "G6 FAIL (residual drops below 0.02 when conditioned on lsk3 + F62 or lsk3 + F-cascade)",
+      "implication": "v8 builds on lsk3 ONLY (not on top of v5/v6/v7). F47 captures information overlapping with F62/F-cascade but not lsk3 alone."
+    }
+  },
+  "entries": [
+    {
+      "candidate_id": "xs_alpha_ontology_v8_lsk3_g_v2_h5d",
+      "base_mechanism_id": "xs_alpha_ontology_v8_lsk3_g_v2",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_alpha_ontology_v8",
+      "strategy_profile": "conservative",
+      "feature_groups": ["volatility", "structure", "derivatives", "trend", "volume"],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "downside_upside_vol_ratio_30",
+        "funding_basis_residual_implied_repo_30",
+        "funding_flip_decay_phase"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": ["mid_liquidity", "top_liquidity"],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.0,
+        "top_long_count": 3,
+        "bottom_short_count": 3,
+        "position_multiplier_overlay_id": "alpha_ontology_regime_gating_v2"
+      },
+      "universe_filter": {"preset": "liquid_perp_core_20"},
+      "thesis_profile": {
+        "thesis_id": "xs_alpha_ontology_v8_lsk3_g_v2_h5d",
+        "thesis_family": "hypothesis_xs_alpha_ontology_v8_lsk3_g_v2_h5d",
+        "market_mechanism": "SP-C v8: lsk3 11-factor + F47 funding_flip_decay_phase (per-subject days-since-last-funding-sign-flip, W3.1 state-machine factor). F47 is a W3.1 idle factor that didn't pass G6 at h5d in W3.1 admission, but the SP-C multi-horizon audit found it borderline-G6-passes at h5d (residual IC -0.020, t=-3.89) and meaningfully passes at h10d (t=-5.61). Sign empirical NEGATIVE: assets with stable funding regime (longer days since flip) outperform; recent-flip assets carry unwind risk. Stacked with W3.5 v2 regime-gating overlay.",
+        "directional_claim": "Same long-short top-3 perp construction. Score adds -0.03*z(funding_flip_decay_phase) to lsk3 raw. Position size multiplied by W3.5 v2 regime-gating overlay. Falsified if (a) walk_forward median sharpe drops more than 0.3 below v_alpha_v1_lsk3_g_v2 (+2.147) without compensating regime improvement; OR (b) regime_holdout fails.",
+        "universe_rule": {"preset": "liquid_perp_core_20"},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "downside_upside_vol_ratio_30",
+          "funding_basis_residual_implied_repo_30",
+          "funding_flip_decay_phase"
+        ],
+        "factor_formula": "raw = -0.20*z(iv_smooth_60) -0.10*z(rv_5) +0.18*z(dh_60) +0.15*z(dh_5) -0.07*z(tt_smooth_5) -0.10*z(liquidity_stress_qv_iv) -0.06*z(momentum_decay_5_20) +0.05*z(taker_imb_dispersion) -0.05*z(quality_funding_oi) +0.10*z(downside_upside_vol_ratio_30) +0.07*z(funding_basis_residual_implied_repo_30) -0.03*z(funding_flip_decay_phase); final_score = tanh((percentile_rank(raw)-0.5)*1.80); target_weight_per_name = (long_leverage/top_K - short_leverage/bottom_K) * regime_gating_v2_multiplier(t)",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed",
+          "v8_walk_forward_median_drops_more_than_0_3_below_lsk3_g_v2"
+        ]
+      },
+      "spec_hash": "5f41f2ec4779608c3cc8dcac69352e98655a1a4f9a381e935b3c8f248ea18d0d"
+    }
+  ],
+  "lifecycle": "experimental",
+  "experimental_marker_set_at": "2026-04-29",
+  "experimental_reason": "SP-C v8 score: lsk3 11-factor + F47 funding_flip_decay_phase. F47 was a W3.1 idle factor; SP-C multi-horizon audit found it borderline G6 PASS at h5d (residual IC -0.020, t=-3.89) and stronger at h10d (-0.026, t=-5.61). Lifecycle 'experimental' until cycle verifies."
+}

@@ -1,0 +1,264 @@
+{
+  "contract_version": "src_quant_research_lab_compatibility_contract.v1",
+  "mutable_global_patch_targets": {},
+  "private_helper_targets": {
+    "_alpha_ontology_linear_score_from_weights": [
+      "scripts/quant_research/analyze_v5_rw_baseline_rebalance_phase_sensitivity.py"
+    ],
+    "_apply_gap_driven_backfill_and_targeted_rerun": [
+      "tests/test_quant_gap_remediation.py"
+    ],
+    "_apply_liquid_perp_core_20": [
+      "scripts/quant_research/alpha_branch_reports/compute_orderbook_inventory_event_study.py",
+      "scripts/quant_research/evaluate_v6_h10d_post_pump_short_replacement.py",
+      "scripts/quant_research/historical_h10d_diagnostics/evaluate_v6_h10d_post_pump_short_overlay.py"
+    ],
+    "_apply_universe_filter": [
+      "scripts/live_trading/run_hv_balanced_dth60_coinglass_phase9r_research_to_live_parity.py",
+      "scripts/quant_research/analyze_v5_rw_baseline_rebalance_phase_sensitivity.py",
+      "scripts/quant_research/analyze_v5_rw_vs_hv_balanced_trade_diff.py",
+      "scripts/quant_research/audit_coinglass_h10d_parent_blocker_attribution.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_dth60_conditional_overlay_ablation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_dth60_frozen_q90_top20_forward_validation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_dth60_overlay_robustness_validation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_m3_1_options_surface_overlay_ablation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_multiphase_factor_drawdown_ablation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_portfolio_construction_experiment.py",
+      "scripts/quant_research/historical_h10d_diagnostics/audit_coinglass_h10d_parent_rebaseline.py",
+      "scripts/quant_research/historical_h10d_diagnostics/compare_alpha_ontology_h10d_fixed_set.py",
+      "scripts/quant_research/historical_h10d_diagnostics/compare_alpha_ontology_h10d_overlay_ablation.py"
+    ],
+    "_available_quote_volume_usd_for_row": [
+      "tests/test_execution_backtest.py"
+    ],
+    "_backtest_cross_sectional": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_blocker_attribution.py",
+      "scripts/quant_research/historical_h10d_diagnostics/audit_coinglass_h10d_parent_rebaseline.py"
+    ],
+    "_backtest_single_asset": [
+      "tests/test_quant_research_overlap.py",
+      "tests/test_quant_research_single_asset_repair.py"
+    ],
+    "_build_factor_evidence_section": [
+      "scripts/quant_research/historical_h10d_diagnostics/audit_coinglass_h10d_parent_rebaseline.py"
+    ],
+    "_chronological_split": [
+      "scripts/quant_research/analyze_v5_rw_vs_hv_balanced_trade_diff.py",
+      "scripts/quant_research/audit_coinglass_h10d_parent_blocker_attribution.py",
+      "scripts/quant_research/historical_h10d_diagnostics/audit_coinglass_h10d_parent_rebaseline.py"
+    ],
+    "_derivatives_first_cross_section_feature_columns": [
+      "tests/test_feature_admission.py"
+    ],
+    "_experiment_directory_name": [
+      "scripts/live_trading/run_hv_balanced_dth60_coinglass_phase9r_research_to_live_parity.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_dth60_conditional_overlay_ablation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_dth60_frozen_q90_top20_forward_validation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_dth60_overlay_robustness_validation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_m3_1_options_surface_overlay_ablation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_multiphase_factor_drawdown_ablation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_portfolio_construction_experiment.py",
+      "scripts/quant_research/historical_h10d_diagnostics/compare_alpha_ontology_h10d_fixed_set.py",
+      "scripts/quant_research/historical_h10d_diagnostics/compare_alpha_ontology_h10d_overlay_ablation.py"
+    ],
+    "_filter_cross_sectional_subject_panel_for_derivatives_readiness": [
+      "scripts/quant_research/analyze_v5_rw_baseline_rebalance_phase_sensitivity.py",
+      "scripts/quant_research/analyze_v5_rw_vs_hv_balanced_trade_diff.py"
+    ],
+    "_fit_and_score": [
+      "scripts/quant_research/analyze_v5_rw_vs_hv_balanced_trade_diff.py",
+      "scripts/quant_research/audit_coinglass_h10d_parent_blocker_attribution.py",
+      "scripts/quant_research/historical_h10d_diagnostics/audit_coinglass_h10d_parent_rebaseline.py"
+    ],
+    "_fixed_set_constraints": [
+      "scripts/quant_research/analyze_v5_rw_vs_hv_balanced_trade_diff.py"
+    ],
+    "_fixed_set_strategy_entry_for_comparison": [
+      "scripts/quant_research/analyze_v5_rw_vs_hv_balanced_trade_diff.py"
+    ],
+    "_normalized_factor_weight_map": [
+      "scripts/quant_research/analyze_v5_rw_baseline_rebalance_phase_sensitivity.py"
+    ],
+    "_resolved_execution_cost_models": [
+      "scripts/live_trading/run_hv_balanced_dth60_coinglass_phase9r_research_to_live_parity.py",
+      "scripts/quant_research/analyze_v5_rw_vs_hv_balanced_trade_diff.py",
+      "scripts/quant_research/audit_coinglass_h10d_parent_blocker_attribution.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_dth60_conditional_overlay_ablation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_dth60_frozen_q90_top20_forward_validation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_dth60_overlay_robustness_validation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_m3_1_options_surface_overlay_ablation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_multiphase_factor_drawdown_ablation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_portfolio_construction_experiment.py",
+      "scripts/quant_research/historical_h10d_diagnostics/audit_coinglass_h10d_parent_rebaseline.py",
+      "scripts/quant_research/historical_h10d_diagnostics/compare_alpha_ontology_h10d_fixed_set.py",
+      "scripts/quant_research/historical_h10d_diagnostics/compare_alpha_ontology_h10d_overlay_ablation.py"
+    ],
+    "_run_walk_forward": [
+      "scripts/quant_research/analyze_v5_rw_vs_hv_balanced_trade_diff.py",
+      "scripts/quant_research/historical_h10d_diagnostics/compare_alpha_ontology_h10d_fixed_set.py",
+      "scripts/quant_research/historical_h10d_diagnostics/compare_alpha_ontology_h10d_overlay_ablation.py"
+    ],
+    "_select_strategy_feature_columns": [
+      "tests/test_quant_m3_3_strict_event_state_scorer.py"
+    ],
+    "_single_asset_position_from_score": [
+      "tests/test_quant_research_single_asset_repair.py"
+    ],
+    "_timestamp_cross_section_zscore": [
+      "scripts/quant_research/analyze_v5_rw_baseline_rebalance_phase_sensitivity.py"
+    ]
+  },
+  "public_facade_targets": {
+    "ALPHA_ONTOLOGY_V5_FACTOR_WEIGHTS": [
+      "scripts/quant_research/analyze_v5_rw_baseline_rebalance_phase_sensitivity.py"
+    ],
+    "QUANT_ARTIFACTS_ROOT": [
+      "scripts/live_trading/run_hv_balanced_dth60_coinglass_phase9r_research_to_live_parity.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/deterministic_support/run_quant_deterministic_daily_sample.py",
+      "scripts/quant_research/export_passed_alphas_to_workbench.py",
+      "scripts/quant_research/feature_panel_tools/generate_versioned_panel.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_dth60_conditional_overlay_ablation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_dth60_frozen_q90_top20_forward_validation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_dth60_overlay_robustness_validation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_m3_1_options_surface_overlay_ablation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_multiphase_factor_drawdown_ablation.py",
+      "scripts/quant_research/h10d_current_diagnostics/run_portfolio_construction_experiment.py",
+      "scripts/quant_research/historical_h10d_diagnostics/audit_coinglass_h10d_parent_rebaseline.py",
+      "scripts/quant_research/historical_h10d_diagnostics/compare_alpha_ontology_h10d_fixed_set.py",
+      "scripts/quant_research/historical_h10d_diagnostics/compare_alpha_ontology_h10d_overlay_ablation.py",
+      "scripts/quant_research/maintenance/run_quant_overlap_legacy_cleanup.py",
+      "scripts/quant_research/maintenance/run_quant_overlap_rerun_remediation.py",
+      "scripts/quant_research/provider_diagnostics/audit_coinglass_dataset_feature_smoke.py",
+      "scripts/quant_research/run_baseline_alpha_proof.py",
+      "scripts/quant_research/run_baseline_alpha_survival.py",
+      "scripts/quant_research/run_quant_hypothesis_batch_cycle.py",
+      "scripts/quant_research/run_quant_research_cycle.py",
+      "scripts/quant_research/run_quant_strategy_proposal_cycle.py",
+      "scripts/quant_research/run_quantagent_shadow_proposal_cycle.py",
+      "scripts/verify/run_bridge_summary_contract_check.py",
+      "scripts/verify/run_quant_overlap_rerun.py",
+      "scripts/verify/run_quant_repo_health_guard.py"
+    ],
+    "QUANT_INPUT_ROOT": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/deterministic_support/run_quant_deterministic_daily_sample.py",
+      "scripts/quant_research/feature_panel_tools/generate_versioned_panel.py",
+      "scripts/quant_research/run_baseline_alpha_proof.py",
+      "scripts/quant_research/run_quant_hypothesis_batch_cycle.py",
+      "scripts/quant_research/run_quant_research_cycle.py",
+      "scripts/quant_research/run_quant_strategy_proposal_cycle.py",
+      "scripts/quant_research/run_quantagent_shadow_proposal_cycle.py"
+    ],
+    "WORKBENCH_ROOT": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/deterministic_support/run_quant_deterministic_daily_sample.py",
+      "scripts/quant_research/export_passed_alphas_to_workbench.py",
+      "scripts/quant_research/maintenance/run_quant_overlap_rerun_remediation.py",
+      "scripts/quant_research/run_baseline_alpha_proof.py",
+      "scripts/quant_research/run_quant_hypothesis_batch_cycle.py",
+      "scripts/quant_research/run_quant_research_cycle.py",
+      "scripts/quant_research/run_quant_strategy_proposal_cycle.py",
+      "scripts/quant_research/run_quantagent_shadow_proposal_cycle.py",
+      "scripts/verify/run_quant_overlap_rerun.py",
+      "scripts/verify/run_quant_repo_health_guard.py"
+    ],
+    "build_quant_datasets": [
+      "scripts/quant_research/feature_panel_tools/generate_versioned_panel.py",
+      "scripts/quant_research/provider_diagnostics/audit_coinglass_dataset_feature_smoke.py"
+    ],
+    "build_quant_feature_sets": [
+      "scripts/quant_research/feature_panel_tools/generate_versioned_panel.py",
+      "scripts/quant_research/provider_diagnostics/audit_coinglass_dataset_feature_smoke.py"
+    ],
+    "execution_capacity_limits": [
+      "scripts/quant_research/analyze_v5_rw_vs_hv_balanced_trade_diff.py"
+    ],
+    "filter_cross_sectional_execution_frame": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_blocker_attribution.py"
+    ],
+    "infer_interval_ms": [
+      "scripts/quant_research/analyze_v5_rw_vs_hv_balanced_trade_diff.py"
+    ],
+    "load_data_readiness_contract": [
+      "scripts/quant_research/analyze_v5_rw_vs_hv_balanced_trade_diff.py"
+    ],
+    "load_quant_universe_snapshot": [
+      "scripts/quant_research/feature_panel_tools/generate_versioned_panel.py",
+      "scripts/quant_research/provider_diagnostics/audit_coinglass_dataset_feature_smoke.py"
+    ],
+    "load_validation_contract": [
+      "scripts/quant_research/analyze_v5_rw_vs_hv_balanced_trade_diff.py"
+    ],
+    "require_derivatives_sync_summary": [
+      "scripts/quant_research/feature_panel_tools/generate_versioned_panel.py",
+      "scripts/quant_research/provider_diagnostics/audit_coinglass_dataset_feature_smoke.py",
+      "tests/test_quant_research_lab.py"
+    ],
+    "resolve_split_realization_contract": [
+      "scripts/quant_research/analyze_v5_rw_vs_hv_balanced_trade_diff.py"
+    ],
+    "run_quant_experiments_for_strategies": [
+      "scripts/quant_research/coinglass_quarantine/run_coinglass_r1a_top_liquidity_ex_trx_strict.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py"
+    ],
+    "run_quant_research_cycle": [
+      "scripts/quant_research/run_quant_research_cycle.py",
+      "tests/test_quant_research_governance.py",
+      "tests/test_quant_research_lab.py"
+    ],
+    "run_quant_universe_freeze": [
+      "tests/test_quant_research_governance.py",
+      "tests/test_quant_research_lab.py"
+    ],
+    "validation_contract_reference_capital_usd": [
+      "scripts/quant_research/analyze_v5_rw_vs_hv_balanced_trade_diff.py"
+    ],
+    "walk_forward_split_with_purge": [
+      "scripts/quant_research/analyze_v5_rw_vs_hv_balanced_trade_diff.py"
+    ]
+  },
+  "scan_roots": [
+    "scripts",
+    "tests"
+  ],
+  "scope": "Freeze existing external lab facade imports, private helper imports, and test patch targets before any facade-first split.",
+  "source_module": "enhengclaw.quant_research.lab",
+  "source_path": "src/enhengclaw/quant_research/lab.py",
+  "string_patch_targets": {
+    "_resolve_quant_local_timezone": [
+      "tests/test_quant_research_lab.py"
+    ],
+    "build_gap_remediation_plan": [
+      "tests/test_quant_gap_remediation.py"
+    ],
+    "build_quant_datasets": [
+      "tests/test_quant_gap_remediation.py"
+    ],
+    "build_quant_feature_sets": [
+      "tests/test_quant_gap_remediation.py"
+    ],
+    "datetime": [
+      "tests/test_quant_research_lab.py"
+    ],
+    "execute_gap_remediation_backfill": [
+      "tests/test_quant_gap_remediation.py"
+    ],
+    "require_derivatives_sync_summary": [
+      "tests/test_quant_gap_remediation.py"
+    ],
+    "run_quant_coinapi_spot_sync": [
+      "tests/test_quant_research_core.py"
+    ],
+    "run_quant_experiments_for_strategies": [
+      "tests/test_quant_gap_remediation.py"
+    ],
+    "run_quant_research_cycle": [
+      "tests/test_quant_deterministic_survival.py",
+      "tests/test_quant_research_core.py"
+    ]
+  }
+}

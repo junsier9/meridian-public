@@ -1,0 +1,8 @@
+{
+  "case_id": "validation_agent_success",
+  "expected_status": "success",
+  "object_id": "golden-validation-agent-aix",
+  "scope": "spot+perp",
+  "subject": "AIX",
+  "validation_text": "Publish hold stays in place because this still needs validation."
+}

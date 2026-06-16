@@ -1,0 +1,29 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_identity_module_contract.v1",
+  "source_module": "enhengclaw.quant_research._binance_canonical_identity",
+  "source_path": "src/enhengclaw/quant_research/_binance_canonical_identity.py",
+  "facade_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "facade_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only identity-helper internal-module importability, root-facade re-export identity, and signatures delegated to the existing root facade hash identity contract. Hash and subject bucket behavior samples remain owned by the existing root contract.",
+  "validation_mode": "internal_module_facade_identity_existing_contract_samples",
+  "approved_by_review": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_identity_normalization_post_extraction_review_2026_05_15.md",
+  "signature_source_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_hash_identity_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_hash_identity_contract.v1"
+  },
+  "identity_module_targets": [
+    "_stable_hash",
+    "_stable_int"
+  ],
+  "excluded_surfaces": [
+    "source migration",
+    "full feature manifest content",
+    "falsification metrics",
+    "backtest output",
+    "pass/fail decisions",
+    "subject normalization",
+    "other module hash helpers",
+    "generic repo-wide hash utility migration",
+    "caller counts"
+  ]
+}

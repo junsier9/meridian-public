@@ -1,0 +1,91 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v92",
+  "entries": [
+    {
+      "candidate_id": "xs_minimal_v7_h5d",
+      "base_mechanism_id": "xs_minimal_v7",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_minimal_v7",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "stress_liq_conc_iv",
+        "unwind_liq_imb_xs",
+        "disagree_tt_retail"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_minimal_v7_h5d",
+        "thesis_family": "hypothesis_xs_minimal_v7_h5d",
+        "market_mechanism": "Phase 1b extension of v91 (xs_minimal_v6): adds 3 B-batch alternative factor candidates orthogonal to the v91 9-factor baseline. Per phase_1c_factor_analysis on the v92 panel, 11 B-batch candidates were screened by full-panel rank IC + VIF; 3 passed |IC| >= 0.04 with VIF < 5: stress_liq_conc_iv (IC=-0.060, VIF=1.66, n=715, stress propagation), unwind_liq_imb_xs (IC=-0.050, VIF=2.41, n=1094, cross-section unwind), disagree_tt_retail (IC=+0.037, VIF=1.37, n=1090, smart-money vs retail flow disagreement, fills mechanism gap not present in v91). Other 8 candidates discarded for IC < 0.04 or |t-stat| < 4. unwind_liq_dh dropped despite |IC|=0.046 because corr(unwind_liq_dh, unwind_liq_imb_xs) = -0.71. v91 9 weights kept unchanged; new 3 weights from full-panel IC magnitude; absolute sum is 1.11 (B-revision: first v92 cycle with normalized weights showed WF sharpe regression 0.846 to 0.677, so keeping v91 magnitudes preserves baseline alpha contribution). v93 CANDIDATE ISSUE (deferred from this batch): v91 IC pruning over-aggressively removed two strong signals \u2014 intraday_realized_vol_4h_to_1d_smooth_20 (IC=-0.104, VIF=15.12) and distance_to_high_20 (IC=+0.098, VIF=4.24). VIF dominated over IC magnitude. v93 should explore VIF-aware GLS residualization or PCA-based combination instead of hard VIF threshold drop, to recover IC from the strongest single-factor signals.",
+        "directional_claim": "rank top-20 liquid perp-covered names by 12 z-score factors (v91 9 IC-pruned + v92 3 B-batch alternatives). Expected: rank IC >= 0.18 (above v91 0.165, modest because new factors weaker than v91 strongest), walk-forward median sharpe >= 0.90 (above v91 0.846), regime worst median sharpe >= -1.8. Critical assumption: 3 new factors maintain orthogonality and do not dilute existing alpha. If realized rank IC < 0.17 or WF median sharpe < 0.85, the new factors are net-negative and v92 should be rolled back.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "stress_liq_conc_iv",
+          "unwind_liq_imb_xs",
+          "disagree_tt_retail"
+        ],
+        "factor_formula": "raw = -0.20*z(iv_smooth_60) -0.10*z(rv_5) +0.18*z(dh_60) +0.15*z(dh_5) -0.07*z(tt_smooth_5) -0.10*z(liquidity_stress_qv_iv) -0.06*z(momentum_decay_5_20) +0.05*z(taker_imb_dispersion) -0.05*z(quality_funding_oi) -0.06*z(stress_liq_conc_iv) -0.05*z(unwind_liq_imb_xs) +0.04*z(disagree_tt_retail); final = tanh((percentile_rank(raw)-0.5)*1.80)",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "b6d641cdb72ac700e72b9a352e419e85bedcd79c466e87d38be5edb22c5ee428"
+    }
+  ]
+}

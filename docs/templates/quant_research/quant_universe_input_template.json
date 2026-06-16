@@ -1,0 +1,35 @@
+{
+  "as_of": "2026-04-20",
+  "generated_at_utc": "2026-04-20T03:30:00Z",
+  "candidates": [
+    {
+      "subject": "ETH",
+      "market_cap_rank": 2,
+      "market_cap_usd": 350000000000,
+      "quote_volume_24h_usd": 18000000000,
+      "listing_age_days": 2200,
+      "spot_symbol": "ETHUSDT",
+      "usdm_symbol": "ETHUSDT",
+      "event_flags": [
+        "etf_flow"
+      ],
+      "narrative_tags": [
+        "large_cap_l1"
+      ]
+    },
+    {
+      "subject": "SUI",
+      "market_cap_rank": 28,
+      "market_cap_usd": 9000000000,
+      "quote_volume_24h_usd": 1400000000,
+      "listing_age_days": 650,
+      "spot_symbol": "SUIUSDT",
+      "usdm_symbol": "SUIUSDT",
+      "event_flags": [
+        "unlock"
+      ],
+      "narrative_tags": [
+        "mid_cap_l1"
+      ]
+    }
+  ]

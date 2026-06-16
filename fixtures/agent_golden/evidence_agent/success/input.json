@@ -1,0 +1,8 @@
+{
+  "case_id": "evidence_agent_success",
+  "expected_status": "success",
+  "object_id": "golden-evidence-success-aix",
+  "scope": "spot+perp",
+  "subject": "AIX",
+  "evidence_text": "Fresh desk notes still show aggressive buyers supporting AIX after the initial breakout."
+}

@@ -1,0 +1,15 @@
+{
+  "contract_version": "quant_baseline_alpha_proof_fixture.v1",
+  "proof_target": "single_asset_deterministic",
+  "as_of": "2026-04-23",
+  "rerun_count": 2,
+  "winner_selection_policy": "manifest_order_first_passing",
+  "validation_contract_version": "quant_validation_contract.v10",
+  "execution_cost_model_version": "quant_execution_cost_model.v1",
+  "required_universe_definition_id": "pit_binance_liquidity_top100",
+  "required_universe_contract_version": "quant_universe_input.v2",
+  "strategy_ids": [
+    "core-eth-conservative-breakout-volatility-expansion-single-asset",
+    "core-btc-balanced-mean-reversion-single-asset"
+  ]
+}

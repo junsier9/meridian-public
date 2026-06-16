@@ -1,0 +1,145 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v6",
+  "entries": [
+    {
+      "candidate_id": "xs_strength_on_reset_v1_h3d",
+      "base_mechanism_id": "xs_strength_on_reset_v1",
+      "horizon_id": "h3d",
+      "target_horizon_bars": 3,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_strength_on_reset_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "range_position_20",
+        "distance_to_high_20",
+        "momentum_5",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_strength_on_reset_v1_h3d",
+        "thesis_family": "hypothesis_xs_strength_on_reset_v1_h3d",
+        "market_mechanism": "liquid spot leaders should outperform after orderly reset below recent highs rather than at immediate extension",
+        "directional_claim": "own liquid names that keep relative strength and medium-horizon slope while participation remains supportive, but only after they have reset inside the short-term range and short-horizon chase has faded",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "range_position_20",
+          "distance_to_high_20",
+          "momentum_5",
+          "return_1"
+        ],
+        "factor_formula": "0.30*relative_strength_20 + 0.22*ema_slope_5_20 + 0.18*(quote_volume_expansion-1) + 0.14*(0.5-range_position_20) - 0.10*distance_to_high_20 - 0.04*return_1 - 0.02*momentum_5",
+        "intended_holding_horizon_bars": 3,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "2c1e68c2e2d84642f43c7130e30f71af1eb1a935892681dedc09974ff20df5e2"
+    },
+    {
+      "candidate_id": "xs_strength_on_reset_v1_h5d",
+      "base_mechanism_id": "xs_strength_on_reset_v1",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_strength_on_reset_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "range_position_20",
+        "distance_to_high_20",
+        "momentum_5",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_strength_on_reset_v1_h5d",
+        "thesis_family": "hypothesis_xs_strength_on_reset_v1_h5d",
+        "market_mechanism": "liquid spot leaders should outperform after orderly reset below recent highs rather than at immediate extension",
+        "directional_claim": "own liquid names that keep relative strength and medium-horizon slope while participation remains supportive, but only after they have reset inside the short-term range and short-horizon chase has faded",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "range_position_20",
+          "distance_to_high_20",
+          "momentum_5",
+          "return_1"
+        ],
+        "factor_formula": "0.30*relative_strength_20 + 0.22*ema_slope_5_20 + 0.18*(quote_volume_expansion-1) + 0.14*(0.5-range_position_20) - 0.10*distance_to_high_20 - 0.04*return_1 - 0.02*momentum_5",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "6268ff3e677044b81a27494126e8df5db9d2af7d6751eddae75266e3a405b178"
+    }
+  ]
+}

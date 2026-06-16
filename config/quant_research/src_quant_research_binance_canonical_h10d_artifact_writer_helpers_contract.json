@@ -1,0 +1,94 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_artifact_writer_helpers_contract.v2",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only root-facade importability, inspect.signature shape, and small helper-level behavior samples for _write_json and _frame_or_empty. _write_universe_membership is governed by the universe-membership writer contract and artifact-module identity contract. This contract does not freeze full artifact schemas.",
+  "validation_mode": "importability_signature_helper_behavior_samples",
+  "artifact_writer_targets": {
+    "_write_json": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "Path",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "path",
+            "required": true
+          },
+          {
+            "annotation": "Any",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "payload",
+            "required": true
+          }
+        ],
+        "return_annotation": "None"
+      },
+      "sample_payloads": {
+        "sorted_nested_payload": {
+          "payload": {
+            "z": 2,
+            "a": 1,
+            "nested": {
+              "b": true
+            }
+          },
+          "expected_text": "{\n  \"a\": 1,\n  \"nested\": {\n    \"b\": true\n  },\n  \"z\": 2\n}"
+        },
+        "date_default_str_payload": {
+          "payload_kind": "date_default_str",
+          "payload": {
+            "as_of": "2026-01-02"
+          },
+          "expected_text": "{\n  \"as_of\": \"2026-01-02\"\n}"
+        }
+      }
+    },
+    "_frame_or_empty": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "Any",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "value",
+            "required": true
+          }
+        ],
+        "return_annotation": "pd.DataFrame"
+      },
+      "sample_frame": {
+        "columns": [
+          "subject",
+          "value"
+        ],
+        "records": [
+          {
+            "subject": "BTC",
+            "value": 1.5
+          },
+          {
+            "subject": "ETH",
+            "value": -0.25
+          }
+        ]
+      }
+    }
+  },
+  "governed_elsewhere_targets": [
+    "_write_universe_membership"
+  ],
+  "excluded_surfaces": [
+    "source migration",
+    "full artifact schemas",
+    "output path selection",
+    "markdown report content",
+    "funding sync semantics",
+    "validation metrics",
+    "universe membership column schema",
+    "risk-brake column ownership",
+    "CSV serialization behavior",
+    "caller counts"
+  ]
+}

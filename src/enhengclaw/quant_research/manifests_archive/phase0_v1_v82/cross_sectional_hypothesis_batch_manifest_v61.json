@@ -1,0 +1,95 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v61",
+  "entries": [
+    {
+      "candidate_id": "xs_carry_dislocation_v1_h5d",
+      "base_mechanism_id": "xs_carry_dislocation_v1",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_carry_dislocation_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "basis_zscore_20",
+        "funding_rate",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "range_position_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_carry_dislocation_v1_h5d",
+        "thesis_family": "hypothesis_xs_carry_dislocation_v1_h5d",
+        "market_mechanism": "in the liquid perp-covered core, residualized cross-sectional funding and basis dislocations tend to mean-revert over multi-day horizons when OI positioning is stable, volatility is contained, and the structural position is not in terminal distress",
+        "directional_claim": "rank liquid perp-covered names higher when their funding and basis sit cross-sectionally cheap relative to peers, OI is stable or mildly growing, volatility is contained, and the structural and trend context is not in distress; this signal is intentionally direction-neutral with respect to recent price momentum",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "basis_zscore_20",
+          "funding_rate",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "range_position_20",
+          "return_1"
+        ],
+        "factor_formula": "make residualized derivatives cheapness (funding and basis z-scores plus raw funding/basis) the primary alpha; use OI stability and balanced volume as confirmation; use trend, structure, and volatility features only as quality screens that penalize distress, blow-up volatility, and broken-tape setups rather than reward strong trend",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "d8980475d04300831fe39408a9940ca9dc0ed9a984453fda25e2376258294853"
+    }
+  ]
+}

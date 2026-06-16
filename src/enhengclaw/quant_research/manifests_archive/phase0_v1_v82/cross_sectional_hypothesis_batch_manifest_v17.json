@@ -1,0 +1,78 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v17",
+  "entries": [
+    {
+      "candidate_id": "xs_contraction_release_v5_h5d",
+      "base_mechanism_id": "xs_contraction_release_v5",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_contraction_release_v5",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "realized_volatility_20",
+        "atr_proxy_20",
+        "range_position_20",
+        "distance_to_high_20",
+        "momentum_5"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_contraction_release_v5_h5d",
+        "thesis_family": "hypothesis_xs_contraction_release_v5_h5d",
+        "market_mechanism": "quiet spot names near the top of their local range can continue higher over five days when the release phase stays balanced and the drift after the setup remains calm instead of running too hot in a single burst",
+        "directional_claim": "own spot names with contraction near local highs and persistent relative strength, but bias the score toward balanced release and calm post-setup drift so edge is not dominated by one hot month of breakout continuation",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "realized_volatility_20",
+          "atr_proxy_20",
+          "range_position_20",
+          "distance_to_high_20",
+          "momentum_5"
+        ],
+        "factor_formula": "favor contraction-release names with strong and orderly cross-sectional ranks, require release intensity to stay balanced, explicitly reward calm drift after the setup, and let stable rank ordering dominate the final score so single-month concentration falls without changing the family semantics",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "0e6722f7f310645e636cb878728a37a315ee879a06bd0c6794feaaa7b62481a9"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "contract_version": "openclaw-market-observer.v1",
+  "entrypoint_module": "enhengclaw.integrations.openclaw.market_observer",
+  "lane_id": "market_observer",
+  "request_fields": [
+    "contract_version",
+    "subject",
+    "scope",
+    "object_id",
+    "observation_text",
+    "execution_permit_path"
+  ],
+  "optional_request_fields": [
+    "input_id",
+    "artifacts_root",
+    "compiler_backend",
+    "recorded_transcript_path"
+  ],
+  "recorded_replay_required_fields": [
+    "input_id",
+    "recorded_transcript_path"
+  ],
+  "response_statuses": [
+    "success",
+    "blocked",
+    "quarantine",
+    "failed"
+  ],
+  "live_backend_env": [
+    "ENHENGCLAW_MARKET_OBSERVER_MODEL_BASE_URL",
+    "ENHENGCLAW_MARKET_OBSERVER_MODEL_NAME",
+    "ENHENGCLAW_MARKET_OBSERVER_API_KEY",
+    "ENHENGCLAW_MARKET_OBSERVER_MODEL_TIMEOUT_SECONDS"
+  ]
+}

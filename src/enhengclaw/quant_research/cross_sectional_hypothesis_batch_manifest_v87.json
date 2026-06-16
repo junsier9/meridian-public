@@ -1,0 +1,77 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v87",
+  "entries": [
+    {
+      "candidate_id": "xs_minimal_v3_volw5_h5d",
+      "base_mechanism_id": "xs_minimal_v3_volw5",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_minimal_v3",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives"
+      ],
+      "required_feature_columns": [
+        "realized_volatility_20",
+        "intraday_realized_vol_4h_to_1d",
+        "distance_to_high_20",
+        "coinglass_top_trader_long_pct"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0,
+        "pair_construction": "inverse_vol_weighted_long_only",
+        "top_long_count": 5,
+        "inverse_vol_column": "realized_volatility_20",
+        "inverse_vol_floor": 0.005
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_minimal_v3_volw5_h5d",
+        "thesis_family": "hypothesis_xs_minimal_v3_volw5_h5d",
+        "market_mechanism": "identical 4-feature linear score as v83 but portfolio construction switched from default 3-name equal-weight long to top-5 inverse-volatility-weighted long-only. Shadow OOS retrospective on 1117 days showed inverse-vol-weighted top-5 has 21% lower std (3.75% vs 4.77%), 30% higher annualized Sharpe (1.30 vs 0.99), and per-regime sharpe entirely above strict gate worst_regime_median_oos_sharpe_min=-0.25. Hypothesis: alpha is real (rank IC +0.107 over 3 years) but long-only top-K equal weight is a high-variance estimator; inverse-vol weighting suppresses single-ticker noise.",
+        "directional_claim": "rank top-20 liquid perp-covered names by 4-feature linear z-score; take top-5 longs weighted by 1/realized_volatility_20 (normalized to long_leverage=1.0). Expected: factor_evidence + walk_forward + regime_holdout + execution_stress all PASS strict; first candidate to clear strict validation since v74 stage.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "realized_volatility_20",
+          "intraday_realized_vol_4h_to_1d",
+          "distance_to_high_20",
+          "coinglass_top_trader_long_pct"
+        ],
+        "factor_formula": "score = tanh((percentile_rank(-0.30*z_rv -0.25*z_iv +0.25*z_dh -0.20*z_tt) - 0.5) * 1.80); portfolio = top-5 by score, weighted by (1/realized_volatility_20) normalized to sum to 1.0",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "495ad799f03f95b1da033a0cdf89f2cc06aaa09ca5a97e6c0e99f03037e4ca12"
+    }
+  ]
+}

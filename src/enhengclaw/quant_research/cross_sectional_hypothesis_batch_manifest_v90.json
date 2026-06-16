@@ -1,0 +1,101 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v90",
+  "entries": [
+    {
+      "candidate_id": "xs_minimal_v5_h5d",
+      "base_mechanism_id": "xs_minimal_v5",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_minimal_v5",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "realized_volatility_5",
+        "realized_volatility_20",
+        "realized_volatility_60",
+        "intraday_realized_vol_4h_to_1d_smooth_5",
+        "intraday_realized_vol_4h_to_1d_smooth_20",
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "distance_to_high_5",
+        "distance_to_high_20",
+        "distance_to_high_60",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "coinglass_top_trader_long_pct_smooth_20",
+        "coinglass_top_trader_long_pct_smooth_60",
+        "momentum_decay_5_20",
+        "quality_funding_oi",
+        "liquidity_stress_qv_iv",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "funding_crowding_basis"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_minimal_v5_h5d",
+        "thesis_family": "hypothesis_xs_minimal_v5_h5d",
+        "market_mechanism": "Phase 1b factor family expansion built on xs_minimal_v4 (v89). Retains the 4 v89 multi-timescale families (low-vol anomaly, intraday vol smoothing, distance-to-high reversion, top-trader contrarian positioning) and adds 5 new factor families covering crowding, stress, and order-flow disagreement: momentum_decay (mean reversion at 1-week scale), quality_proxy (funding * OI growth = long-crowding), liquidity_stress (volume * intraday vol = stress persistence), order_flow_dispersion (taker imbalance dispersion = intraday disagreement), funding_crowding (funding z-score * basis tension). All 5 new families hypothesized negative sign and weighted at 0.10 each (secondary to v89 core which keeps original v83 weight magnitudes).",
+        "directional_claim": "rank top-20 liquid perp-covered names by 4 multi-timescale family means (v89 core, weights -0.30/-0.25/+0.25/-0.20) plus 5 new family z-scores (Phase 1b additions, all weight -0.10). Expected: rank IC >= 0.22 (above v89 0.199), regime worst >= -1.6 (above v89 -1.98), continued cross-regime stability improvement.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "realized_volatility_5",
+          "realized_volatility_20",
+          "realized_volatility_60",
+          "intraday_realized_vol_4h_to_1d_smooth_5",
+          "intraday_realized_vol_4h_to_1d_smooth_20",
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "distance_to_high_5",
+          "distance_to_high_20",
+          "distance_to_high_60",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "coinglass_top_trader_long_pct_smooth_20",
+          "coinglass_top_trader_long_pct_smooth_60",
+          "momentum_decay_5_20",
+          "quality_funding_oi",
+          "liquidity_stress_qv_iv",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "funding_crowding_basis"
+        ],
+        "factor_formula": "family_X = mean(z(X_5d), z(X_20d), z(X_60d)) for X in {rv, iv, dh, tt}; raw = -0.30*family_rv -0.25*family_iv +0.25*family_dh -0.20*family_tt -0.10*z(momentum_decay) -0.10*z(quality_funding_oi) -0.10*z(liquidity_stress_qv_iv) -0.10*z(coinglass_taker_imb_intraday_dispersion_24h) -0.10*z(funding_crowding_basis); final = tanh((percentile_rank(raw)-0.5)*1.80)",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "74eb51893bb470b24b74858faa8d9eeff6feee167bdbbcf1c2a0a322e816576a"
+    }
+  ]
+}

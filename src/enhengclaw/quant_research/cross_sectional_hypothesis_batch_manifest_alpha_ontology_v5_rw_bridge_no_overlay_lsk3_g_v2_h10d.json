@@ -1,0 +1,108 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.alpha_ontology_v5_rw_bridge_no_overlay_lsk3_g_v2_h10d",
+  "lineage": {
+    "doc": "docs/quant_research/00_roadmap_state/alpha_ontology_and_factor_library.md",
+    "doc_context_version": "2026-05-02.2",
+    "predecessor_baseline": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v5_rw_bridge_lsk3_g_v2_h10d.json",
+    "scoring_family": "xs_alpha_ontology_v5_h10d_rw_bridge",
+    "overlay_id": null,
+    "method": "Overlay-ablation promotion candidate: keep v5_rw_bridge_h10d train-only factor-weight estimation, h10d horizon, liquid_perp_core_20 universe, and top/bottom-3 construction; remove the W3.5 regime_gating_v2 position multiplier so the score evidence is evaluated without hand-tuned overlay throttle.",
+    "goal": "Test whether the current h10d mainline should switch from regime_gating_v2 to no overlay after overlay ablation showed the no-overlay bridge has stronger full OOS cumulative return and higher period sharpe."
+  },
+  "entries": [
+    {
+      "candidate_id": "xs_alpha_ontology_v5_rw_bridge_no_overlay_lsk3_g_v2_h10d",
+      "base_mechanism_id": "xs_alpha_ontology_v5_rw_bridge_no_overlay_lsk3_g_v2",
+      "horizon_id": "h10d",
+      "target_horizon_bars": 10,
+      "label_contract_id": "forward_return_execution_aligned.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_alpha_ontology_v5_h10d_rw_bridge",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "downside_upside_vol_ratio_30",
+        "funding_basis_residual_implied_repo_30",
+        "settlement_cycle_premium_60d"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.0,
+        "top_long_count": 3,
+        "bottom_short_count": 3
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_alpha_ontology_v5_rw_bridge_no_overlay_lsk3_g_v2_h10d",
+        "thesis_family": "hypothesis_xs_alpha_ontology_v5_rw_bridge_no_overlay_lsk3_g_v2_h10d",
+        "market_mechanism": "Methodology bridge for v5_h10d with no portfolio overlay. Keep the same 12-factor alpha ontology v5 score and train-only signed-IR factor weights, but remove W3.5 regime_gating_v2 so promotion evidence is not dependent on hand-tuned regime throttle parameters.",
+        "directional_claim": "Same long-short top-3 perp construction. Factor weights are estimated only from each split/window train segment, then applied to validation/test. Target weights are not multiplied by any regime overlay.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "downside_upside_vol_ratio_30",
+          "funding_basis_residual_implied_repo_30",
+          "settlement_cycle_premium_60d"
+        ],
+        "factor_formula": "For each train split/window: compute daily cross-sectional Spearman IC of each required factor z-score versus target_execution_forward_return, convert to IR = mean(IC)/std(IC), assign sign by mean(IC), normalize signed |IR| weights to abs-sum 1.0, then raw = sum(weight_f * z_f) on validation/test; final_score = tanh((percentile_rank(raw)-0.5)*1.80); target_weight_per_name = long_leverage/top_K - short_leverage/bottom_K with no position_multiplier_overlay_id.",
+        "intended_holding_horizon_bars": 10,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed",
+          "no_overlay_bridge_fails_fixed_set_or_capacity_gate",
+          "no_overlay_bridge_underperforms_regime_gating_v2_bridge_on_full_oos_period_returns"
+        ]
+      },
+      "spec_hash": "23ab75ff3a2a0013d650aae4ef08c7eb3aa493a909c64851d68684cbc24d8c52"
+    }
+  ],
+  "lifecycle": "active",
+  "promotion_eligibility": "promotion_gate_candidate",
+  "canonical_mainline_marker_set_at": "2026-05-02",
+  "canonical_mainline_reason": "Canonical h10d methodology baseline after execution-aligned labels, ready-row feature handling, fixed-set paired comparison, and overlay ablation. Formal strict artifact 2026-04-29-xs_alpha_ontology_v5_rw_bridge_no_overlay_lsk3_g_v2_h10d passes fixed-set and overlay-ablation promotion evidence: no-overlay full-OOS cumret 1.766 / period sharpe 2.199 / recomputed WF median 3.360, beating the regime_gating_v2 bridge on cumulative return by +0.780 with sign-test p=0.0169. Use this as the default parent for future h10d candidates; regime_gating_v2 variants are comparator-only until a redesigned conservative overlay proves incremental value."
+}

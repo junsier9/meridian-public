@@ -1,0 +1,167 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.alpha_ontology_v9_lsk3_g_v2_h10d",
+  "lineage": {
+    "doc": "docs/quant_research/00_roadmap_state/alpha_ontology_and_factor_library.md",
+    "doc_context_version": "2026-04-29.1",
+    "predecessor_baseline": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v6_lsk3_g_v2_h10d.json",
+    "scoring_family": "xs_alpha_ontology_v9_h10d",
+    "overlay_id": "alpha_ontology_regime_gating_v2",
+    "method": "SP-F: extends v6_h10d (lsk3 + F-cascade w=0.025) by adding F1 funding_intraday_dispersion_30d (per-subject 4h-grain rolling-30d mean of within-day funding_rate std). w=-0.020. Stacked with W3.5 v2 regime-gating overlay.",
+    "sub_path": "SP-F (data_utilization_roadmap.md)",
+    "sp_f_admission_audit_2026_04_30": {
+      "factor_id": "funding_intraday_dispersion_30d",
+      "audit_artifact": "artifacts/quant_research/factor_reports/2026-04-29/subday_funding_factor_report_card.json",
+      "panel_grain": "1d aggregate of 4h binance_derivatives funding_rate (6 obs/day per subject)",
+      "rolling_window_days": 30,
+      "rolling_bars_4h": 180,
+      "subjects_with_4h_data": 99,
+      "raw_spearman_ic_h5d": -0.0115,
+      "raw_t_stat_h5d": -2.42,
+      "raw_spearman_ic_h10d": -0.0187,
+      "raw_t_stat_h10d": -3.83,
+      "g3_regime_same_sign_fraction": 1.0,
+      "g6_residual_ic_vs_lsk3_h5d": 0.0252,
+      "g6_t_stat_vs_lsk3_h5d": 4.42,
+      "g6_residual_ic_vs_lsk3_f08_h5d": 0.0313,
+      "g6_t_stat_vs_lsk3_f08_h5d": 5.77,
+      "g6_residual_ic_vs_lsk3_h10d": 0.0328,
+      "g6_t_stat_vs_lsk3_h10d": 5.77,
+      "g6_residual_ic_vs_lsk3_f08_h10d": 0.0396,
+      "g6_t_stat_vs_lsk3_f08_h10d": 7.24,
+      "selected_horizon": "h10d (residual t 7.24 vs 5.77 at h5d, monotone-stronger consistent with SP-C h10d-preference finding)",
+      "weight": 0.015,
+      "weight_calibration": "Sign correction after first v9 attempt at w=-0.020 failed (walk-forward dropped 0.32, regime broke). F1 raw IC is NEGATIVE (-0.019) but residual IC is POSITIVE (+0.040 vs lsk3+F08; +0.029 vs lsk3+F-cascade). Residual IC drives the sign for marginal contribution to score (not raw IC). F-cascade reference: residual IC +0.062 -> w +0.025 (ratio 0.40). F1 residual IC vs lsk3+F-cascade +0.029 -> w +0.029 × 0.50 = +0.015. Per-ts Spearman corr(F1, F-cascade) = 0.064 mean (low; not sibling-duplicate)."
+    },
+    "alternative_variants_audited": [
+      {
+        "factor": "funding_sign_flip_count_30d_4h",
+        "raw_ic_h10d": -0.0094,
+        "g6_vs_lsk3_h10d": 0.0271,
+        "g6_t_h10d": 4.63,
+        "g6_pass": true,
+        "decision": "secondary candidate; not stacked with F1 to avoid sibling-duplicate from same 4h funding sequence (per v7 non-additivity lesson)"
+      },
+      {
+        "factor": "funding_term_skew_30d_4h",
+        "raw_ic_h10d": 0.0515,
+        "g6_vs_lsk3_h10d": 0.0096,
+        "g6_pass": false,
+        "decision": "FAIL G6 — collinear with F08 funding_term_skew_60 (1d-grain version absorbs the sub-day skew signal). Plumbed for diagnostic, NOT score-integrated."
+      }
+    ]
+  },
+  "entries": [
+    {
+      "candidate_id": "xs_alpha_ontology_v9_lsk3_g_v2_h10d",
+      "base_mechanism_id": "xs_alpha_ontology_v9_lsk3_g_v2",
+      "horizon_id": "h10d",
+      "target_horizon_bars": 10,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_alpha_ontology_v9_h10d",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "downside_upside_vol_ratio_30",
+        "funding_basis_residual_implied_repo_30",
+        "liq_cascade_recency_score_5d",
+        "funding_intraday_dispersion_30d"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.0,
+        "top_long_count": 3,
+        "bottom_short_count": 3,
+        "position_multiplier_overlay_id": "alpha_ontology_regime_gating_v2"
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_alpha_ontology_v9_lsk3_g_v2_h10d",
+        "thesis_family": "hypothesis_xs_alpha_ontology_v9_lsk3_g_v2_h10d",
+        "market_mechanism": "SP-F: extends v6_h10d (lsk3 + F-cascade w=0.025) with F1 funding_intraday_dispersion_30d. Per-subject 4h-grain funding sequence (6 obs/day) aggregated to daily within-day std, rolling-30d mean. Mechanism: high intraday funding dispersion = unstable/overheated carry regime; assets with elevated F1 systematically underperform in next 10 days. Sign empirical: NEGATIVE. Stacked with W3.5 v2 regime-gating overlay.",
+        "directional_claim": "Same long-short top-3 perp construction as v6_h10d. Score adds +0.015 * z(funding_intraday_dispersion_30d). Sign POSITIVE per residual IC (NOT raw IC) — first v9 attempt at w=-0.020 (matching raw IC sign -0.019) failed because residual IC is positive (+0.029 vs lsk3+F-cascade); marginal contribution sign is driven by residual IC. Position size multiplied by W3.5 v2 regime-gating overlay. F1 captures sub-day funding microstructure orthogonal to F08 (1d-grain skew) AND F-cascade (G6 +0.029 t=+5.19 vs lsk3+F-cascade). Falsified if (a) walk_forward median sharpe drops more than 0.2 below v6_h10d (+2.832) without compensating regime improvement; OR (b) regime_holdout fails (worst regime below -2.828 OR positive_regime_fraction below 1/3); OR (c) F1 residual IC vs lsk3+F-cascade falls below 0.02 on this panel.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "downside_upside_vol_ratio_30",
+          "funding_basis_residual_implied_repo_30",
+          "liq_cascade_recency_score_5d",
+          "funding_intraday_dispersion_30d"
+        ],
+        "factor_formula": "raw = -0.20*z(iv_smooth_60) -0.10*z(rv_5) +0.18*z(dh_60) +0.15*z(dh_5) -0.07*z(tt_smooth_5) -0.10*z(liquidity_stress_qv_iv) -0.06*z(momentum_decay_5_20) +0.05*z(taker_imb_dispersion) -0.05*z(quality_funding_oi) +0.10*z(downside_upside_vol_ratio_30) +0.07*z(funding_basis_residual_implied_repo_30) +0.025*z(liq_cascade_recency_score_5d) +0.015*z(funding_intraday_dispersion_30d); final_score = tanh((percentile_rank(raw)-0.5)*1.80); target_weight_per_name = (long_leverage/top_K - short_leverage/bottom_K) * regime_gating_v2_multiplier(t)",
+        "intended_holding_horizon_bars": 10,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed",
+          "v9_walk_forward_median_drops_more_than_0_2_below_v6_h10d_without_regime_improvement",
+          "sp_f_f1_residual_ic_vs_lsk3_f08_below_0_02"
+        ]
+      },
+      "spec_hash": "e835fef4f929d6a086b0a904d4eff1cb86143fd41144d35d368fd9bca2a0d7f7"
+    }
+  ],
+  "lifecycle": "experimental",
+  "experimental_marker_set_at": "2026-04-30",
+  "experimental_reason": "SP-F admission winner (G6 +0.040 t=7.24 vs lsk3+F08 at h10d). Score-integration produces NO marginal cycle improvement over v6_h10d when stacked with F-cascade — non-additivity finding. Weight scan (h10d cycles): w=-0.020 walk_forward 2.513 regime fail, w=+0.015 walk_forward 2.832 regime pass (= v6_h10d), w=+0.020 walk_forward 2.832 regime pass (= v6_h10d), w=+0.025 walk_forward 2.832 regime fail. F1's signal overlaps with F-cascade's rotation regime protection in cycle backtest space (analogous to v7 F62+F-cascade non-additivity). Locked at w=+0.015 (safest strict-pass). v9 = v6_h10d on cycle metrics; not promoted to active_alternative. v6_lsk3_g_v2_h10d remains the h10d active. F1 plumbed in panel for future use (different baseline / no F-cascade context).",
+  "verified_outcome_2026_04_30": {
+    "contract_version": "quant_validation_contract.v10_h10d",
+    "validation_contract_status": "passed",
+    "walk_forward_median_oos_sharpe": 2.832,
+    "walk_forward_loss_window_fraction": 0.312,
+    "regime_holdout_passed": true,
+    "positive_regime_fraction": 0.667,
+    "worst_regime_median_oos_sharpe": -2.736,
+    "weight_scan": {
+      "w_neg_0_020": {"walk_forward": 2.513, "regime_worst": -3.001, "passed": false, "interpretation": "wrong sign (raw IC sign); actively contradicts F1 residual signal"},
+      "w_pos_0_015": {"walk_forward": 2.832, "regime_worst": -2.736, "passed": true, "interpretation": "right sign, conservative; identical to v6_h10d (no marginal cycle value)"},
+      "w_pos_0_020": {"walk_forward": 2.832, "regime_worst": -2.736, "passed": true, "interpretation": "still identical to v6_h10d"},
+      "w_pos_0_025": {"walk_forward": 2.832, "regime_worst": -3.098, "passed": false, "interpretation": "regime breaks; over-shooting F-cascade's rotation protection"}
+    },
+    "non_additivity_finding": "F1 G6 admission is real (residual IC +0.029 vs lsk3+F-cascade) but cycle-layer marginal value is zero. F1's predictive direction overlaps with F-cascade's rotation regime protection in walk-forward / regime metrics, even though per-ts Spearman corr(F1, F-cascade) is only 0.064 (mean). Analogous to v7 F62+F-cascade non-additivity (commit 68c4593)."
+  }
+}

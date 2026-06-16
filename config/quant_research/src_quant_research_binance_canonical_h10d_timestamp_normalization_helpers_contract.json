@@ -1,0 +1,110 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_timestamp_normalization_helpers_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only root-facade importability, inspect.signature shape, and tiny behavior samples for h10d-local timestamp normalization helpers. This contract does not cover features.py same-name helpers or full alpha scorer behavior.",
+  "validation_mode": "root_facade_signature_behavior_samples",
+  "timestamp_normalization_targets": {
+    "_timestamp_zscore": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.Series",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "series",
+            "required": true
+          },
+          {
+            "annotation": "pd.Series",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "timestamps",
+            "required": true
+          }
+        ],
+        "return_annotation": "pd.Series"
+      },
+      "sample": {
+        "values": [
+          1.0,
+          2.0,
+          3.0,
+          5.0,
+          5.0
+        ],
+        "timestamps": [
+          1,
+          1,
+          1,
+          2,
+          2
+        ],
+        "expected_values": [
+          -1.224744871391589,
+          0.0,
+          1.224744871391589,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "_timestamp_percentile_rank": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.Series",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "series",
+            "required": true
+          },
+          {
+            "annotation": "pd.Series",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "timestamps",
+            "required": true
+          }
+        ],
+        "return_annotation": "pd.Series"
+      },
+      "sample": {
+        "values": [
+          10.0,
+          20.0,
+          30.0,
+          5.0,
+          5.0
+        ],
+        "timestamps": [
+          1,
+          1,
+          1,
+          2,
+          2
+        ],
+        "expected_values": [
+          0.3333333333333333,
+          0.6666666666666666,
+          1.0,
+          0.75,
+          0.75
+        ]
+      }
+    }
+  },
+  "approved_module_after_move": "enhengclaw.quant_research._binance_canonical_normalization",
+  "excluded_surfaces": [
+    "features.py helper behavior",
+    "full alpha formula behavior",
+    "score_binance_ohlcv_core_alpha output snapshots",
+    "feature weights",
+    "feature subset selection",
+    "backtest metrics",
+    "validation pass/fail status",
+    "risk-brake behavior",
+    "partition or month-key helpers",
+    "caller counts"
+  ]
+}

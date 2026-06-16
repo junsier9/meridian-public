@@ -1,0 +1,54 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_run_metadata_helpers_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only root-facade importability, inspect.signature shape, UTC timestamp/date string formats, and strategy-label sanitization for run metadata helpers. This does not freeze exact timestamp values or artifact path ownership.",
+  "validation_mode": "root_facade_signature_format_samples",
+  "run_metadata_targets": {
+    "utc_now": {
+      "signature": {
+        "parameters": [],
+        "return_annotation": "str"
+      },
+      "output_regex": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z$"
+    },
+    "_default_run_id": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "str",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "strategy_label",
+            "required": true
+          }
+        ],
+        "return_annotation": "str"
+      },
+      "sample_strategy_label": "v5 binance/h10d: run",
+      "expected_label_suffix": "v5-binance-h10d-run",
+      "output_regex": "^\\d{8}T\\d{6}Z-v5-binance-h10d-run$"
+    },
+    "_today_compact": {
+      "signature": {
+        "parameters": [],
+        "return_annotation": "str"
+      },
+      "output_regex": "^\\d{4}_\\d{2}_\\d{2}$"
+    }
+  },
+  "approved_module_after_move": "enhengclaw.quant_research._binance_canonical_run_metadata",
+  "excluded_surfaces": [
+    "exact timestamp values",
+    "clock source replacement",
+    "output root selection",
+    "artifact path ownership",
+    "markdown report content",
+    "validation report payload structure",
+    "validation metrics",
+    "strategy pass/fail status",
+    "funding sync behavior",
+    "dataset or feature manifest schemas",
+    "caller counts"
+  ]
+}

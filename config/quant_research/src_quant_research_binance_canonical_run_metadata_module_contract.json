@@ -1,0 +1,35 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_run_metadata_module_contract.v1",
+  "source_module": "enhengclaw.quant_research._binance_canonical_run_metadata",
+  "source_path": "src/enhengclaw/quant_research/_binance_canonical_run_metadata.py",
+  "facade_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "facade_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only run-metadata internal-module importability, root-facade re-export identity, and signatures delegated to the existing root facade run-metadata contract. Timestamp regex and label-sanitization samples remain owned by the existing root contract.",
+  "validation_mode": "internal_module_facade_identity_existing_contract_samples",
+  "approved_by_review": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_time_run_metadata_post_extraction_review_2026_05_15.md",
+  "signature_source_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_run_metadata_helpers_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_run_metadata_helpers_contract.v1",
+    "required_approved_module_after_move": "enhengclaw.quant_research._binance_canonical_run_metadata"
+  },
+  "run_metadata_module_targets": [
+    "utc_now",
+    "_default_run_id",
+    "_today_compact"
+  ],
+  "excluded_surfaces": [
+    "source migration",
+    "exact timestamp values",
+    "clock source replacement",
+    "output root selection",
+    "artifact path ownership",
+    "markdown report content",
+    "validation report payload structure",
+    "validation metrics",
+    "strategy pass/fail status",
+    "funding sync behavior",
+    "dataset or feature manifest schemas",
+    "generic repo-wide time utility migration",
+    "caller counts"
+  ]
+}

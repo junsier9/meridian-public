@@ -1,0 +1,15 @@
+{
+  "category": "normal",
+  "scenario": "bullish_publish",
+  "subject": "AIX",
+  "scope": "spot+perp",
+  "object_type": "asset",
+  "baseline_cex": {
+    "replay_root": "fixtures/golden_corpus/cex/normal",
+    "scenario": "bullish_publish"
+  },
+  "candidate_onchain": {
+    "replay_root": "fixtures/golden_corpus/onchain/normal",
+    "scenario": "bullish_publish"
+  }
+}

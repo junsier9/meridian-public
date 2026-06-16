@@ -1,0 +1,80 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v19",
+  "entries": [
+    {
+      "candidate_id": "xs_failed_breakdown_reclaim_v1_h5d",
+      "base_mechanism_id": "xs_failed_breakdown_reclaim_v1",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_failed_breakdown_reclaim_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "quote_volume_expansion",
+        "range_position_20",
+        "distance_to_low_20",
+        "distance_to_low_60",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_failed_breakdown_reclaim_v1_h5d",
+        "thesis_family": "hypothesis_xs_failed_breakdown_reclaim_v1_h5d",
+        "market_mechanism": "spot names can outperform over five days when an attempted downside break fails: the name holds medium-horizon trend quality, stays safely above its longer-term base, and reclaims support on a mild rebound day without panic-like churn",
+        "directional_claim": "own spot names with positive relative strength and slope that sit in a reclaimed support zone after a failed breakdown, where the one-day rebound is controlled, long-base support is still intact, and both intraday volatility and participation remain orderly enough to suggest support defense rather than capitulation",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "quote_volume_expansion",
+          "range_position_20",
+          "distance_to_low_20",
+          "distance_to_low_60",
+          "return_1"
+        ],
+        "factor_formula": "favor names with strong trend quality, reclaimed 20-day support, intact 60-day base distance, balanced participation, and a mild rebound day, while penalizing high intraday churn, panic-like downside impulse, and euphoric volume spikes",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "f8ed8778a68f6374764eab0a219e67fa51a0947dddf403c875c8bfe98bc8670b"
+    }
+  ]
+}

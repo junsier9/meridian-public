@@ -1,0 +1,89 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_funding_module_contract.v1",
+  "source_module": "enhengclaw.quant_research._binance_canonical_funding",
+  "source_path": "src/enhengclaw/quant_research/_binance_canonical_funding.py",
+  "facade_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "facade_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only internal funding module importability, root-facade re-export identity, signatures delegated to the existing funding facade contract, and tiny pure path/month samples. This contract intentionally excludes provider HTTP behavior, funding sync/load behavior, CSV IO snapshots, storage-root relocation, and _partition_month movement.",
+  "validation_mode": "internal_module_facade_identity_tiny_path_month_samples",
+  "approved_by_review": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_funding_module_post_extraction_review_2026_05_15.md",
+  "signature_source_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_funding_facade_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_funding_facade_contract.v1"
+  },
+  "funding_module_targets": [
+    "_funding_columns",
+    "funding_symbol_root",
+    "funding_partition_path",
+    "funding_symbol_manifest_path",
+    "funding_sync_summary_path",
+    "_read_funding_partition",
+    "_dedupe_funding_rows",
+    "_http_get_json",
+    "_resolve_funding_root",
+    "_month_key_from_ms",
+    "_month_start_ms",
+    "_month_end_ms"
+  ],
+  "funding_columns_sample": [
+    "exchange",
+    "market_type",
+    "symbol",
+    "funding_time_ms",
+    "funding_rate",
+    "source"
+  ],
+  "path_sample": {
+    "funding_root_child": "funding-root",
+    "symbol": "btcusdt",
+    "month": "2026-02",
+    "expected_symbol_root": "funding-root/BTCUSDT",
+    "expected_partition_path": "funding-root/BTCUSDT/2026-02.csv.gz",
+    "expected_manifest_path": "funding-root/BTCUSDT/manifest.json",
+    "expected_summary_path": "funding-root/last_sync_summary.json"
+  },
+  "resolve_root_sample": {
+    "explicit_root_child": "explicit-root",
+    "configured_root_child": "configured-root"
+  },
+  "month_samples": {
+    "timestamp_ms": 1769904000000,
+    "expected_month_key": "2026-02",
+    "month": "2026-02",
+    "expected_start_ms": 1769904000000,
+    "expected_end_ms": 1772323199999
+  },
+  "required_adjacent_contracts": [
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_partition_boundary_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_partition_boundary_contract.v1",
+      "must_exclude_surface": "funding sync behavior"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_funding_facade_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_funding_facade_contract.v1",
+      "must_exclude_surface": "provider HTTP behavior"
+    }
+  ],
+  "excluded_surfaces": [
+    "source migration",
+    "provider HTTP behavior",
+    "HTTP retry semantics",
+    "live Binance API behavior",
+    "full sync_funding_cost_history behavior",
+    "full load_funding_cost_daily behavior",
+    "_read_funding_partition IO snapshots",
+    "_dedupe_funding_rows row semantics",
+    "funding formula behavior",
+    "funding root relocation",
+    "funding partition naming changes beyond tiny sample",
+    "CSV compression changes",
+    "_partition_month archive/funding boundary",
+    "neutral partition helper implementation",
+    "PIT universe behavior",
+    "validation metrics",
+    "strategy promotion status",
+    "live-readiness authorization",
+    "caller counts"
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_truthy_series_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only root-local importability, inspect.signature shape, and tiny synthetic mask samples for _truthy_series. This contract intentionally keeps the helper root-local and does not approve migration into a generic utility module.",
+  "validation_mode": "root_local_signature_tiny_truthy_mask_samples",
+  "approved_by_dry_run": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_truthy_series_mask_helper_dry_run_2026_05_16.md",
+  "required_classification_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_root_surface_classification_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_root_surface_classification_contract.v1",
+    "required_group": "pit_universe_and_eligibility"
+  },
+  "required_adjacent_contracts": [
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_pit_universe_eligibility_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_pit_universe_eligibility_contract.v1",
+      "must_exclude_surface": "_truthy_series as a generic utility"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_risk_brake_behavior_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_risk_brake_behavior_contract.v1",
+      "must_exclude_surface": "_truthy_series as a generic utility"
+    }
+  ],
+  "truthy_target": {
+    "helper_name": "_truthy_series",
+    "signature": {
+      "parameters": [
+        {
+          "annotation": "pd.Series",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "series",
+          "required": true
+        }
+      ],
+      "return_annotation": "pd.Series"
+    },
+    "bool_sample": {
+      "values": [
+        true,
+        false,
+        null
+      ],
+      "dtype": "boolean",
+      "expected": [
+        true,
+        false,
+        false
+      ]
+    },
+    "text_sample": {
+      "values": [
+        "1",
+        "true",
+        "TRUE ",
+        " yes ",
+        "Y",
+        "0",
+        "false",
+        "no",
+        "",
+        "random"
+      ],
+      "expected": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    }
+  },
+  "excluded_surfaces": [
+    "source migration",
+    "generic utility extraction",
+    "caller behavior snapshots",
+    "risk-brake formula behavior",
+    "PIT membership snapshots",
+    "validation metrics",
+    "report payloads",
+    "funding status behavior",
+    "falsification behavior",
+    "caller counts"
+  ]
+}

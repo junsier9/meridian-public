@@ -1,0 +1,97 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v63",
+  "entries": [
+    {
+      "candidate_id": "xs_dispersion_regime_blend_v1_h5d",
+      "base_mechanism_id": "xs_dispersion_regime_blend_v1",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_dispersion_regime_blend_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "range_position_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_dispersion_regime_blend_v1_h5d",
+        "thesis_family": "hypothesis_xs_dispersion_regime_blend_v1_h5d",
+        "market_mechanism": "in the liquid perp-covered core, leader-continuation alpha and derivatives carry-dislocation alpha fail in different market regimes that are best discriminated by cross-sectional momentum dispersion rather than name-level realized volatility: high cross-sectional dispersion separates winners from losers and favors leader-continuation, low dispersion indicates compressed or rotational markets and favors residualized carry-dislocation",
+        "directional_claim": "rank liquid perp-covered names higher by blending a leader-continuation sub-signal and a carry-dislocation sub-signal where the blend weight is driven by per-timestamp cross-sectional dispersion of medium-horizon momentum: high-dispersion timestamps lean toward leader continuation, low-dispersion timestamps lean toward carry dislocation",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "range_position_20",
+          "return_1"
+        ],
+        "factor_formula": "compute a v9-style leader-continuation sub-score and a v61-style carry-dislocation sub-score at the name level, then blend them using a smooth blend weight derived from per-timestamp cross-sectional dispersion of |momentum_20|: high cross-sectional dispersion shifts weight toward leader continuation, low dispersion shifts weight toward carry dislocation; apply common quality screens for distress, blow-up volatility, and broken-tape setups",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "bcceae29808c11b94b83764bb1217eec139c74b1cb5faf0aceef801eedbac1c6"
+    }
+  ]
+}

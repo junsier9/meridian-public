@@ -1,0 +1,88 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v94",
+  "entries": [
+    {
+      "candidate_id": "xs_minimal_v9_h5d",
+      "base_mechanism_id": "xs_minimal_v9",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_minimal_v9",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_20",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "distance_to_high_20",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0,
+        "position_multiplier_overlay_id": "btc_eth_max_iv_aggressive_tanh_v1"
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_minimal_v9_h5d",
+        "thesis_family": "hypothesis_xs_minimal_v9_h5d",
+        "market_mechanism": "v94: revises v91 IC pruning to recover strong-IC factors incorrectly killed by VIF threshold. Two changes from v91 (xs_minimal_v6) score: (1) REPLACED iv_smooth_60 (IC=-0.093) with iv_smooth_20 (IC=-0.104, +12% stronger) \u2014 the iv family has all 3 VIFs > 5 (smooth_5 7.52, smooth_20 15.12, smooth_60 11.56) so using the strongest-IC member alone is statistically equivalent to picking any single one but with strictly more signal; (2) ADDED dh_20 (IC=+0.098, strongest in dh family) at weight +0.13, redistributing v91's dh weight budget (0.33) IC-proportionally across the 3 dh timescales (dh_60: +0.11 was +0.18, dh_5: +0.10 was +0.15, dh_20: +0.13 NEW). The dh family has moderate VIFs (2.97 / 4.24 / 3.65), so all 3 add modest independent info. Other 7 v91 factors unchanged (rv_5, tt_smooth_5, liquidity_stress_qv_iv, momentum_decay_5_20, taker_imb_dispersion sign-flipped, quality_funding_oi). Combined with v93's portfolio multiplier overlay declared in profile_constraints.position_multiplier_overlay_id (overlay applies at backtest layer, not score layer). v94 = v91 baseline + 2 recovered factors + IC-redistributed dh weights + v93 DVOL multiplier. Total factor count 9 -> 10.",
+        "directional_claim": "rank top-3 liquid perp-covered names by 10 z-score factors (v91 baseline 7 + iv_smooth_20 swap + dh_20 addition + dh family weight redistribution), then scale all positions by DVOL regime multiplier (in [0.2, 1.0]). Expected: rank IC ~0.18 (above v91/v93 0.165, gain from recovered strong-IC factors), WF median sharpe ~0.80-0.90 (similar to v93 0.801 with possible upside from stronger ranking), worst regime sharpe ~-2.5 to -2.8 (similar to v93 +0.32 improvement maintained from multiplier overlay). Critical assumption: iv_smooth_20 and dh_20 add OOS-stable signal (not just collinear with kept factors). v92's lesson: in-sample IC alone doesn't predict OOS \u2014 dh_20 has lower VIF (4.24) than iv_smooth_20 (15.12), so dh_20 is the more conservative bet; iv_smooth_20 swap is a near-equivalent statistical replacement of iv_smooth_60. Falsification triggers rollback ONLY if: rank IC < 0.155 (signal degradation), OR WF median sharpe < 0.75 (factors hurt rather than help), OR worst regime sharpe < -2.9 (overlay regression). Strict validation gates (validation_contract.json) remain unchanged; v94 still flags 'fail' on participation cap and net-return-negative tests (no improvement vs v93 expected on these axes).",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_20",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "distance_to_high_20",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi"
+        ],
+        "factor_formula": "raw = -0.20*z(iv_smooth_20) -0.10*z(rv_5) +0.11*z(dh_60) +0.10*z(dh_5) +0.13*z(dh_20) -0.07*z(tt_smooth_5) -0.10*z(liquidity_stress_qv_iv) -0.06*z(momentum_decay_5_20) +0.05*z(taker_imb_dispersion) -0.05*z(quality_funding_oi); final = tanh((percentile_rank(raw)-0.5)*1.80); position_multiplier_overlay = clip(1 - tanh((max(btc_dvol_z90, eth_dvol_z90) - 0.5) * 3), 0.2, 1.0) applied at portfolio sizing layer (not in raw_score)",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "c58159d9051c8a8149550da95448988dc19fe2247c9c30217034c491b40071ec"
+    }
+  ]
+}

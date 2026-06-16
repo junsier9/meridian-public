@@ -1,0 +1,97 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v65",
+  "entries": [
+    {
+      "candidate_id": "xs_quad_regime_filter_v1_h5d",
+      "base_mechanism_id": "xs_quad_regime_filter_v1",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_quad_regime_filter_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "range_position_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_quad_regime_filter_v1_h5d",
+        "thesis_family": "hypothesis_xs_quad_regime_filter_v1_h5d",
+        "market_mechanism": "in the liquid perp-covered core, four distinct alpha mechanisms dominate in a two-dimensional regime grid formed by per-timestamp cross-sectional momentum dispersion and cross-sectional median momentum: high-dispersion up regimes favor leader-continuation, high-dispersion down regimes favor carry-dislocation, low-dispersion broad-up regimes favor defensive-quality grinder names rather than chase, and low-dispersion broad-down regimes favor a contrarian laggard tilt that fades over-extended chase",
+        "directional_claim": "rank liquid perp-covered names higher by blending four sub-signals (leader-continuation, carry-dislocation, defensive-quality, contrarian laggard-tilt) where blend weights follow per-timestamp two-dimensional regime classification: dispersion separates dispersed vs broad-uniform regimes, sign of median momentum separates up vs down, contrarian is activated only in broad-down regimes, and defensive-quality is activated only in broad-up regimes",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "range_position_20",
+          "return_1"
+        ],
+        "factor_formula": "compute four name-level sub-scores (leader-continuation, carry-dislocation, defensive-quality, contrarian laggard-tilt) and blend them using a per-timestamp two-dimensional regime classification: high-dispersion timestamps allocate between leader and carry by sign of median momentum, low-dispersion timestamps allocate between defensive-quality (positive median) and contrarian laggard-tilt (negative median); apply common quality screens for distress, blow-up volatility, and broken-tape setups",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "8ca08e9506d063072cbc3c600de9855901ea6c4dfb38c86c9f0a121d59c2f2bb"
+    }
+  ]
+}

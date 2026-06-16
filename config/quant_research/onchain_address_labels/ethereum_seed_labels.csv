@@ -1,0 +1,20 @@
+address,chain,entity_type,entity_name,label_source,label_confidence,as_of_date_utc
+0x77696bb39917c91a0c3908d577d5e322095425ca,ethereum,exchange,Coinbase 3,manual_seed:etherscan_named_wallet,0.95,2024-01-01
+0xe1a0ddeb9b5b55e489977b438764e60e314e917c,ethereum,exchange,Coinbase 8,manual_seed:etherscan_named_wallet,0.95,2024-01-01
+0x40dbb544e1bcacb197df5b8953e2f54e1b18e0d1,ethereum,exchange,Coinbase Deposit 0x40DB...,manual_seed:etherscan_named_wallet,0.9,2025-01-01
+0x8a7f6199484a556c348c605a8958f6286edd341a,ethereum,exchange,Coinbase Deposit 0x8A7f...,manual_seed:etherscan_named_wallet,0.9,2025-01-01
+0x7830c87c02e56aff27fa8ab1241711331fa86f43,ethereum,exchange,Coinbase Deposit 0x7830...,manual_seed:etherscan_named_wallet,0.9,2025-01-01
+0x28c6c06298d514db089934071355e5743bf21d60,ethereum,exchange,Binance 14,manual_seed:etherscan_named_wallet,0.95,2024-01-01
+0x21a31ee1afc51d94c2efccaa2092ad1028285549,ethereum,exchange,Binance 15,manual_seed:etherscan_named_wallet,0.95,2024-01-01
+0x5a70c5be5850125d022e653b7c2e2701b327ea55,ethereum,exchange,Kraken 5,manual_seed:etherscan_named_wallet,0.95,2024-01-01
+0x6b4c398f622a686d98fdc349f372d140707ffba0,ethereum,exchange,Kraken Hot Wallet 5,manual_seed:etherscan_named_wallet,0.95,2024-01-01
+0xae2d4617c862309a3d75a0ffb358c7a5009c673f,ethereum,exchange,Kraken 10,manual_seed:etherscan_named_wallet,0.9,2024-01-01
+0x6adc8f3ab9d777502a7bf818484ade7a6ba6f395,ethereum,exchange,ByBit Deposit,manual_seed:etherscan_named_wallet,0.9,2024-01-01
+0x742d35cc6634c0532925a3b844bc454e4438f44e,ethereum,exchange,Bitfinex 2,manual_seed:etherscan_named_wallet,0.95,2024-01-01
+0x77134cbc06cb00b66f4c7e623d5fdbf6777635ec,ethereum,exchange,Bitfinex Hot Wallet,manual_seed:etherscan_named_wallet,0.95,2024-01-01
+0x1b8766d041567eed306940c587e21c06ab968663,ethereum,exchange,Bitfinex 14,manual_seed:etherscan_named_wallet,0.9,2024-01-01
+0x6cc5f688a315f3dc28a7781717a9a798a59fda7b,ethereum,exchange,OKX,manual_seed:etherscan_named_wallet,0.9,2024-01-01
+0x536c4921d1aafde6a5cda882fb5ca046f3601c65,ethereum,exchange,OKX Deposit 0x536c...,manual_seed:etherscan_named_wallet,0.9,2025-01-01
+0xbfbbfaccd1126a11b8f84c60b09859f80f3bd10f,ethereum,exchange,OKX 93,manual_seed:etherscan_named_wallet,0.9,2024-01-01
+0x189b24f3eb15dc71b4fc57c5914e7e9b3246e449,ethereum,exchange,KuCoin 68,manual_seed:etherscan_named_wallet,0.9,2025-03-01
+0x5754284f345afc66a98fbb0a0afe71e0f007b949,ethereum,treasury,Tether Treasury,manual_seed:etherscan_named_wallet,0.9,2024-01-01

@@ -1,0 +1,8 @@
+{
+  "case_id": "risk_signal_agent_blocked",
+  "expected_status": "blocked",
+  "object_id": "golden-risk-signal-agent-aix",
+  "risk_text": "This feels complicated and unclear.",
+  "scope": "spot+perp",
+  "subject": "AIX"
+}

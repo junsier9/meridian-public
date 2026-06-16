@@ -1,0 +1,76 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_run_backtest_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only root-facade importability, inspect.signature shape, and direct smoke-test presence for _run_backtest. This contract intentionally excludes source migration, exact return metrics, exact period payloads, trade cost values, capacity metric values, falsification metrics, ablation metrics, validation pass/fail status, and promotion/live-readiness decisions.",
+  "validation_mode": "root_facade_signature_required_behavior_test_presence_only",
+  "approved_by_dry_run": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_run_backtest_owner_gated_dry_run_2026_05_15.md",
+  "run_backtest_target": {
+    "helper_name": "_run_backtest",
+    "signature": {
+      "parameters": [
+        {
+          "annotation": "pd.DataFrame",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "frame",
+          "required": true
+        },
+        {
+          "annotation": "dict[str, Any]",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "config",
+          "required": true
+        },
+        {
+          "annotation": "str",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "scenario",
+          "required": true
+        },
+        {
+          "annotation": "bool",
+          "default_repr": "False",
+          "kind": "KEYWORD_ONLY",
+          "name": "include_periods",
+          "required": false
+        }
+      ],
+      "return_annotation": "dict[str, Any]"
+    }
+  },
+  "required_behavior_test_file": "tests/test_binance_canonical_h10d.py",
+  "required_behavior_tests": [
+    "test_run_backtest_wrapper_smoke_keeps_scenario_and_period_shape"
+  ],
+  "required_adjacent_contracts": [
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_validation_status_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_validation_status_contract.v1",
+      "must_exclude_surface": "backtest metric values"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_reporting_metric_sanitation_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_reporting_metric_sanitation_contract.v1",
+      "must_exclude_surface": "_run_backtest behavior"
+    }
+  ],
+  "excluded_surfaces": [
+    "source migration",
+    "internal module layout",
+    "execution_backtest.backtest_cross_sectional behavior",
+    "exact portfolio return metrics",
+    "exact period-return payload values",
+    "exact trade cost values",
+    "exact capacity metric values",
+    "exact data-gap blocker strings",
+    "exact falsification metrics",
+    "exact ablation metrics",
+    "validation pass/fail status",
+    "promotion status",
+    "live-readiness authorization",
+    "caller counts"
+  ]
+}

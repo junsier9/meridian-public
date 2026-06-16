@@ -1,0 +1,24 @@
+[project]
+name = "meridian-alpha-platform"
+version = "0.1.0"
+description = "Controlled shadow-ingestion and runtime-governance toolkit for Meridian Alpha Platform."
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26,<3",
+    "pandas>=2.2,<3",
+    "scikit-learn>=1.5,<2",
+    "websockets>=12,<16",
+    "PyYAML>=6,<7",
+]
+
+[project.scripts]
+shadow-ingest = "enhengclaw.orchestration.shadow_ingestion_runner:main"
+meridian-shadow-ingest = "enhengclaw.orchestration.shadow_ingestion_runner:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["enhengclaw*", "meridian_alpha*"]

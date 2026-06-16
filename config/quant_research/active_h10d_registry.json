@@ -1,0 +1,75 @@
+{
+  "contract_version": "quant_active_h10d_registry.v1",
+  "as_of": "2026-06-03",
+  "canonical_parent": {
+    "label": "v5_rw_bridge_no_overlay_h10d",
+    "strategy_id": "xs_alpha_ontology_v5_rw_bridge_no_overlay_lsk3_g_v2_h10d",
+    "experiment_id": "2026-04-29-xs_alpha_ontology_v5_rw_bridge_no_overlay_lsk3_g_v2_h10d",
+    "manifest_path": "src/enhengclaw/quant_research/cross_sectional_hypothesis_batch_manifest_alpha_ontology_v5_rw_bridge_no_overlay_lsk3_g_v2_h10d.json",
+    "alpha_card_path": "artifacts/quant_research/experiments/2026-04-29-xs_alpha_ontology_v5_rw_bridg-6054571c70ef/alpha_card.json",
+    "role": "canonical_h10d_parent",
+    "required_for_new_h10d_candidates": true
+  },
+  "effective_research_baseline": {
+    "label": "v5_rw_bridge_no_overlay_h10d:multiphase_10_sleeve",
+    "score_parent_label": "v5_rw_bridge_no_overlay_h10d",
+    "portfolio_construction_label": "multiphase_10_sleeve",
+    "role": "canonical_h10d_research_baseline",
+    "required_for_new_h10d_candidate_performance_reports": true,
+    "formal_score_parent_artifact": "artifacts/quant_research/experiments/2026-04-29-xs_alpha_ontology_v5_rw_bridg-6054571c70ef/alpha_card.json",
+    "formal_multiphase_research_artifact_status": "pending"
+  },
+  "portfolio_construction_baseline": {
+    "target_engine": "multiphase_equal_sleeve",
+    "rebalance_interval_days_per_sleeve": 10,
+    "phase_offsets_days": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    "sleeve_weight": 0.1,
+    "per_sleeve_long_short_k": 3,
+    "per_sleeve_gross": 1.0,
+    "aggregate_rule": "sum_equal_weight_sleeve_targets",
+    "live_alignment_source": "hv_balanced live baseline target_engine=multiphase_equal_sleeve",
+    "single_phase_status": "historical_comparator_not_current_baseline"
+  },
+  "promotion_guard": {
+    "script": "scripts/quant_research/assert_h10d_promotion_evidence.py",
+    "required_alpha_card_fields": {
+      "fixed_set_comparison.status": "computed",
+      "fixed_set_comparison.promotion_gate.passed": true,
+      "overlay_ablation.status": "computed"
+    },
+    "also_enforced_by_contract": "config/quant_research/promotion_gate_h10d.json"
+  },
+  "fixed_set": [
+    {
+      "label": "lsk3_g_v2_h10d",
+      "role": "control_baseline"
+    },
+    {
+      "label": "v5_h10d",
+      "role": "static_comparator"
+    },
+    {
+      "label": "v5_rw_bridge_no_overlay_h10d",
+      "role": "canonical_parent"
+    },
+    {
+      "label": "v6_h10d",
+      "role": "legacy_comparator"
+    }
+  ],
+  "research_only": [
+    {
+      "label": "v5_rw_bridge_h10d",
+      "reason": "regime_gating_v2 overlay comparator; not the default parent"
+    },
+    {
+      "label": "v6_h10d",
+      "reason": "legacy full-panel static-weight / regime_gating_v2 comparator"
+    },
+    {
+      "label": "SP-K",
+      "reason": "factor evidence retained, but not suitable for current canonical h10d mainline"
+    }
+  ],
+  "next_alpha_rule": "New h10d alpha research must attach to the v5_rw_bridge_no_overlay_h10d score parent and, for current baseline performance claims, be judged against the 10-phase equal-sleeve construction with fixed-set paired comparison, full OOS period returns, capacity, and overlay ablation."
+}

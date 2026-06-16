@@ -1,0 +1,114 @@
+{
+  "allowed_alpha_sources": [
+    "binance_public_archive_1m_ohlcv"
+  ],
+  "as_of": "2026-04-30",
+  "capacity_limits": {
+    "max_trade_participation_rate_max": 0.005
+  },
+  "cost_only_sources": [
+    "binance_funding_rate"
+  ],
+  "dataset_profile": "binance_canonical_daily_1m_to_1d",
+  "diagnostic_ablations": {
+    "enable_reference_core20_filters": false
+  },
+  "execution_gap_policy": {
+    "mode": "pit_recent_completeness_only"
+  },
+  "excluded_source_patterns": [
+    "^coinglass_",
+    "open_interest",
+    "^oi_",
+    "funding",
+    "basis",
+    "liquidation",
+    "orderbook",
+    "top_trader",
+    "taker"
+  ],
+  "feature_columns": [
+    "intraday_realized_vol_4h_to_1d_smooth_60",
+    "realized_volatility_5",
+    "distance_to_high_60",
+    "distance_to_high_5",
+    "downside_upside_vol_ratio_30"
+  ],
+  "feature_subset_policy": {
+    "allow_pruned_subset": true,
+    "baseline_strategy_label": "v5_binance_pit_top_mid_h10d",
+    "dropped_features": [
+      "settlement_cycle_premium_60d",
+      "momentum_decay_5_20",
+      "liquidity_stress_qv_iv"
+    ],
+    "rationale": "Preregistered removal of three negative leave-one-out contributors while holding PIT universe, costs, rebalance, holdout, bucket, and shuffle gates fixed."
+  },
+  "feature_weights": {
+    "distance_to_high_5": 0.15,
+    "distance_to_high_60": 0.18,
+    "downside_upside_vol_ratio_30": 0.1,
+    "intraday_realized_vol_4h_to_1d_smooth_60": -0.2,
+    "realized_volatility_5": -0.1
+  },
+  "funding_cost_root": "E:\\EnhengClawData\\market_history\\binance_funding_cost_only",
+  "gap_policy": {
+    "complete_1m_buckets_only": true,
+    "forward_fill_ohlcv": false
+  },
+  "label_contract_id": "forward_return_execution_aligned.v1",
+  "min_oos_periods": 60,
+  "parent_label": "v5_binance_pit_top_mid_h10d",
+  "pit_data_eligibility_policy": {
+    "lookback_days": 30,
+    "min_consecutive_valid_days": 10,
+    "min_coverage_ratio": 0.95,
+    "min_funding_sample_count": 1,
+    "min_lifetime_valid_days": 30,
+    "min_same_bucket_days": 10,
+    "mode": "rolling_recent_completeness",
+    "require_current_funding_sample": true,
+    "short_max_universe_rank": 18
+  },
+  "reference_capital_usd": 1000.0,
+  "split_realization": {
+    "interval": "1d",
+    "target_horizon_bars": 10
+  },
+  "strategy_label": "v5_binance_pit_top_mid_h10d_pruned3",
+  "strategy_profile": {
+    "bottom_short_count": 3,
+    "decision_eligible_column": "binance_decision_eligible",
+    "execution_venue": "perp",
+    "long_decision_eligible_column": "binance_pit_top_long_eligible",
+    "long_leverage": 0.5,
+    "max_gross_leverage": 1.0,
+    "max_turnover_per_rebalance": 1.0,
+    "short_allowed": true,
+    "short_decision_eligible_column": "binance_pit_mid_short_eligible",
+    "short_leverage": 0.5,
+    "spot_only": false,
+    "top_long_count": 3
+  },
+  "universe_policy": {
+    "coverage_threshold": 0.85,
+    "freeze_as_of": "2026-04-30",
+    "lookback_days": 30,
+    "market_type": "usdm_perp",
+    "preset": "binance_pit_top_mid_20",
+    "selection_mode": "rolling_quote_volume",
+    "top_n": 20
+  },
+  "validation_gates": {
+    "legacy_symbol_holdout_hard_gate": false,
+    "liquidity_positive_bucket_count_min": 2,
+    "max_trade_participation_rate_max": 0.005,
+    "min_oos_periods": 60,
+    "require_base_positive_return": true,
+    "require_holdout_positive_return": true,
+    "require_stress_positive_return": true,
+    "stratified_holdout_min_positive_fraction": 0.75,
+    "stratified_holdout_repeat_count": 8,
+    "stratified_holdout_require_gap_free": true
+  }
+}

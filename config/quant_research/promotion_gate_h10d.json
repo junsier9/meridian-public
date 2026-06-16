@@ -1,0 +1,42 @@
+{
+  "contract_version": "quant_h10d_promotion_gate.v1",
+  "gate_role": "promotion_gate",
+  "validation_contract_role": "research_gate_only",
+  "applicability": {
+    "shape": "cross_sectional",
+    "bar_interval_ms": 86400000,
+    "target_horizon_bars": 10,
+    "label_contract_ids": [
+      "forward_return_execution_aligned.v1"
+    ],
+    "required_research_lanes": [
+      "hypothesis_factor"
+    ]
+  },
+  "required_evidence": {
+    "fixed_set_comparison": {
+      "status": "computed",
+      "promotion_gate_passed": true,
+      "full_oos_period_count_min": 60
+    },
+    "capacity": {
+      "source": "fixed_set_comparison.candidate_summary.full_oos_max_trade_participation_rate",
+      "max_trade_participation_rate_max": 0.005
+    },
+    "overlay_ablation": {
+      "status": "computed",
+      "promotion_gate_passed": true
+    },
+    "blocker_attribution": {
+      "status": "completed_symbol_bucket_strict_gate",
+      "strict_gate_passed": true,
+      "missing_statistical_falsification_policy": "not_measured_fail_closed",
+      "fail_closed_blocker_codes": [
+        "top_bucket_only",
+        "symbol_holdout_dependency"
+      ],
+      "positive_liquidity_bucket_count_min": 2,
+      "sublane_symbol_holdout_required": true
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v59",
+  "entries": [
+    {
+      "candidate_id": "xs_relative_value_spread_v9_h5d",
+      "base_mechanism_id": "xs_relative_value_spread_v9",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_relative_value_spread_v9",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "range_position_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_relative_value_spread_v9_h5d",
+        "thesis_family": "hypothesis_xs_relative_value_spread_v9_h5d",
+        "market_mechanism": "inside the liquid perp-covered core, orderly leaders sitting in the quality-reset zone of their 20-bar range should outperform: names with intact leadership, a completed reset window, only mild carry discount, and a structural position that is neither distressed near lows nor overextended near highs",
+        "directional_claim": "rank liquid perp-covered names higher when leadership is intact, the reset window is orderly, carry is only mildly discounted, and the structural position sits in the quality-reset zone rather than at exhaustion-high or distress-low extremes",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "range_position_20",
+          "return_1"
+        ],
+        "factor_formula": "keep the leader-reset window gating and frothy-leader penalty from v58, and add an explicit range-position quality gate that rewards names in the orderly middle zone and penalizes structural extremes at both ends",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "2be0d21f75f313bba1e1788f30bbb97487ed457799dac3155914149d7b5034ec"
+    }
+  ]
+}

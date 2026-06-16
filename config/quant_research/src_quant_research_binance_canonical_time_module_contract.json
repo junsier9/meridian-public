@@ -1,0 +1,33 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_time_module_contract.v1",
+  "source_module": "enhengclaw.quant_research._binance_canonical_time",
+  "source_path": "src/enhengclaw/quant_research/_binance_canonical_time.py",
+  "facade_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "facade_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only time-boundary internal-module importability, root-facade re-export identity, and signatures delegated to the existing datetime-boundary contract. UTC date/timestamp samples remain owned by the existing root contract.",
+  "validation_mode": "internal_module_facade_identity_existing_contract_samples",
+  "approved_by_review": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_time_run_metadata_post_extraction_review_2026_05_15.md",
+  "signature_source_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_datetime_boundary_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_datetime_boundary_contract.v1"
+  },
+  "time_module_targets": [
+    "_parse_date",
+    "_date_to_ms",
+    "_ms_to_date",
+    "_date_utc_series"
+  ],
+  "excluded_surfaces": [
+    "source migration",
+    "accepted _parse_date input type expansion",
+    "naive datetime behavior changes",
+    "missing timestamp behavior changes",
+    "downstream validation metrics",
+    "backtest output",
+    "funding behavior",
+    "PIT universe behavior",
+    "artifact schemas",
+    "generic repo-wide time utility migration",
+    "caller counts"
+  ]
+}

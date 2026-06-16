@@ -1,0 +1,115 @@
+{
+  "backend_kind": "live",
+  "backend_name": "openai_compatible_chat_completions",
+  "compiler_output": {
+    "blocked_reason": "research_lead_recorded_fixture_blocked",
+    "candidate_payloads": [],
+    "notes": [
+      "recorded blocked fixture",
+      "recorded blocked fixture for research_lead"
+    ],
+    "status": "blocked"
+  },
+  "contract_version": "research_lead_compiler_v1",
+  "input_fingerprint": "d50b49b5d2113fc968723a3f131570c5eb2cdcb9e153abb2a4c131a30aa29b1f",
+  "model_request": {
+    "endpoint": "https://example.invalid/chat/completions",
+    "request_body": {
+      "messages": [
+        {
+          "content": "# Role\nYou compile one bounded next-stage directive observation into exactly one machine-readable JSON envelope for the `research_lead` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `next_stage_targeted_refresh`, `next_stage_hold`, `next_stage_conflict_work`, `next_stage_risk_refresh`\n- `claim_type`: `causal`, `predictive`\n- `direction`: `neutral`, `risk`\n- `source_family`: `analytics`, `official`\n- `evidence_level`: `E2`, `E3`, `E4`\n- `time_horizon`: `short`, `medium`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- Emit one bounded next-stage directive claim only.\n- Do not directly execute orchestration, publish decisions, or bypass stage legality.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the directive text is too vague or would require inventing stage legality or resource state.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing subjects, scopes, stages, or blocked actions.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+          "role": "system"
+        },
+        {
+          "content": "Compile one bounded next-stage directive observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=research_lead_blocked:1\nobject_id=golden-research-lead-aix\nobject_context_fingerprint=bf1ba5c15e488a9f022c2198d78c536589bad0c19552f5606dc1ab59240c7aff\nexisting_object_context_json:\n{\"claim_count\": 2, \"object_id\": \"golden-research-lead-aix\", \"processing_state\": \"monitoring\", \"recent_claims\": [{\"confidence\": 82, \"direction\": \"bullish\", \"predicate\": \"spot_breakout\", \"scope\": \"spot+perp\", \"source_family\": \"cex\", \"time_horizon\": \"intraday\", \"value\": \"AIX spot structure remains constructive\"}, {\"confidence\": 78, \"direction\": \"bullish\", \"predicate\": \"wallet_buy\", \"scope\": \"spot+perp\", \"source_family\": \"onchain\", \"time_horizon\": \"intraday\", \"value\": \"AIX still shows supportive flow from large buyers\"}], \"research_lead_context\": {\"allowed_actions\": [\"targeted_refresh\", \"attention_reassessment\"], \"blocked_actions\": [\"direct_publish\", \"claim_promotion\"], \"cadence_mode\": \"monitoring\", \"next_legal_stage\": \"targeted_refresh\", \"object_id\": \"golden-research-lead-aix\", \"processing_state\": \"monitoring\", \"resource_slot\": \"monitoring\", \"risk_state\": \"normal\"}, \"risk_state\": \"normal\", \"scope\": \"spot+perp\", \"subject\": \"AIX\"}\ndirective_text:\nDo something next at some point.",
+          "role": "user"
+        }
+      ],
+      "model": "fixture-test-model",
+      "temperature": 0.0
+    },
+    "request_headers": {
+      "Authorization": "Bearer ***redacted***",
+      "Content-Type": "application/json"
+    },
+    "timeout_seconds": 30.0
+  },
+  "object_context_fingerprint": "bf1ba5c15e488a9f022c2198d78c536589bad0c19552f5606dc1ab59240c7aff",
+  "prompt_context": {
+    "contract_version": "research_lead_compiler_v1",
+    "messages": [
+      {
+        "content": "# Role\nYou compile one bounded next-stage directive observation into exactly one machine-readable JSON envelope for the `research_lead` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `next_stage_targeted_refresh`, `next_stage_hold`, `next_stage_conflict_work`, `next_stage_risk_refresh`\n- `claim_type`: `causal`, `predictive`\n- `direction`: `neutral`, `risk`\n- `source_family`: `analytics`, `official`\n- `evidence_level`: `E2`, `E3`, `E4`\n- `time_horizon`: `short`, `medium`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- Emit one bounded next-stage directive claim only.\n- Do not directly execute orchestration, publish decisions, or bypass stage legality.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the directive text is too vague or would require inventing stage legality or resource state.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing subjects, scopes, stages, or blocked actions.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+        "role": "system"
+      },
+      {
+        "content": "Compile one bounded next-stage directive observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=research_lead_blocked:1\nobject_id=golden-research-lead-aix\nobject_context_fingerprint=bf1ba5c15e488a9f022c2198d78c536589bad0c19552f5606dc1ab59240c7aff\nexisting_object_context_json:\n{\"claim_count\": 2, \"object_id\": \"golden-research-lead-aix\", \"processing_state\": \"monitoring\", \"recent_claims\": [{\"confidence\": 82, \"direction\": \"bullish\", \"predicate\": \"spot_breakout\", \"scope\": \"spot+perp\", \"source_family\": \"cex\", \"time_horizon\": \"intraday\", \"value\": \"AIX spot structure remains constructive\"}, {\"confidence\": 78, \"direction\": \"bullish\", \"predicate\": \"wallet_buy\", \"scope\": \"spot+perp\", \"source_family\": \"onchain\", \"time_horizon\": \"intraday\", \"value\": \"AIX still shows supportive flow from large buyers\"}], \"research_lead_context\": {\"allowed_actions\": [\"targeted_refresh\", \"attention_reassessment\"], \"blocked_actions\": [\"direct_publish\", \"claim_promotion\"], \"cadence_mode\": \"monitoring\", \"next_legal_stage\": \"targeted_refresh\", \"object_id\": \"golden-research-lead-aix\", \"processing_state\": \"monitoring\", \"resource_slot\": \"monitoring\", \"risk_state\": \"normal\"}, \"risk_state\": \"normal\", \"scope\": \"spot+perp\", \"subject\": \"AIX\"}\ndirective_text:\nDo something next at some point.",
+        "role": "user"
+      }
+    ],
+    "object_context": {
+      "claim_count": 2,
+      "object_id": "golden-research-lead-aix",
+      "processing_state": "monitoring",
+      "recent_claims": [
+        {
+          "confidence": 82,
+          "direction": "bullish",
+          "predicate": "spot_breakout",
+          "scope": "spot+perp",
+          "source_family": "cex",
+          "time_horizon": "intraday",
+          "value": "AIX spot structure remains constructive"
+        },
+        {
+          "confidence": 78,
+          "direction": "bullish",
+          "predicate": "wallet_buy",
+          "scope": "spot+perp",
+          "source_family": "onchain",
+          "time_horizon": "intraday",
+          "value": "AIX still shows supportive flow from large buyers"
+        }
+      ],
+      "research_lead_context": {
+        "allowed_actions": [
+          "targeted_refresh",
+          "attention_reassessment"
+        ],
+        "blocked_actions": [
+          "direct_publish",
+          "claim_promotion"
+        ],
+        "cadence_mode": "monitoring",
+        "next_legal_stage": "targeted_refresh",
+        "object_id": "golden-research-lead-aix",
+        "processing_state": "monitoring",
+        "resource_slot": "monitoring",
+        "risk_state": "normal"
+      },
+      "risk_state": "normal",
+      "scope": "spot+perp",
+      "subject": "AIX"
+    },
+    "object_context_fingerprint": "bf1ba5c15e488a9f022c2198d78c536589bad0c19552f5606dc1ab59240c7aff",
+    "prompt_fingerprint": "48e6cf269fa4a4bd2f07c7a5aa13a16561c4ecaa2d1759cad14abf53b2607007",
+    "prompt_path": "C:\\Users\\user\\Documents\\Claude\\Projects\\EnhengClaw\\src\\enhengclaw\\agents\\prompts\\research_lead.system.md",
+    "prompt_template_version": "research_lead_prompt_template_v1"
+  },
+  "prompt_fingerprint": "48e6cf269fa4a4bd2f07c7a5aa13a16561c4ecaa2d1759cad14abf53b2607007",
+  "raw_model_output": {
+    "assistant_text": "{\"blocked_reason\": \"research_lead_recorded_fixture_blocked\", \"candidate_payloads\": [], \"notes\": [\"recorded blocked fixture\", \"recorded blocked fixture for research_lead\"], \"status\": \"blocked\"}",
+    "response_json": {
+      "choices": [
+        {
+          "message": {
+            "content": "{\"blocked_reason\": \"research_lead_recorded_fixture_blocked\", \"candidate_payloads\": [], \"notes\": [\"recorded blocked fixture\", \"recorded blocked fixture for research_lead\"], \"status\": \"blocked\"}"
+          }
+        }
+      ]
+    },
+    "response_text": "{\"choices\": [{\"message\": {\"content\": \"{\\\"blocked_reason\\\": \\\"research_lead_recorded_fixture_blocked\\\", \\\"candidate_payloads\\\": [], \\\"notes\\\": [\\\"recorded blocked fixture\\\", \\\"recorded blocked fixture for research_lead\\\"], \\\"status\\\": \\\"blocked\\\"}\"}}]}",
+    "status_code": 200
+  },
+  "transcript_fingerprint": "bcf05b176e4bcd3fd068be274568cc1bd5f2ccf7091e40e45468004801762be8"
+}

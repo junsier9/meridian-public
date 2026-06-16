@@ -1,0 +1,70 @@
+{
+  "providers": [
+    {
+      "kind": "binance_trade",
+      "provider_id": "binance.spot.ws",
+      "subject_key": "BTCUSDT.binance.spot",
+      "symbol": "BTCUSDT",
+      "websocket_url": "wss://stream.binance.com:9443/ws",
+      "receive_timeout_seconds": 20.0,
+      "initial_backoff_seconds": 1.0,
+      "max_backoff_seconds": 5.0,
+      "max_reconnect_attempts": null
+    },
+    {
+      "kind": "binance_trade",
+      "provider_id": "binance.spot.ws",
+      "subject_key": "ETHUSDT.binance.spot",
+      "symbol": "ETHUSDT",
+      "websocket_url": "wss://stream.binance.com:9443/ws",
+      "receive_timeout_seconds": 20.0,
+      "initial_backoff_seconds": 1.0,
+      "max_backoff_seconds": 5.0,
+      "max_reconnect_attempts": null
+    },
+    {
+      "kind": "binance_trade",
+      "provider_id": "binance.spot.ws",
+      "subject_key": "BNBUSDT.binance.spot",
+      "symbol": "BNBUSDT",
+      "websocket_url": "wss://stream.binance.com:9443/ws",
+      "receive_timeout_seconds": 20.0,
+      "initial_backoff_seconds": 1.0,
+      "max_backoff_seconds": 5.0,
+      "max_reconnect_attempts": null
+    },
+    {
+      "kind": "binance_trade",
+      "provider_id": "binance.spot.ws",
+      "subject_key": "DOGEUSDT.binance.spot",
+      "symbol": "DOGEUSDT",
+      "websocket_url": "wss://stream.binance.com:9443/ws",
+      "receive_timeout_seconds": 20.0,
+      "initial_backoff_seconds": 1.0,
+      "max_backoff_seconds": 5.0,
+      "max_reconnect_attempts": null
+    },
+    {
+      "kind": "binance_trade",
+      "provider_id": "binance.spot.ws",
+      "subject_key": "SUIUSDT.binance.spot",
+      "symbol": "SUIUSDT",
+      "websocket_url": "wss://stream.binance.com:9443/ws",
+      "receive_timeout_seconds": 20.0,
+      "initial_backoff_seconds": 1.0,
+      "max_backoff_seconds": 5.0,
+      "max_reconnect_attempts": null
+    },
+    {
+      "kind": "binance_trade",
+      "provider_id": "binance.spot.ws",
+      "subject_key": "TAOUSDT.binance.spot",
+      "symbol": "TAOUSDT",
+      "websocket_url": "wss://stream.binance.com:9443/ws",
+      "receive_timeout_seconds": 20.0,
+      "initial_backoff_seconds": 1.0,
+      "max_backoff_seconds": 5.0,
+      "max_reconnect_attempts": null
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "contract_version": "quant_alpha_ontology_v3_weights.v1",
+  "factors": [
+    {
+      "column": "intraday_realized_vol_4h_to_1d_smooth_60",
+      "hand_tuned_weight": 0.0,
+      "ic_mean": 0.0,
+      "ic_std": 0.0,
+      "n_ts": 611,
+      "shrunk_ic": 0.0,
+      "status": "ok",
+      "t_stat": 0.0,
+      "weight": 0.0
+    },
+    {
+      "column": "realized_volatility_5",
+      "hand_tuned_weight": 0.0,
+      "ic_mean": 0.0,
+      "ic_std": 0.0,
+      "n_ts": 665,
+      "shrunk_ic": 0.0,
+      "status": "ok",
+      "t_stat": 0.0,
+      "weight": 0.0
+    },
+    {
+      "column": "distance_to_high_60",
+      "hand_tuned_weight": 0.0,
+      "ic_mean": 0.0,
+      "ic_std": 0.0,
+      "n_ts": 611,
+      "shrunk_ic": 0.0,
+      "status": "ok",
+      "t_stat": 0.0,
+      "weight": 0.0
+    },
+    {
+      "column": "distance_to_high_5",
+      "hand_tuned_weight": 0.0,
+      "ic_mean": 0.0,
+      "ic_std": 0.0,
+      "n_ts": 666,
+      "shrunk_ic": 0.0,
+      "status": "ok",
+      "t_stat": 0.0,
+      "weight": 0.0
+    },
+    {
+      "column": "coinglass_top_trader_long_pct_smooth_5",
+      "hand_tuned_weight": 0.0,
+      "ic_mean": 0.0,
+      "ic_std": 0.0,
+      "n_ts": 647,
+      "shrunk_ic": 0.0,
+      "status": "ok",
+      "t_stat": 0.0,
+      "weight": 0.0
+    },
+    {
+      "column": "liquidity_stress_qv_iv",
+      "hand_tuned_weight": 0.0,
+      "ic_mean": 0.0,
+      "ic_std": 0.0,
+      "n_ts": 651,
+      "shrunk_ic": 0.0,
+      "status": "ok",
+      "t_stat": 0.0,
+      "weight": 0.0
+    },
+    {
+      "column": "momentum_decay_5_20",
+      "hand_tuned_weight": 0.0,
+      "ic_mean": 0.0,
+      "ic_std": 0.0,
+      "n_ts": 650,
+      "shrunk_ic": 0.0,
+      "status": "ok",
+      "t_stat": 0.0,
+      "weight": 0.0
+    },
+    {
+      "column": "coinglass_taker_imb_intraday_dispersion_24h",
+      "hand_tuned_weight": 0.0,
+      "ic_mean": 0.0,
+      "ic_std": 0.0,
+      "n_ts": 268,
+      "shrunk_ic": 0.0,
+      "status": "ok",
+      "t_stat": 0.0,
+      "weight": 0.0
+    },
+    {
+      "column": "quality_funding_oi",
+      "hand_tuned_weight": 0.0,
+      "ic_mean": 0.0,
+      "ic_std": 0.0,
+      "n_ts": 642,
+      "shrunk_ic": 0.0,
+      "status": "ok",
+      "t_stat": 0.0,
+      "weight": 0.0
+    },
+    {
+      "column": "downside_upside_vol_ratio_30",
+      "hand_tuned_weight": 0.0,
+      "ic_mean": 0.0,
+      "ic_std": 0.0,
+      "n_ts": 660,
+      "shrunk_ic": 0.0,
+      "status": "ok",
+      "t_stat": 0.0,
+      "weight": 0.0
+    },
+    {
+      "column": "funding_basis_residual_implied_repo_30",
+      "hand_tuned_weight": 0.0,
+      "ic_mean": 0.0,
+      "ic_std": 0.0,
+      "n_ts": 641,
+      "shrunk_ic": 0.0,
+      "status": "ok",
+      "t_stat": 0.0,
+      "weight": 0.0
+    }
+  ],
+  "features_artifact": "C:\\Users\\user\\Documents\\Claude\\Projects\\EnhengClaw\\artifacts\\quant_research\\features\\2026-04-29-cross-sectional-daily-1d-features-v1\\features.csv.gz",
+  "generated_at_utc": "2026-04-29T17:33:41.240041+00:00",
+  "hyperparameters": {
+    "ic_to_weight_scale": 3.25,
+    "tau_t": 2.0
+  },
+  "in_sample_window": {
+    "end_date_utc": "2025-01-29",
+    "end_ts_ms": 1738108800000,
+    "fraction_of_panel": 0.6,
+    "n_unique_ts_in_sample": 670,
+    "n_unique_ts_total": 1117,
+    "start_date_utc": "2023-04-01",
+    "start_ts_ms": 1680307200000
+  },
+  "summary": {
+    "sign_match_count": 11,
+    "sum_abs_hand_tuned": 1.1300000000000001,
+    "sum_abs_v3": 0.642657
+  },
+  "_public_mirror_notice": "Research weights and IC statistics REDACTED in this public mirror (placeholders)."
+}

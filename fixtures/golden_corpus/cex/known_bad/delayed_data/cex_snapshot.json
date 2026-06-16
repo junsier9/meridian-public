@@ -1,0 +1,85 @@
+{
+  "provider": "binance-public-cex",
+  "retrieved_at": "2026-04-07T10:20:00Z",
+  "scenario_tag": "delayed_data",
+  "instrument": "AIXUSDT",
+  "events": [
+    {
+      "event_id": "bad-delayed-1",
+      "event_name": "spot_24h_momentum",
+      "payload": {
+        "asset": "AIX",
+        "summary": "payload looks normal but underlying kline close is stale"
+      },
+      "mapping": {
+        "claimKind": "measurement",
+        "bias": "bullish",
+        "evidence": "E4",
+        "confidenceScore": 64,
+        "horizon": "intraday"
+      },
+      "extra": {
+        "venue": "Binance",
+        "market_type": "spot"
+      }
+    },
+    {
+      "event_id": "bad-delayed-2",
+      "event_name": "market_structure_support",
+      "payload": {
+        "asset": "AIX",
+        "summary": "structure support based on stale candles"
+      },
+      "mapping": {
+        "claimKind": "market_structure",
+        "bias": "bullish",
+        "evidence": "E4",
+        "confidenceScore": 67,
+        "horizon": "intraday"
+      },
+      "extra": {
+        "venue": "Binance",
+        "market_type": "spot"
+      }
+    }
+  ],
+  "raw_http": {
+    "ticker_24hr": {
+      "symbol": "AIXUSDT",
+      "priceChangePercent": "3.10",
+      "quoteVolume": "300000.00",
+      "lastPrice": "1.1800",
+      "openPrice": "1.1450"
+    },
+    "klines": [
+      [
+        1775519700000,
+        "1.1400",
+        "1.1500",
+        "1.1300",
+        "1.1450",
+        "200",
+        1775520000000,
+        "14000.0",
+        55,
+        "7000.0",
+        "7300.0",
+        "0"
+      ],
+      [
+        1775520000000,
+        "1.1450",
+        "1.1820",
+        "1.1400",
+        "1.1800",
+        "240",
+        1775520300000,
+        "16000.0",
+        60,
+        "8200.0",
+        "9000.0",
+        "0"
+      ]
+    ]
+  }
+}

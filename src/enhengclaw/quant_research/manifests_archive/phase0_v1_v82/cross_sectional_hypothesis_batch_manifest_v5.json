@@ -1,0 +1,149 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v5",
+  "entries": [
+    {
+      "candidate_id": "xs_participation_drift_v5_h3d",
+      "base_mechanism_id": "xs_participation_drift_v5",
+      "horizon_id": "h3d",
+      "target_horizon_bars": 3,
+      "label_contract_id": "participation_drift_excess_vol_adjusted_return.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_participation_drift_v5",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "ema_slope_5_20",
+        "range_position_20",
+        "momentum_5",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_participation_drift_v5_h3d",
+        "thesis_family": "hypothesis_xs_participation_drift_v5_h3d",
+        "market_mechanism": "participation-led spot drift should be harvested after orderly reset rather than on immediate extension",
+        "directional_claim": "own liquid names where relative strength, expanding participation and intraday expansion remain intact, but only after the move has reset inside the short-term range and short-horizon chase has cooled",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "ema_slope_5_20",
+          "range_position_20",
+          "momentum_5",
+          "return_1"
+        ],
+        "factor_formula": "0.28*relative_strength_20 + 0.24*(quote_volume_expansion-1) + 0.18*intraday_realized_vol_4h_to_1d + 0.12*ema_slope_5_20 + 0.10*(0.5-range_position_20) - 0.05*momentum_5 - 0.03*return_1",
+        "label_contract_id": "participation_drift_excess_vol_adjusted_return.v1",
+        "intended_holding_horizon_bars": 3,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "aac3e2ceb1fedc55a82eab105bea1bca5670dd850d113598ffafa397f1673e2a"
+    },
+    {
+      "candidate_id": "xs_participation_drift_v5_h5d",
+      "base_mechanism_id": "xs_participation_drift_v5",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "participation_drift_excess_vol_adjusted_return.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_participation_drift_v5",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "ema_slope_5_20",
+        "range_position_20",
+        "momentum_5",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_participation_drift_v5_h5d",
+        "thesis_family": "hypothesis_xs_participation_drift_v5_h5d",
+        "market_mechanism": "participation-led spot drift should be harvested after orderly reset rather than on immediate extension",
+        "directional_claim": "own liquid names where relative strength, expanding participation and intraday expansion remain intact, but only after the move has reset inside the short-term range and short-horizon chase has cooled",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "ema_slope_5_20",
+          "range_position_20",
+          "momentum_5",
+          "return_1"
+        ],
+        "factor_formula": "0.28*relative_strength_20 + 0.24*(quote_volume_expansion-1) + 0.18*intraday_realized_vol_4h_to_1d + 0.12*ema_slope_5_20 + 0.10*(0.5-range_position_20) - 0.05*momentum_5 - 0.03*return_1",
+        "label_contract_id": "participation_drift_excess_vol_adjusted_return.v1",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "57e0043f3d60d6da2b9a6228140084e3c13042d3a80482fde55a825e27a45547"
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "contract_version": "src_quant_research_terminal_governance_contract.v1",
+  "scope": "Composite terminal governance proof for src/enhengclaw/quant_research. This contract binds the architecture plan, h10d terminal contracts, non-h10d minimal closure, governance index, and static test coverage without authorizing runtime behavior, payload, path, source, promotion, or live-readiness changes.",
+  "validation_mode": "composite_docs_config_static_test_only",
+  "terminal_rollup_doc": "docs/quant_research/00_roadmap_state/src_quant_research_owner_delegated_remaining_bucket_status_2026_05_16.md",
+  "governance_index_doc": "docs/quant_research/00_roadmap_state/research_doc_governance_index.md",
+  "required_terminal_docs": [
+    "docs/quant_research/00_roadmap_state/src_quant_research_architecture_governance_plan_2026_05_14.md",
+    "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_owner_delegated_terminal_contracts_2026_05_16.md",
+    "docs/quant_research/00_roadmap_state/src_quant_research_owner_delegated_remaining_bucket_status_2026_05_16.md",
+    "docs/quant_research/00_roadmap_state/src_quant_research_non_h10d_minimal_contract_closure_2026_05_16.md"
+  ],
+  "required_h10d_terminal_contracts": [
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_symbol_feature_builder_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_symbol_feature_builder_contract.v1"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_ablation_rescore_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_ablation_rescore_contract.v1"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_attribution_runner_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_attribution_runner_contract.v1"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_falsification_suite_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_falsification_suite_contract.v1"
+    }
+  ],
+  "required_non_h10d_contracts": [
+    {
+      "path": "config/quant_research/src_quant_research_manifest_lifecycle_catalog.json",
+      "contract_version": "src_quant_research_manifest_lifecycle_catalog.v1"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_hypothesis_batch_compatibility_contract.json",
+      "contract_version": "src_quant_research_hypothesis_batch_compatibility_contract.v1"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_lab_compatibility_contract.json",
+      "contract_version": "src_quant_research_lab_compatibility_contract.v1"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_features_utility_compatibility_contract.json",
+      "contract_version": "src_quant_research_features_utility_compatibility_contract.v1"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_features_f2_raw_scorer_shim_compatibility_contract.json",
+      "contract_version": "src_quant_research_features_f2_raw_scorer_shim_compatibility_contract.v1"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_features_f3a_v11_stablecoin_flow_scorer_family_contract.json",
+      "contract_version": "src_quant_research_features_f3a_v11_stablecoin_flow_scorer_family_contract.v1"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_features_f3b1_relative_value_spread_scorer_family_contract.json",
+      "contract_version": "src_quant_research_features_f3b1_relative_value_spread_scorer_family_contract.v1"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_features_f3b2_residualized_pair_book_scorer_family_contract.json",
+      "contract_version": "src_quant_research_features_f3b2_residualized_pair_book_scorer_family_contract.v1"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_features_f3b3a_pair_book_v1_v12_scorer_family_contract.json",
+      "contract_version": "src_quant_research_features_f3b3a_pair_book_v1_v12_scorer_family_contract.v1"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_features_f3b3b_pair_book_v16_v24_alias_scorer_family_contract.json",
+      "contract_version": "src_quant_research_features_f3b3b_pair_book_v16_v24_alias_scorer_family_contract.v1"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_frozen_benchmark_v35_identity_contract.json",
+      "contract_version": "src_quant_research_frozen_benchmark_v35_identity_contract.v1"
+    }
+  ],
+  "required_static_test_methods": [
+    "test_quant_research_markdown_docs_are_indexed",
+    "test_quant_research_architecture_frozen_root_surfaces_exist",
+    "test_quant_research_path_sensitive_manifests_remain_documented",
+    "test_quant_research_manifest_lifecycle_catalog_covers_root_json",
+    "test_quant_research_binance_h10d_symbol_feature_builder_contract_stays_stable",
+    "test_quant_research_binance_h10d_ablation_rescore_contract_stays_stable",
+    "test_quant_research_binance_h10d_attribution_runner_contract_stays_stable",
+    "test_quant_research_binance_h10d_falsification_suite_contract_stays_stable",
+    "test_quant_research_hypothesis_batch_external_compatibility_contract_stays_stable",
+    "test_quant_research_lab_external_compatibility_contract_stays_stable",
+    "test_quant_research_features_utility_compatibility_contract_stays_stable",
+    "test_quant_research_features_f2_raw_scorer_shim_import_signature_contract_stays_stable",
+    "test_quant_research_features_f3a_v11_stablecoin_flow_scorer_family_contract_stays_stable",
+    "test_quant_research_features_f3b1_relative_value_spread_scorer_family_contract_stays_stable",
+    "test_quant_research_features_f3b2_residualized_pair_book_scorer_family_contract_stays_stable",
+    "test_quant_research_features_f3b3a_pair_book_v1_v12_scorer_family_contract_stays_stable",
+    "test_quant_research_features_f3b3b_pair_book_v16_v24_alias_scorer_family_contract_stays_stable",
+    "test_quant_research_frozen_benchmark_v35_identity_contract_stays_stable",
+    "test_quant_research_terminal_governance_contract_stays_stable"
+  ],
+  "terminal_markers": [
+    "terminal for autonomous cleanup",
+    "closed at a minimal static or smoke-contract layer",
+    "status-only / monitor-only",
+    "owner-gated",
+    "source movement",
+    "runtime payload",
+    "live-readiness"
+  ],
+  "excluded_surfaces": [
+    "source movement",
+    "package layout changes",
+    "manifest movement",
+    "runtime payload snapshots",
+    "report payload snapshots",
+    "markdown report text snapshots",
+    "local artifact snapshots",
+    "artifact path contracts",
+    "real archive path discovery",
+    "full data foundation behavior",
+    "build_binance_canonical_dataset behavior",
+    "run_binance_canonical_validation behavior",
+    "write_validation_artifacts behavior",
+    "scorer formula snapshots",
+    "exact backtest metric values",
+    "exact falsification metric values",
+    "alpha quality",
+    "promotion status",
+    "live-readiness authorization",
+    "caller counts"
+  ]
+}

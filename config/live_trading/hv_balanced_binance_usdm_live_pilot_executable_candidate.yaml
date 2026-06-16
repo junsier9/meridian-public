@@ -1,0 +1,48 @@
+strategy:
+  label: v5_binance_pit_top_mid_h10d_pruned3_hv_balanced_soft_budget
+  frozen_config_path: config/quant_research/binance_pit_top_mid_h10d_pruned3_hv_balanced_soft_budget.json
+  frozen_config_sha256: 9867437bc74733d46f1a4292c84bbdf4f09c6c49f4862a0616d95ebc43f31938
+  rebalance_interval_days: 10
+
+binance:
+  venue: usdm_futures
+  base_url_env: ENHENGCLAW_BINANCE_USDM_BASE_URL
+  api_key_env: Trade
+  api_secret_env: Secret_Key
+  recv_window_ms: 5000
+  position_mode: one_way
+  margin_type: cross
+  max_leverage: 2
+
+capital:
+  allocated_capital_usdt: 500.0
+  max_gross_leverage: 1.0
+  max_symbol_notional_usdt: 100.0
+  max_order_notional_usdt: 100.0
+
+market_data:
+  public_data_enabled: true
+  symbols: BTCUSDT,ETHUSDT,BNBUSDT,SOLUSDT,XRPUSDT,DOGEUSDT,ADAUSDT,AVAXUSDT,LINKUSDT,LTCUSDT,BCHUSDT,TRXUSDT,DOTUSDT,UNIUSDT,AAVEUSDT,NEARUSDT,FILUSDT,ETCUSDT,APTUSDT,ARBUSDT
+  daily_limit: 140
+  four_hour_limit: 840
+
+risk:
+  trading_enabled: false
+  require_manual_live_confirm: true
+  max_allocated_capital_usdt: 500.0
+  max_gross_notional_usdt: 500.0
+  max_symbol_notional_usdt: 100.0
+  max_order_notional_usdt: 100.0
+  min_available_balance_after_plan_usdt: 100.0
+  min_available_balance_ratio_after_plan: 0.05
+  min_margin_cushion_after_plan_usdt: 100.0
+  max_spread_bps: 20
+  max_market_data_age_seconds: 300
+  max_account_snapshot_age_seconds: 30
+  max_heartbeat_age_seconds: 900
+  allow_new_shorts: true
+  reduce_only_on_gate_failure: true
+
+state:
+  sqlite_path: artifacts/live_trading/hv_balanced_binance_usdm_live_pilot_executable_candidate/state/live_trading.sqlite3
+  artifact_root: artifacts/live_trading/hv_balanced_binance_usdm_live_pilot_executable_candidate/runs

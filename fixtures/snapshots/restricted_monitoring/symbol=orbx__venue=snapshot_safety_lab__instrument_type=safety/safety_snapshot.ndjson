@@ -1,0 +1,1 @@
+{"provider":"snapshot-safety-lab","retrieved_at":"2026-04-07T07:00:30Z","incident":{"asset":"ORBX","code":"bridge_risk","summary":"bridge governance activity is unusual and unresolved"},"classification":{"claim":"risk_flag","direction":"risk","evidence_level":"E4","confidence":68,"horizon":"short"},"extra":{"bridge":"base-router","severity":"medium"}}

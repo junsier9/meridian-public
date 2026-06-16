@@ -1,0 +1,120 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_assertion_helpers_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only root-facade importability, inspect.signature shape, and tiny behavior samples for feature-purity assertion helpers. This contract intentionally excludes scorer formulas, feature-weight behavior, full score outputs, default config payloads, and source movement.",
+  "validation_mode": "root_facade_signature_tiny_assertion_samples",
+  "approved_by_dry_run": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_assertion_helpers_behavior_dry_run_2026_05_15.md",
+  "required_classification_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_root_surface_classification_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_root_surface_classification_contract.v1",
+    "required_group": "score_surface_and_feature_manifest"
+  },
+  "required_score_surface_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_score_surface_behavior_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_score_surface_behavior_contract.v1",
+    "required_validator_target": "validate_alpha_feature_columns"
+  },
+  "assertion_helper_targets": {
+    "assert_alpha_feature_purity": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "Iterable[str]",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "feature_columns",
+            "required": true
+          }
+        ],
+        "return_annotation": "None"
+      },
+      "no_raise_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "downside_upside_vol_ratio_30",
+        "settlement_cycle_premium_60d"
+      ],
+      "raise_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "coinglass_open_interest_sidecar"
+      ],
+      "expected_error_substring": "Binance-canonical feature purity failed"
+    },
+    "assert_alpha_feature_subset_purity": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "Iterable[str]",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "feature_columns",
+            "required": true
+          }
+        ],
+        "return_annotation": "None"
+      },
+      "no_raise_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5"
+      ],
+      "raise_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "coinglass_open_interest_sidecar"
+      ],
+      "expected_error_substring": "Binance-canonical feature subset purity failed"
+    },
+    "_allow_feature_subset": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "config",
+            "required": true
+          }
+        ],
+        "return_annotation": "bool"
+      },
+      "sample_cases": [
+        {
+          "config": {
+            "feature_subset_policy": {
+              "allow_pruned_subset": true
+            }
+          },
+          "expected": true
+        },
+        {
+          "config": {
+            "feature_subset_policy": {}
+          },
+          "expected": false
+        },
+        {
+          "config": {},
+          "expected": false
+        }
+      ]
+    }
+  },
+  "excluded_surfaces": [
+    "source migration",
+    "full score formula behavior",
+    "feature weights",
+    "feature allowlist edits",
+    "forbidden pattern edits",
+    "full score output snapshots",
+    "default config payload contents",
+    "feature_manifest_hash identity",
+    "backtest metrics",
+    "validation pass/fail status",
+    "features.py scorer formulas",
+    "caller counts"
+  ]
+}

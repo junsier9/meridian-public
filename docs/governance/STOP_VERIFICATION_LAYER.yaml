@@ -1,0 +1,102 @@
+stop_verification_layer:
+
+  stop_event_recording:
+    rule: "每次命中 stop criteria，必须生成一条 stop_event。"
+    stop_event_required_fields:
+      - batch_id
+      - trigger_condition
+      - timestamp_utc
+      - triggering_actor
+      - evidence_reference
+    field_definition:
+      batch_id: "当前执行批次标识，如 batch_3"
+      trigger_condition: "命中的 stop criteria 原文或稳定枚举名"
+      timestamp_utc: "UTC 时间戳，ISO 8601 / Z"
+      triggering_actor: "executor 或 owner；必须明确到角色主体"
+      evidence_reference:
+        - "stdout path or handle"
+        - "stderr path or handle"
+        - "collector output path"
+        - "watchdog output path if applicable"
+        - "test report path if applicable"
+    recording_constraints:
+      - "stop_event 必须在执行停止动作发生时同步记录。"
+      - "禁止只口头判定 stop 而不留记录。"
+      - "若同一 batch 命中多个 stop criteria，可记录多条 stop_event，或一条带多 trigger_condition；但不得丢失触发依据。"
+
+  stop_enforcement_check:
+    rule: "每个 batch 结束后，必须执行 stop enforcement check。"
+    check_must_answer:
+      - "是否存在未触发 stop 的异常情况"
+      - "是否存在应 stop 但未 stop 的证据"
+    required_inputs:
+      - "batch stdout"
+      - "batch stderr"
+      - "collector output"
+      - "watchdog output if applicable"
+      - "test output if applicable"
+      - "produced stop_event list"
+    pass_condition:
+      - "所有异常都已被 stop criteria 覆盖，或明确不属于 stop criteria"
+      - "若命中 stop criteria，则存在对应 stop_event 且 batch 已停止"
+    fail_condition:
+      - "发现应 stop 的证据，但没有对应 stop_event"
+      - "发现应 stop 的证据，但 batch 仍继续执行"
+      - "存在异常输出，但无法证明其是否属于 stop criteria"
+    result_fields:
+      - batch_id
+      - enforcement_check_status
+      - missed_stop_detected
+      - unmatched_anomalies
+      - supporting_evidence_references
+
+  post_batch_integrity_check:
+    rule: "若任一后续 batch 被执行，必须证明前一 batch 未命中任何 stop 条件。"
+    required_proof:
+      - "前一 batch 的 stop enforcement check = passed"
+      - "前一 batch 的 stop_event list 为空，或 stop_event 已触发并执行已终止且未继续"
+      - "前一 batch 无 missed_stop_detected"
+    violation_definition:
+      - "后续 batch 已开始，但前一 batch 没有有效的 no-stop 证明"
+      - "后续 batch 已开始，但前一 batch 存在 missed_stop_detected=true"
+      - "后续 batch 已开始，但前一 batch evidence 无法证明是否应 stop"
+    outcome_if_violation:
+      - "视为 execution violation"
+
+  violation_handling:
+    should_stop_but_did_not_stop:
+      required_actions:
+        - "立即触发 global freeze"
+        - "标记 execution invalid"
+        - "强制回到 owner review"
+        - "禁止继续执行任何 batch"
+      execution_state_effect:
+        execution_valid: false
+        next_batch_allowed: false
+        owner_review_required: true
+    violation_record_required_fields:
+      - batch_id
+      - violation_type
+      - detected_at_utc
+      - evidence_reference
+      - freeze_triggered
+      - execution_valid
+
+  audit_requirement:
+    traceability_rule: "所有 batch 必须可追溯到 stop 判定与继续判定。"
+    each_batch_must_prove:
+      - "是否触发 stop"
+      - "若触发 stop，何时触发、谁触发、依据是什么"
+      - "若未触发 stop，依据是什么"
+      - "谁决定继续到下一个 batch"
+    prohibited_state:
+      - "无法证明是否应该停止"
+      - "无法证明是谁决定继续"
+      - "存在异常但无 stop_event / no-stop justification"
+    audit_minimum_artifacts:
+      - "batch stdout/stderr"
+      - "collector output"
+      - "watchdog output if applicable"
+      - "stop_event records"
+      - "stop enforcement check result"
+      - "post-batch integrity check result"

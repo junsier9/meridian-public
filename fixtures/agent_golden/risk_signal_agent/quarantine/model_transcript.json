@@ -1,0 +1,118 @@
+{
+  "backend_kind": "live",
+  "backend_name": "openai_compatible_chat_completions",
+  "compiler_output": {
+    "blocked_reason": null,
+    "candidate_payloads": [
+      {
+        "claim_type": "invalidation",
+        "confidence_hint": 72,
+        "direction": "invalidating",
+        "evidence_level": "E4",
+        "input_id": "risk_signal_agent_success:1",
+        "predicate": "fresh_invalidation_risk",
+        "scope": "spot+perp",
+        "source_family": "safety",
+        "subject": "BADX",
+        "time_horizon": "short",
+        "value": "facts=fresh invalidation cues are visible in the bounded risk observation; interpretation=the current object now carries one clear invalidation-oriented risk signal; uncertainty=full invalidation still depends on follow-through and host review"
+      }
+    ],
+    "notes": [
+      "deterministic compiler emitted one candidate payload",
+      "recorded quarantine fixture",
+      "recorded quarantine fixture for risk_signal_agent"
+    ],
+    "status": "success"
+  },
+  "contract_version": "risk_signal_agent_compiler_v1",
+  "input_fingerprint": "43e3f7c452951f8f7b0e740b0726ffee8fea6c2a654142c0548108ebcc875544",
+  "model_request": {
+    "endpoint": "https://example.invalid/chat/completions",
+    "request_body": {
+      "messages": [
+        {
+          "content": "# Role\nYou compile one bounded risk observation into exactly one machine-readable JSON envelope for the `risk_signal_agent` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `fresh_invalidation_risk`, `headline_risk`, `suppression_risk`, `risk_state_caution`\n- `claim_type`: `risk_flag`, `invalidation`\n- `direction`: `risk`, `invalidating`\n- `source_family`: `safety`, `analytics`, `official`\n- `evidence_level`: `E2`, `E3`, `E4`, `E5`\n- `time_horizon`: `short`, `medium`, `structural`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- `value` must preserve this order:\n  `facts=...; interpretation=...; uncertainty=...`\n- Emit one bounded risk-oriented claim only.\n- Do not create governance unlocks, publish decisions, or multi-step workflows.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the observation is too weak, stale, cross-object, or cannot honestly fill `facts`, `interpretation`, and `uncertainty`.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing subjects, scopes, or timeframes.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+          "role": "system"
+        },
+        {
+          "content": "Compile one bounded risk observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=risk_signal_agent_quarantine:1\nobject_id=golden-risk-signal-agent-aix\nobject_context_fingerprint=c08b0e5f9fddcd33d14877c1bc2102e023710ff2b6dd73960b36cdd751e10dab\nexisting_object_context_json:\n{\"claim_count\": 2, \"object_id\": \"golden-risk-signal-agent-aix\", \"processing_state\": \"monitoring\", \"recent_claims\": [{\"confidence\": 82, \"direction\": \"bullish\", \"predicate\": \"spot_breakout\", \"scope\": \"spot+perp\", \"source_family\": \"cex\", \"time_horizon\": \"intraday\", \"value\": \"AIX spot structure remains constructive\"}, {\"confidence\": 78, \"direction\": \"bullish\", \"predicate\": \"wallet_buy\", \"scope\": \"spot+perp\", \"source_family\": \"onchain\", \"time_horizon\": \"intraday\", \"value\": \"AIX still shows supportive flow from large buyers\"}], \"risk_signal_context\": {\"current_risk_posture\": \"normal\", \"recent_risk_claims\": []}, \"risk_state\": \"normal\", \"scope\": \"spot+perp\", \"subject\": \"AIX\"}\nrisk_text:\nFresh invalidation breakdown risk is now visible in the setup.",
+          "role": "user"
+        }
+      ],
+      "model": "fixture-test-model",
+      "temperature": 0.0
+    },
+    "request_headers": {
+      "Authorization": "Bearer ***redacted***",
+      "Content-Type": "application/json"
+    },
+    "timeout_seconds": 30.0
+  },
+  "object_context_fingerprint": "c08b0e5f9fddcd33d14877c1bc2102e023710ff2b6dd73960b36cdd751e10dab",
+  "prompt_context": {
+    "contract_version": "risk_signal_agent_compiler_v1",
+    "messages": [
+      {
+        "content": "# Role\nYou compile one bounded risk observation into exactly one machine-readable JSON envelope for the `risk_signal_agent` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `fresh_invalidation_risk`, `headline_risk`, `suppression_risk`, `risk_state_caution`\n- `claim_type`: `risk_flag`, `invalidation`\n- `direction`: `risk`, `invalidating`\n- `source_family`: `safety`, `analytics`, `official`\n- `evidence_level`: `E2`, `E3`, `E4`, `E5`\n- `time_horizon`: `short`, `medium`, `structural`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- `value` must preserve this order:\n  `facts=...; interpretation=...; uncertainty=...`\n- Emit one bounded risk-oriented claim only.\n- Do not create governance unlocks, publish decisions, or multi-step workflows.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the observation is too weak, stale, cross-object, or cannot honestly fill `facts`, `interpretation`, and `uncertainty`.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing subjects, scopes, or timeframes.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+        "role": "system"
+      },
+      {
+        "content": "Compile one bounded risk observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=risk_signal_agent_quarantine:1\nobject_id=golden-risk-signal-agent-aix\nobject_context_fingerprint=c08b0e5f9fddcd33d14877c1bc2102e023710ff2b6dd73960b36cdd751e10dab\nexisting_object_context_json:\n{\"claim_count\": 2, \"object_id\": \"golden-risk-signal-agent-aix\", \"processing_state\": \"monitoring\", \"recent_claims\": [{\"confidence\": 82, \"direction\": \"bullish\", \"predicate\": \"spot_breakout\", \"scope\": \"spot+perp\", \"source_family\": \"cex\", \"time_horizon\": \"intraday\", \"value\": \"AIX spot structure remains constructive\"}, {\"confidence\": 78, \"direction\": \"bullish\", \"predicate\": \"wallet_buy\", \"scope\": \"spot+perp\", \"source_family\": \"onchain\", \"time_horizon\": \"intraday\", \"value\": \"AIX still shows supportive flow from large buyers\"}], \"risk_signal_context\": {\"current_risk_posture\": \"normal\", \"recent_risk_claims\": []}, \"risk_state\": \"normal\", \"scope\": \"spot+perp\", \"subject\": \"AIX\"}\nrisk_text:\nFresh invalidation breakdown risk is now visible in the setup.",
+        "role": "user"
+      }
+    ],
+    "object_context": {
+      "claim_count": 2,
+      "object_id": "golden-risk-signal-agent-aix",
+      "processing_state": "monitoring",
+      "recent_claims": [
+        {
+          "confidence": 82,
+          "direction": "bullish",
+          "predicate": "spot_breakout",
+          "scope": "spot+perp",
+          "source_family": "cex",
+          "time_horizon": "intraday",
+          "value": "AIX spot structure remains constructive"
+        },
+        {
+          "confidence": 78,
+          "direction": "bullish",
+          "predicate": "wallet_buy",
+          "scope": "spot+perp",
+          "source_family": "onchain",
+          "time_horizon": "intraday",
+          "value": "AIX still shows supportive flow from large buyers"
+        }
+      ],
+      "risk_signal_context": {
+        "current_risk_posture": "normal",
+        "recent_risk_claims": []
+      },
+      "risk_state": "normal",
+      "scope": "spot+perp",
+      "subject": "AIX"
+    },
+    "object_context_fingerprint": "c08b0e5f9fddcd33d14877c1bc2102e023710ff2b6dd73960b36cdd751e10dab",
+    "prompt_fingerprint": "8cc17367273b6ed3a0603148a91cf7f9b70208ec17cf174ecf03bae5e4f6e511",
+    "prompt_path": "C:\\Users\\user\\Documents\\Claude\\Projects\\EnhengClaw\\src\\enhengclaw\\agents\\prompts\\risk_signal_agent.system.md",
+    "prompt_template_version": "risk_signal_agent_prompt_template_v1"
+  },
+  "prompt_fingerprint": "8cc17367273b6ed3a0603148a91cf7f9b70208ec17cf174ecf03bae5e4f6e511",
+  "raw_model_output": {
+    "assistant_text": "{\"blocked_reason\": null, \"candidate_payloads\": [{\"claim_type\": \"invalidation\", \"confidence_hint\": 72, \"direction\": \"invalidating\", \"evidence_level\": \"E4\", \"input_id\": \"risk_signal_agent_success:1\", \"predicate\": \"fresh_invalidation_risk\", \"scope\": \"spot+perp\", \"source_family\": \"safety\", \"subject\": \"BADX\", \"time_horizon\": \"short\", \"value\": \"facts=fresh invalidation cues are visible in the bounded risk observation; interpretation=the current object now carries one clear invalidation-oriented risk signal; uncertainty=full invalidation still depends on follow-through and host review\"}], \"notes\": [\"deterministic compiler emitted one candidate payload\", \"recorded quarantine fixture\", \"recorded quarantine fixture for risk_signal_agent\"], \"status\": \"success\"}",
+    "response_json": {
+      "choices": [
+        {
+          "message": {
+            "content": "{\"blocked_reason\": null, \"candidate_payloads\": [{\"claim_type\": \"invalidation\", \"confidence_hint\": 72, \"direction\": \"invalidating\", \"evidence_level\": \"E4\", \"input_id\": \"risk_signal_agent_success:1\", \"predicate\": \"fresh_invalidation_risk\", \"scope\": \"spot+perp\", \"source_family\": \"safety\", \"subject\": \"BADX\", \"time_horizon\": \"short\", \"value\": \"facts=fresh invalidation cues are visible in the bounded risk observation; interpretation=the current object now carries one clear invalidation-oriented risk signal; uncertainty=full invalidation still depends on follow-through and host review\"}], \"notes\": [\"deterministic compiler emitted one candidate payload\", \"recorded quarantine fixture\", \"recorded quarantine fixture for risk_signal_agent\"], \"status\": \"success\"}"
+          }
+        }
+      ]
+    },
+    "response_text": "{\"choices\": [{\"message\": {\"content\": \"{\\\"blocked_reason\\\": null, \\\"candidate_payloads\\\": [{\\\"claim_type\\\": \\\"invalidation\\\", \\\"confidence_hint\\\": 72, \\\"direction\\\": \\\"invalidating\\\", \\\"evidence_level\\\": \\\"E4\\\", \\\"input_id\\\": \\\"risk_signal_agent_success:1\\\", \\\"predicate\\\": \\\"fresh_invalidation_risk\\\", \\\"scope\\\": \\\"spot+perp\\\", \\\"source_family\\\": \\\"safety\\\", \\\"subject\\\": \\\"BADX\\\", \\\"time_horizon\\\": \\\"short\\\", \\\"value\\\": \\\"facts=fresh invalidation cues are visible in the bounded risk observation; interpretation=the current object now carries one clear invalidation-oriented risk signal; uncertainty=full invalidation still depends on follow-through and host review\\\"}], \\\"notes\\\": [\\\"deterministic compiler emitted one candidate payload\\\", \\\"recorded quarantine fixture\\\", \\\"recorded quarantine fixture for risk_signal_agent\\\"], \\\"status\\\": \\\"success\\\"}\"}}]}",
+    "status_code": 200
+  },
+  "transcript_fingerprint": "bb3d00e1293d20b636a516768be9ccd021f96954977e9ba841187bf48ccc211d"
+}

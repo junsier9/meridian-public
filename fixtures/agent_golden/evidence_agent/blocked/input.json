@@ -1,0 +1,8 @@
+{
+  "case_id": "evidence_agent_blocked",
+  "expected_status": "blocked",
+  "object_id": "golden-evidence-blocked-aix",
+  "scope": "spot+perp",
+  "subject": "AIX",
+  "evidence_text": "Team chatter says things feel kind of interesting but nobody can say what changed."
+}

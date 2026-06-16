@@ -1,0 +1,53 @@
+{
+  "provider": "snapshot-cex-lab",
+  "retrieved_at": "2026-04-07T06:00:00Z",
+  "scenario_tag": "bullish_publish",
+  "instrument": "AIXUSDT",
+  "events": [
+    {
+      "event_id": "cex-breakout-1",
+      "event_name": "spot_breakout",
+      "payload": {
+        "asset": "AIX",
+        "summary": "spot volume expansion with price strength",
+        "metrics": {
+          "price_change_pct": 12.4,
+          "volume_ratio_7d": 2.8
+        }
+      },
+      "mapping": {
+        "claimKind": "measurement",
+        "bias": "bullish",
+        "evidence": "E4",
+        "confidenceScore": 82,
+        "horizon": "intraday"
+      },
+      "extra": {
+        "venue": "Binance",
+        "market_type": "spot"
+      }
+    },
+    {
+      "event_id": "cex-structure-1",
+      "event_name": "market_structure_support",
+      "payload": {
+        "asset": "AIX",
+        "summary": "spot is leading perps with constructive structure",
+        "metrics": {
+          "spot_lead_minutes": 9
+        }
+      },
+      "mapping": {
+        "claimKind": "market_structure",
+        "bias": "bullish",
+        "evidence": "E4",
+        "confidenceScore": 75,
+        "horizon": "intraday"
+      },
+      "extra": {
+        "venue": "OKX",
+        "market_type": "perp"
+      }
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+record_id,retrieved_at,provider,asset_symbol,event_type,interpretation,claim_kind,signal_side,evidence_grade,confidence_score,horizon_label,scope_name,wallet_cluster,extra_note
+chain-buy-1,2026-04-07T06:00:20Z,snapshot-onchain-lab,AIX,wallet_buy,smart money wallets are net buying,flow,bullish,E4,78,intraday,spot+perp,smart_money_cluster,tracking cohort 7

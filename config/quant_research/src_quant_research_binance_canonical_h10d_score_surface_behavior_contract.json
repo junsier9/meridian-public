@@ -1,0 +1,278 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_score_surface_behavior_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze root-facade importability, signatures, alpha allowlist and weights, and tiny behavior samples for the active Binance-canonical h10d score surface. This contract intentionally excludes full formula snapshots, manifest hash identity, and source movement.",
+  "validation_mode": "root_facade_signature_allowlist_tiny_behavior_samples",
+  "function_targets": {
+    "validate_alpha_feature_columns": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "Iterable[str]",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "feature_columns",
+            "required": true
+          },
+          {
+            "annotation": "Iterable[str]",
+            "default_repr": "('intraday_realized_vol_4h_to_1d_smooth_60', 'realized_volatility_5', 'distance_to_high_60', 'distance_to_high_5', 'liquidity_stress_qv_iv', 'momentum_decay_5_20', 'downside_upside_vol_ratio_30', 'settlement_cycle_premium_60d')",
+            "kind": "KEYWORD_ONLY",
+            "name": "allowed_columns",
+            "required": false
+          },
+          {
+            "annotation": "Iterable[str]",
+            "default_repr": "('^coinglass_', 'open_interest', '^oi_', 'funding', 'basis', 'liquidation', 'orderbook', 'top_trader', 'taker')",
+            "kind": "KEYWORD_ONLY",
+            "name": "forbidden_patterns",
+            "required": false
+          },
+          {
+            "annotation": "bool",
+            "default_repr": "True",
+            "kind": "KEYWORD_ONLY",
+            "name": "require_all_allowed",
+            "required": false
+          }
+        ],
+        "return_annotation": "dict[str, Any]"
+      }
+    },
+    "build_feature_manifest": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "dict[str, Any] | None",
+            "default_repr": "None",
+            "kind": "KEYWORD_ONLY",
+            "name": "config",
+            "required": false
+          }
+        ],
+        "return_annotation": "dict[str, Any]"
+      }
+    },
+    "score_binance_ohlcv_core": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "frame",
+            "required": true
+          },
+          {
+            "annotation": "Iterable[str]",
+            "default_repr": "('intraday_realized_vol_4h_to_1d_smooth_60', 'realized_volatility_5', 'distance_to_high_60', 'distance_to_high_5', 'liquidity_stress_qv_iv', 'momentum_decay_5_20', 'downside_upside_vol_ratio_30', 'settlement_cycle_premium_60d')",
+            "kind": "KEYWORD_ONLY",
+            "name": "feature_columns",
+            "required": false
+          },
+          {
+            "annotation": "dict[str, float] | None",
+            "default_repr": "None",
+            "kind": "KEYWORD_ONLY",
+            "name": "feature_weights",
+            "required": false
+          },
+          {
+            "annotation": "bool",
+            "default_repr": "True",
+            "kind": "KEYWORD_ONLY",
+            "name": "require_complete_feature_set",
+            "required": false
+          },
+          {
+            "annotation": "bool",
+            "default_repr": "True",
+            "kind": "KEYWORD_ONLY",
+            "name": "enforce_alpha_purity",
+            "required": false
+          },
+          {
+            "annotation": "dict[str, pd.Series] | None",
+            "default_repr": "None",
+            "kind": "KEYWORD_ONLY",
+            "name": "contribution_multipliers",
+            "required": false
+          }
+        ],
+        "return_annotation": "pd.Series"
+      }
+    },
+    "prepare_scored_backtest_frame": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "panel",
+            "required": true
+          },
+          {
+            "annotation": "dict[str, Any] | None",
+            "default_repr": "None",
+            "kind": "KEYWORD_ONLY",
+            "name": "config",
+            "required": false
+          }
+        ],
+        "return_annotation": "tuple[pd.DataFrame, dict[str, Any]]"
+      }
+    }
+  },
+  "constant_targets": {
+    "ALLOWED_ALPHA_FEATURES": [
+      "intraday_realized_vol_4h_to_1d_smooth_60",
+      "realized_volatility_5",
+      "distance_to_high_60",
+      "distance_to_high_5",
+      "liquidity_stress_qv_iv",
+      "momentum_decay_5_20",
+      "downside_upside_vol_ratio_30",
+      "settlement_cycle_premium_60d"
+    ],
+    "BINANCE_OHLCV_CORE_WEIGHTS": {
+      "intraday_realized_vol_4h_to_1d_smooth_60": -0.2,
+      "realized_volatility_5": -0.1,
+      "distance_to_high_60": 0.18,
+      "distance_to_high_5": 0.15,
+      "liquidity_stress_qv_iv": -0.1,
+      "momentum_decay_5_20": -0.06,
+      "downside_upside_vol_ratio_30": 0.1,
+      "settlement_cycle_premium_60d": -0.08
+    }
+  },
+  "purity_samples": {
+    "forbidden_sidecar_column": "coinglass_top_trader_long_pct_smooth_5",
+    "strict_subset_feature_count": 5,
+    "expected_strict_subset_missing_columns": [
+      "momentum_decay_5_20",
+      "downside_upside_vol_ratio_30",
+      "settlement_cycle_premium_60d"
+    ]
+  },
+  "score_sample": {
+    "feature_value_offsets": {
+      "intraday_realized_vol_4h_to_1d_smooth_60": 0.0,
+      "realized_volatility_5": 0.01,
+      "distance_to_high_60": 0.02,
+      "distance_to_high_5": 0.03,
+      "liquidity_stress_qv_iv": 0.04,
+      "momentum_decay_5_20": 0.05,
+      "downside_upside_vol_ratio_30": 0.06,
+      "settlement_cycle_premium_60d": 0.07
+    },
+    "base_rows": [
+      {
+        "subject": "BTC",
+        "timestamp_ms": 1767225600000,
+        "base": 0.11
+      },
+      {
+        "subject": "ETH",
+        "timestamp_ms": 1767225600000,
+        "base": 0.21
+      },
+      {
+        "subject": "SOL",
+        "timestamp_ms": 1767225600000,
+        "base": 0.31
+      },
+      {
+        "subject": "BTC",
+        "timestamp_ms": 1767312000000,
+        "base": 0.41
+      },
+      {
+        "subject": "ETH",
+        "timestamp_ms": 1767312000000,
+        "base": 0.32
+      },
+      {
+        "subject": "SOL",
+        "timestamp_ms": 1767312000000,
+        "base": 0.23
+      }
+    ],
+    "sidecar_column": "coinglass_top_trader_long_pct_smooth_5",
+    "sidecar_values": [
+      9.0,
+      8.0,
+      7.0,
+      6.0,
+      5.0,
+      4.0
+    ],
+    "expected_scores": [
+      0.716297870199,
+      0.291312612452,
+      -0.291312612452,
+      -0.291312612452,
+      0.291312612452,
+      0.716297870199
+    ]
+  },
+  "manifest_sample": {
+    "config": {
+      "strategy_label": "contract_score_surface_sample",
+      "parent_label": "contract_parent",
+      "feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5"
+      ],
+      "feature_weights": {
+        "intraday_realized_vol_4h_to_1d_smooth_60": -2.0,
+        "realized_volatility_5": 1.0
+      },
+      "feature_subset_policy": {
+        "allow_pruned_subset": true
+      },
+      "allowed_alpha_sources": [
+        "binance_public_archive_1m_ohlcv"
+      ],
+      "excluded_source_patterns": [
+        "^coinglass_",
+        "open_interest",
+        "^oi_",
+        "funding",
+        "basis",
+        "liquidation",
+        "orderbook",
+        "top_trader",
+        "taker"
+      ]
+    },
+    "expected_feature_weights": {
+      "intraday_realized_vol_4h_to_1d_smooth_60": -0.6666666666666666,
+      "realized_volatility_5": 0.3333333333333333
+    },
+    "expected_raw_parent_weight_subset": {
+      "intraday_realized_vol_4h_to_1d_smooth_60": -2.0,
+      "realized_volatility_5": 1.0
+    },
+    "expected_purity_passed": true,
+    "assert_feature_manifest_hash_identity": false,
+    "assert_generated_at_exact": false
+  },
+  "excluded_surfaces": [
+    "source migration",
+    "internal module layout",
+    "full score formula behavior",
+    "golden score output snapshots beyond tiny fixture",
+    "feature_manifest_hash identity",
+    "exact generated_at_utc values",
+    "dataset manifest schemas",
+    "backtest metrics",
+    "validation pass/fail status",
+    "funding behavior",
+    "PIT universe behavior",
+    "risk-brake behavior",
+    "features.py scorer formulas",
+    "caller counts"
+  ]
+}

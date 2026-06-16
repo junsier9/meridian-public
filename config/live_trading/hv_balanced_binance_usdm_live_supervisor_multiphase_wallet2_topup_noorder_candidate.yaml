@@ -1,0 +1,115 @@
+strategy:
+  label: v5_binance_pit_top_mid_h10d_pruned3_hv_balanced_soft_budget
+  frozen_config_path: config/quant_research/binance_pit_top_mid_h10d_pruned3_hv_balanced_soft_budget.json
+  frozen_config_sha256: 9867437bc74733d46f1a4292c84bbdf4f09c6c49f4862a0616d95ebc43f31938
+  rebalance_interval_days: 10
+
+binance:
+  venue: usdm_futures
+  base_url_env: ENHENGCLAW_BINANCE_USDM_BASE_URL
+  api_key_env: Trade
+  api_secret_env: Secret_Key
+  recv_window_ms: 5000
+  position_mode: one_way
+  margin_type: cross
+  max_leverage: 2
+  auto_prepare_planned_symbol_settings: false
+
+capital:
+  sizing_basis: total_wallet_balance_usdt_x_2
+  allocated_capital_usdt: 3000.0
+  max_gross_leverage: 2.0
+  max_symbol_notional_usdt: 600.0
+  max_order_notional_usdt: 600.0
+
+capital_topup:
+  enabled: true
+  mode: multiphase_wallet_balance_x_2_all_or_none_plan_only
+  sizing_basis: total_wallet_balance_usdt_x_2
+  max_gross_leverage: 2.0
+  reserve_available_balance_usdt: 0.0
+  gross_notional_safety_buffer_usdt: 0.0
+  min_additional_allocated_capital_usdt: 25.0
+  require_balanced_all_or_none: true
+  dynamic_risk_caps_from_resolved_capital: true
+  max_symbol_weight_cap: 0.35
+  max_order_weight_cap: 0.35
+  allowed_delta_classifications: increase_same_side,new_entry,dust_residual,no_delta
+  live_execution_enabled: false
+
+risk:
+  trading_enabled: false
+  require_manual_live_confirm: true
+  max_allocated_capital_usdt: 3000.0
+  max_gross_notional_usdt: 3000.0
+  max_symbol_notional_usdt: 600.0
+  max_order_notional_usdt: 600.0
+  min_available_balance_after_plan_usdt: 100.0
+  min_available_balance_ratio_after_plan: 0.05
+  min_margin_cushion_after_plan_usdt: 100.0
+  max_spread_bps: 20
+  max_market_data_age_seconds: 300
+  max_account_snapshot_age_seconds: 30
+  max_heartbeat_age_seconds: 900
+  allow_new_shorts: true
+  reduce_only_on_gate_failure: true
+
+market_data:
+  public_data_enabled: true
+  symbols: BTCUSDT,ETHUSDT,BNBUSDT,SOLUSDT,XRPUSDT,DOGEUSDT,ADAUSDT,AVAXUSDT,LINKUSDT,LTCUSDT,BCHUSDT,TRXUSDT,DOTUSDT,UNIUSDT,AAVEUSDT,NEARUSDT,FILUSDT,ETCUSDT,APTUSDT,ARBUSDT
+  daily_limit: 140
+  four_hour_limit: 840
+
+core_loop:
+  mode: multiphase_capital_topup_plan_only
+  target_engine: multiphase_equal_sleeve
+  target_as_of: latest_closed_rebalance_slot
+  capital_topup_after_static_noop: false
+  max_cycles_per_invocation: 1
+  interval_seconds: 0
+  live_delta_enabled: false
+  submit_orders: false
+  auto_confirm_delta_after_preflight: false
+  allowed_execution_stages: entry_second
+  max_live_delta_order_count_per_cycle: 6
+  live_delta_order_cap_policy:
+    mode: target_leg_aware
+    hard_max_order_count: 20
+    reduce_first_extra_stale_exit_allowance: 5
+    entry_second_cap_basis: target_position_count
+    reduce_first_cap_basis: max_current_or_target_position_count
+  min_seconds_between_live_delta_executions: 300
+  min_clean_cycles_before_live_delta: 3
+  require_post_trade_reconcile: true
+  require_data_freshness_gate: true
+  require_margin_cushion_gate: true
+  kill_switch_source: sqlite_operator_state
+
+mainnet_live_supervisor:
+  mode: sqlite_unarmed_multiphase_wallet2_topup_observation
+  target_engine: multiphase_equal_sleeve
+  max_cycles_per_invocation: 1
+  interval_seconds: 0
+  allow_live_delta_when_armed: false
+  capital_topup_enabled: false
+  live_delta_armed_default: false
+  recover_stale_heartbeats: true
+  disarm_on_blocker: true
+  require_core_loop_stage_policy: true
+  recommended_timer_minutes: 10
+
+mainnet_health_monitor:
+  mode: artifact_sqlite_timer_health
+  recent_run_count: 3
+  max_seconds_since_latest_supervisor_run: 1200
+  max_running_heartbeat_age_seconds: 900
+  require_systemd_timer_active: false
+  no_order_expected: true
+  disarm_on_alert: true
+  exit_code_on_alert: 2
+  telegram_bot_token_env: TELEGRAM_BOT_TOKEN
+  telegram_chat_id_env: TELEGRAM_CHAT_ID
+
+state:
+  sqlite_path: artifacts/live_trading/hv_balanced_binance_usdm_live_2x_full_balance_candidate/state/live_trading.sqlite3
+  artifact_root: artifacts/live_trading/hv_balanced_binance_usdm_live_2x_full_balance_candidate/runs

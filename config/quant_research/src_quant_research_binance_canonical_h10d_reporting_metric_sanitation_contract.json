@@ -1,0 +1,242 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_reporting_metric_sanitation_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze root-facade importability, signatures, and tiny behavior samples for reporting metric sanitation helpers used by Binance-canonical h10d validation, ablation, and falsification summaries. This contract intentionally excludes full validation payloads and source movement.",
+  "validation_mode": "root_facade_signature_reporting_sanitation_samples",
+  "reporting_metric_sanitation_targets": {
+    "_rank_ic_summary": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "frame",
+            "required": true
+          },
+          {
+            "annotation": "str",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "score_column",
+            "required": true
+          },
+          {
+            "annotation": "str",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "target_column",
+            "required": true
+          }
+        ],
+        "return_annotation": "dict[str, Any]"
+      },
+      "sample": {
+        "score_column": "score",
+        "target_column": "target_execution_forward_return",
+        "records": [
+          {
+            "timestamp_ms": 1,
+            "subject": "A",
+            "score": 1.0,
+            "target_execution_forward_return": 10.0,
+            "binance_decision_eligible": true
+          },
+          {
+            "timestamp_ms": 1,
+            "subject": "B",
+            "score": 2.0,
+            "target_execution_forward_return": 20.0,
+            "binance_decision_eligible": true
+          },
+          {
+            "timestamp_ms": 1,
+            "subject": "C",
+            "score": 3.0,
+            "target_execution_forward_return": 30.0,
+            "binance_decision_eligible": true
+          },
+          {
+            "timestamp_ms": 2,
+            "subject": "A",
+            "score": 1.0,
+            "target_execution_forward_return": 30.0,
+            "binance_decision_eligible": true
+          },
+          {
+            "timestamp_ms": 2,
+            "subject": "B",
+            "score": 2.0,
+            "target_execution_forward_return": 20.0,
+            "binance_decision_eligible": true
+          },
+          {
+            "timestamp_ms": 2,
+            "subject": "C",
+            "score": 3.0,
+            "target_execution_forward_return": 10.0,
+            "binance_decision_eligible": true
+          }
+        ],
+        "expected_summary": {
+          "period_count": 2,
+          "mean_rank_ic": 0.0,
+          "std_rank_ic": 1.4142135623730951,
+          "t_stat": 0.0
+        },
+        "expected_empty_summary": {
+          "period_count": 0,
+          "mean_rank_ic": 0.0,
+          "std_rank_ic": 0.0,
+          "t_stat": 0.0
+        }
+      }
+    },
+    "_strip_periods": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "metrics",
+            "required": true
+          }
+        ],
+        "return_annotation": "dict[str, Any]"
+      },
+      "sample": {
+        "metrics": {
+          "net_return": 0.1,
+          "periods": [
+            {
+              "date": "2026-01-01",
+              "return": 0.01
+            }
+          ],
+          "status": "ok"
+        },
+        "expected": {
+          "net_return": 0.1,
+          "status": "ok"
+        }
+      }
+    },
+    "_drop_periods_from_metrics": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "metrics",
+            "required": true
+          }
+        ],
+        "return_annotation": "dict[str, Any]"
+      },
+      "sample": {
+        "metrics": {
+          "base": {
+            "net_return": 0.1,
+            "periods": [
+              {
+                "date": "2026-01-01",
+                "return": 0.01
+              }
+            ]
+          },
+          "stress": {
+            "net_return": 0.2,
+            "periods": [
+              {
+                "date": "2026-01-02",
+                "return": 0.02
+              }
+            ]
+          },
+          "metadata": {
+            "run": "contract_sample"
+          },
+          "status": "ok"
+        },
+        "expected": {
+          "base": {
+            "net_return": 0.1
+          },
+          "stress": {
+            "net_return": 0.2
+          },
+          "metadata": {
+            "run": "contract_sample"
+          },
+          "status": "ok"
+        }
+      }
+    },
+    "_split_contract": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "config",
+            "required": true
+          }
+        ],
+        "return_annotation": "dict[str, Any]"
+      },
+      "sample_cases": {
+        "explicit_4h_15_bar": {
+          "config": {
+            "split_realization": {
+              "interval": "4h",
+              "target_horizon_bars": 15
+            }
+          },
+          "expected": {
+            "contract_version": "quant_split_realization_contract.v1",
+            "shape": "cross_sectional",
+            "target_horizon_bars": 15,
+            "realization_step_bars": 15,
+            "bar_interval_ms": 14400000,
+            "partition_gap_bars": 15,
+            "skipped_between_partitions_bars": 14,
+            "require_zero_boundary_contamination": true,
+            "require_non_overlapping_realization": true
+          }
+        },
+        "default_1d_10_bar": {
+          "config": {},
+          "expected": {
+            "contract_version": "quant_split_realization_contract.v1",
+            "shape": "cross_sectional",
+            "target_horizon_bars": 10,
+            "realization_step_bars": 10,
+            "bar_interval_ms": 86400000,
+            "partition_gap_bars": 10,
+            "skipped_between_partitions_bars": 9,
+            "require_zero_boundary_contamination": true,
+            "require_non_overlapping_realization": true
+          }
+        }
+      }
+    }
+  },
+  "excluded_surfaces": [
+    "source migration",
+    "internal module layout",
+    "full validation report payloads",
+    "full falsification metrics",
+    "full ablation report schemas",
+    "_run_backtest behavior",
+    "period-return construction",
+    "execution ledger behavior",
+    "PIT universe behavior",
+    "risk-brake behavior",
+    "funding behavior",
+    "caller counts"
+  ]
+}

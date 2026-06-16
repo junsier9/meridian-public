@@ -1,0 +1,7 @@
+{
+  "provider": "snapshot-cex-lab",
+  "retrieved_at": "2026-04-07T08:00:00Z",
+  "scenario_tag": "blocked_risk",
+  "instrument": "VRTXUSDT",
+  "events": []
+}

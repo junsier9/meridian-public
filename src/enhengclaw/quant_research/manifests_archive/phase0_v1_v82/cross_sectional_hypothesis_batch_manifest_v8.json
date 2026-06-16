@@ -1,0 +1,78 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v8",
+  "entries": [
+    {
+      "candidate_id": "xs_strength_on_reset_v3_h5d",
+      "base_mechanism_id": "xs_strength_on_reset_v3",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_strength_on_reset_v3",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "range_position_20",
+        "distance_to_high_20",
+        "return_1",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_strength_on_reset_v3_h5d",
+        "thesis_family": "hypothesis_xs_strength_on_reset_v3_h5d",
+        "market_mechanism": "liquid spot leaders should outperform after shallow consolidation near highs, but only when the reset is not occurring inside a high-volatility rotation burst",
+        "directional_claim": "own liquid names that retain relative strength, slope and supportive participation while staying near the upper part of the range, but veto setups when intraday volatility and participation expansion jointly spike into a high-vol rotation state",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "range_position_20",
+          "distance_to_high_20",
+          "return_1",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20"
+        ],
+        "factor_formula": "0.34*relative_strength_20 + 0.24*ema_slope_5_20 + 0.18*(quote_volume_expansion-1) + 0.12*range_position_20 + 0.08*distance_to_high_20 - 0.04*return_1, veto if intraday_realized_vol_4h_to_1d and quote_volume_expansion are both cross-sectionally elevated and realized_volatility/range extension confirm high-vol rotation",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "97e8bc43dc63db3f60b0eed10d61b1be3358421970e5b8ab18651953ee3d9f56"
+    }
+  ]
+}

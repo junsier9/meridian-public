@@ -1,0 +1,22 @@
+{
+  "provider": "snapshot-cex-lab",
+  "retrieved_at": "2026-04-07T09:00:00Z",
+  "scenario_tag": "bad",
+  "instrument": "BADUSDT",
+  "events": [
+    {
+      "event_id": "bad-cex-1",
+      "event_name": "spot_breakout",
+      "payload": {
+        "asset": "BAD",
+        "summary": "missing confidence score in mapping"
+      },
+      "mapping": {
+        "claimKind": "measurement",
+        "bias": "bullish",
+        "evidence": "E4",
+        "horizon": "intraday"
+      }
+    }
+  ]
+}

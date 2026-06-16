@@ -1,0 +1,8 @@
+{
+  "case_id": "risk_signal_agent_quarantine",
+  "expected_status": "quarantine",
+  "object_id": "golden-risk-signal-agent-aix",
+  "risk_text": "Fresh invalidation breakdown risk is now visible in the setup.",
+  "scope": "spot+perp",
+  "subject": "AIX"
+}

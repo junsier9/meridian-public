@@ -1,0 +1,72 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_universe_membership_writer_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze root-facade importability for BINANCE_RISK_BRAKE_COLUMNS and _write_universe_membership, the exact current risk-brake column tuple, and a tiny universe-membership CSV projection/sort sample. This does not freeze risk-brake formulas or the full universe_membership.csv schema.",
+  "validation_mode": "root_facade_column_registry_signature_projection_sample",
+  "risk_brake_columns": [
+    "binance_short_squeeze_veto_multiplier",
+    "binance_high_vol_rebound_short_multiplier",
+    "binance_risk_brake_short_multiplier",
+    "binance_short_squeeze_veto_flag",
+    "binance_high_vol_rebound_flag",
+    "binance_high_vol_rebound_severe_flag",
+    "binance_market_realized_vol_5_median",
+    "binance_market_realized_vol_5_threshold",
+    "binance_market_momentum_20_median",
+    "binance_market_positive_momentum_share_20",
+    "binance_market_close_to_high_share_5"
+  ],
+  "universe_membership_target": {
+    "helper_name": "_write_universe_membership",
+    "signature": {
+      "parameters": [
+        {
+          "annotation": "pd.DataFrame",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "scored_frame",
+          "required": true
+        },
+        {
+          "annotation": "Path",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "path",
+          "required": true
+        }
+      ],
+      "return_annotation": "None"
+    },
+    "projection_sort_sample": {
+      "records": [
+        {
+          "timestamp_ms": 2,
+          "subject": "ETH",
+          "binance_risk_brake_short_multiplier": 0.5,
+          "extra_column": "ignored"
+        },
+        {
+          "timestamp_ms": 1,
+          "subject": "BTC",
+          "binance_risk_brake_short_multiplier": 1.0,
+          "extra_column": "ignored"
+        }
+      ],
+      "expected_csv": "timestamp_ms,subject,binance_risk_brake_short_multiplier\n1,BTC,1.0\n2,ETH,0.5\n"
+    }
+  },
+  "approved_registry_module_after_move": "enhengclaw.quant_research._binance_canonical_risk_columns",
+  "approved_writer_module_after_move": "enhengclaw.quant_research._binance_canonical_artifacts",
+  "excluded_surfaces": [
+    "source migration approval beyond listed registry and writer names",
+    "risk-brake formula behavior",
+    "full universe membership schema",
+    "empty-frame full schema behavior",
+    "validation artifact path selection",
+    "strategy pass/fail metrics",
+    "CSV writer settings outside the projection sample",
+    "feature subset behavior",
+    "caller counts"
+  ]
+}

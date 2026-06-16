@@ -1,0 +1,97 @@
+{
+  "provider": "binance-public-cex",
+  "retrieved_at": "2026-04-07T10:00:00Z",
+  "scenario_tag": "bullish_publish",
+  "instrument": "AIXUSDT",
+  "events": [
+    {
+      "event_id": "aixusdt-spot-24h",
+      "event_name": "spot_24h_momentum",
+      "payload": {
+        "asset": "AIX",
+        "summary": "24h price change is 5.80% with quote volume 1543210; last price 1.257000 vs open 1.188000",
+        "metrics": {
+          "price_change_pct": 5.8,
+          "quote_volume": 1543210.5,
+          "last_price": 1.257
+        }
+      },
+      "mapping": {
+        "claimKind": "measurement",
+        "bias": "bullish",
+        "evidence": "E4",
+        "confidenceScore": 66,
+        "horizon": "intraday"
+      },
+      "extra": {
+        "venue": "Binance",
+        "market_type": "spot",
+        "endpoint": "/api/v3/ticker/24hr"
+      }
+    },
+    {
+      "event_id": "aixusdt-spot-structure",
+      "event_name": "market_structure_support",
+      "payload": {
+        "asset": "AIX",
+        "summary": "latest 5m candle is holding above the prior close with taker buy ratio 0.65",
+        "metrics": {
+          "previous_close": 1.205,
+          "latest_close": 1.257,
+          "taker_buy_ratio": 0.6522
+        }
+      },
+      "mapping": {
+        "claimKind": "market_structure",
+        "bias": "bullish",
+        "evidence": "E4",
+        "confidenceScore": 80,
+        "horizon": "intraday"
+      },
+      "extra": {
+        "venue": "Binance",
+        "market_type": "spot",
+        "endpoint": "/api/v3/klines"
+      }
+    }
+  ],
+  "raw_http": {
+    "ticker_24hr": {
+      "symbol": "AIXUSDT",
+      "priceChangePercent": "5.80",
+      "quoteVolume": "1543210.50",
+      "lastPrice": "1.2570",
+      "openPrice": "1.1880"
+    },
+    "klines": [
+      [
+        1775555400000,
+        "1.1900",
+        "1.2100",
+        "1.1800",
+        "1.2050",
+        "1200",
+        1775555700000,
+        "150000.0",
+        120,
+        "82000.0",
+        "102000.0",
+        "0"
+      ],
+      [
+        1775555700000,
+        "1.2050",
+        "1.2650",
+        "1.2000",
+        "1.2570",
+        "1800",
+        1775556000000,
+        "230000.0",
+        200,
+        "150000.0",
+        "150000.0",
+        "0"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.alpha_ontology_v5_rw_bridge_no_overlay_mf01_combo_replace_v1_h10d",
+  "lineage": {
+    "doc": "docs/quant_research/03_alpha_branches/orderbook_inventory_risk_transfer_proposal.md",
+    "doc_context_version": "2026-05-03.1",
+    "predecessor_baseline": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v5_rw_bridge_no_overlay_lsk3_g_v2_h10d.json",
+    "scoring_family": "xs_alpha_ontology_v5_h10d_rw_bridge_mf01_combo_replace_v1",
+    "overlay_id": null,
+    "method": "MF-01 short-boundary replacement on the canonical v5_rw_bridge_no_overlay_h10d parent.",
+    "goal": "Measure orderbook/inventory-transfer incremental value against canonical parent without relying on SP-K or legacy v6."
+  },
+  "entries": [
+    {
+      "candidate_id": "xs_alpha_ontology_v5_rw_bridge_no_overlay_mf01_combo_replace_v1_h10d",
+      "base_mechanism_id": "xs_alpha_ontology_v5_rw_bridge_no_overlay_mf01_combo_replace_v1",
+      "horizon_id": "h10d",
+      "target_horizon_bars": 10,
+      "label_contract_id": "forward_return_execution_aligned.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_alpha_ontology_v5_h10d_rw_bridge_mf01_combo_replace_v1",
+      "strategy_profile": "conservative",
+      "feature_selection_mode": "required_columns",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "downside_upside_vol_ratio_30",
+        "funding_basis_residual_implied_repo_30",
+        "settlement_cycle_premium_60d",
+        "boundary_fragile_orderbook_score",
+        "pump_bid_replenishment_failure_score",
+        "mf01_short_boundary_combo_score"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.0,
+        "top_long_count": 3,
+        "bottom_short_count": 3
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_alpha_ontology_v5_rw_bridge_no_overlay_mf01_combo_replace_v1_h10d",
+        "thesis_family": "hypothesis_xs_alpha_ontology_v5_rw_bridge_no_overlay_mf01_combo_replace_v1_h10d",
+        "market_mechanism": "MF-01 tests whether weak bid replenishment, persistent ask pressure, and pump bid-failure identify better marginal shorts near the canonical parent short cutoff. This is a parent-independent orderbook/inventory-transfer boundary rule, not an SP-K continuation, veto, or event-tape branch.",
+        "directional_claim": "Keeping the canonical long leg unchanged, replacing at most one bottom-3 short slot with a nearby MF-01 fragile candidate should improve net h10d OOS returns and survive statistical falsification versus v5_rw_bridge_no_overlay_h10d.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "downside_upside_vol_ratio_30",
+          "funding_basis_residual_implied_repo_30",
+          "settlement_cycle_premium_60d",
+          "boundary_fragile_orderbook_score",
+          "pump_bid_replenishment_failure_score",
+          "mf01_short_boundary_combo_score"
+        ],
+        "factor_formula": "For each train split/window, estimate v5 rolling signed-IR weights from train only and compute the canonical no-overlay parent score. Long leg remains parent top-3. Short leg starts from parent bottom-3. Search only the bottom-6 tail; if a candidate has sufficiently negative mf01_short_boundary_combo_score z-score, allow at most one replacement of the weakest current short. No SP-K feature, no event tape, no overlay, no long-side change.",
+        "intended_holding_horizon_bars": 10,
+        "falsification_conditions": [
+          "fixed_set_underperforms_v5_rw_bridge_no_overlay_h10d",
+          "statistical_falsification_failed",
+          "delay_stress_failed",
+          "cost_stress_failed",
+          "symbol_holdout_failed",
+          "liquidity_bucket_consistency_failed",
+          "legacy_v6_only_effect"
+        ]
+      },
+      "spec_hash": "f7279568481f1f3d7a268a17feaffa7fd700098bb0f9c4b78a629532d8e236d5"
+    }
+  ],
+  "lifecycle": "experimental",
+  "experimental_marker_set_at": "2026-05-03",
+  "experimental_reason": "First canonical MF-01 replacement test after SP-K no-go. Promotion requires canonical parent increment and statistical falsification clearance."
+}

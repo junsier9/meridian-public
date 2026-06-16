@@ -1,0 +1,404 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v3",
+  "entries": [
+    {
+      "candidate_id": "xs_quality_strength_v3_h1d",
+      "base_mechanism_id": "xs_quality_strength_v3",
+      "horizon_id": "h1d",
+      "target_horizon_bars": 1,
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_quality_strength_v3",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "momentum_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "range_position_20"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_quality_strength_v3_h1d",
+        "thesis_family": "hypothesis_xs_quality_strength_v3_h1d",
+        "market_mechanism": "quality leadership in liquid spot names should persist best after orderly pullbacks rather than at peak extension",
+        "directional_claim": "own liquid names that combine relative strength and medium-horizon slope with supportive participation, but only after the move has reset inside the range",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "momentum_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "range_position_20"
+        ],
+        "factor_formula": "0.32*relative_strength_20 + 0.22*ema_slope_5_20 + 0.18*momentum_20 + 0.14*(quote_volume_expansion-1) + 0.14*(0.5-range_position_20)",
+        "intended_holding_horizon_bars": 1,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "a351cbb163b44e44f128e6f16912dfc7ca0d172b1e5964dd0144b7a7c93d07e1"
+    },
+    {
+      "candidate_id": "xs_quality_strength_v3_h3d",
+      "base_mechanism_id": "xs_quality_strength_v3",
+      "horizon_id": "h3d",
+      "target_horizon_bars": 3,
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_quality_strength_v3",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "momentum_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "range_position_20"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_quality_strength_v3_h3d",
+        "thesis_family": "hypothesis_xs_quality_strength_v3_h3d",
+        "market_mechanism": "quality leadership in liquid spot names should persist best after orderly pullbacks rather than at peak extension",
+        "directional_claim": "own liquid names that combine relative strength and medium-horizon slope with supportive participation, but only after the move has reset inside the range",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "momentum_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "range_position_20"
+        ],
+        "factor_formula": "0.32*relative_strength_20 + 0.22*ema_slope_5_20 + 0.18*momentum_20 + 0.14*(quote_volume_expansion-1) + 0.14*(0.5-range_position_20)",
+        "intended_holding_horizon_bars": 3,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "2fa5d6c221fc411b7c455ba674b3c9f9bfe3a2a7749ff351db528dbad8cc997f"
+    },
+    {
+      "candidate_id": "xs_quality_strength_v3_h5d",
+      "base_mechanism_id": "xs_quality_strength_v3",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_quality_strength_v3",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "momentum_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "range_position_20"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_quality_strength_v3_h5d",
+        "thesis_family": "hypothesis_xs_quality_strength_v3_h5d",
+        "market_mechanism": "quality leadership in liquid spot names should persist best after orderly pullbacks rather than at peak extension",
+        "directional_claim": "own liquid names that combine relative strength and medium-horizon slope with supportive participation, but only after the move has reset inside the range",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "momentum_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "range_position_20"
+        ],
+        "factor_formula": "0.32*relative_strength_20 + 0.22*ema_slope_5_20 + 0.18*momentum_20 + 0.14*(quote_volume_expansion-1) + 0.14*(0.5-range_position_20)",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "692c7be97f3271887da1b0fc0e50af74af8f6f4bacd788d05f22e0b50ad7f465"
+    },
+    {
+      "candidate_id": "xs_participation_drift_v3_h1d",
+      "base_mechanism_id": "xs_participation_drift_v3",
+      "horizon_id": "h1d",
+      "target_horizon_bars": 1,
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_participation_drift_v3",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "momentum_20",
+        "ema_slope_5_20",
+        "distance_to_high_20"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_participation_drift_v3_h1d",
+        "thesis_family": "hypothesis_xs_participation_drift_v3_h1d",
+        "market_mechanism": "participation-led spot drift should persist when turnover expansion is paired with medium-horizon trend confirmation instead of pure short-horizon chase",
+        "directional_claim": "own liquid names where relative strength and expanding participation align with intraday expansion, medium-horizon trend support, and proximity to highs",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "momentum_20",
+          "ema_slope_5_20",
+          "distance_to_high_20"
+        ],
+        "factor_formula": "0.26*relative_strength_20 + 0.22*(quote_volume_expansion-1) + 0.18*intraday_realized_vol_4h_to_1d + 0.16*momentum_20 + 0.10*ema_slope_5_20 - 0.08*distance_to_high_20",
+        "intended_holding_horizon_bars": 1,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "9ba47db2502776ca49a2f8b2e011b872845751882a0539b8083c6cd14e59d756"
+    },
+    {
+      "candidate_id": "xs_participation_drift_v3_h3d",
+      "base_mechanism_id": "xs_participation_drift_v3",
+      "horizon_id": "h3d",
+      "target_horizon_bars": 3,
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_participation_drift_v3",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "momentum_20",
+        "ema_slope_5_20",
+        "distance_to_high_20"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_participation_drift_v3_h3d",
+        "thesis_family": "hypothesis_xs_participation_drift_v3_h3d",
+        "market_mechanism": "participation-led spot drift should persist when turnover expansion is paired with medium-horizon trend confirmation instead of pure short-horizon chase",
+        "directional_claim": "own liquid names where relative strength and expanding participation align with intraday expansion, medium-horizon trend support, and proximity to highs",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "momentum_20",
+          "ema_slope_5_20",
+          "distance_to_high_20"
+        ],
+        "factor_formula": "0.26*relative_strength_20 + 0.22*(quote_volume_expansion-1) + 0.18*intraday_realized_vol_4h_to_1d + 0.16*momentum_20 + 0.10*ema_slope_5_20 - 0.08*distance_to_high_20",
+        "intended_holding_horizon_bars": 3,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "b553bc8a96e47cea58673526d36bd3f829d43f059310b9e24d2f210892862621"
+    },
+    {
+      "candidate_id": "xs_participation_drift_v3_h5d",
+      "base_mechanism_id": "xs_participation_drift_v3",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_participation_drift_v3",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "momentum_20",
+        "ema_slope_5_20",
+        "distance_to_high_20"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_participation_drift_v3_h5d",
+        "thesis_family": "hypothesis_xs_participation_drift_v3_h5d",
+        "market_mechanism": "participation-led spot drift should persist when turnover expansion is paired with medium-horizon trend confirmation instead of pure short-horizon chase",
+        "directional_claim": "own liquid names where relative strength and expanding participation align with intraday expansion, medium-horizon trend support, and proximity to highs",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "momentum_20",
+          "ema_slope_5_20",
+          "distance_to_high_20"
+        ],
+        "factor_formula": "0.26*relative_strength_20 + 0.22*(quote_volume_expansion-1) + 0.18*intraday_realized_vol_4h_to_1d + 0.16*momentum_20 + 0.10*ema_slope_5_20 - 0.08*distance_to_high_20",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "a6f0df15d1532c8e1ec0ebcadaf3926924da3d8d4e8786f883e05635e6199484"
+    }
+  ]
+}

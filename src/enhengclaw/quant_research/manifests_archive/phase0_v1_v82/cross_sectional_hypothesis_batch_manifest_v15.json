@@ -1,0 +1,78 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v15",
+  "entries": [
+    {
+      "candidate_id": "xs_contraction_release_v3_h5d",
+      "base_mechanism_id": "xs_contraction_release_v3",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_contraction_release_v3",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "realized_volatility_20",
+        "atr_proxy_20",
+        "range_position_20",
+        "distance_to_high_20",
+        "momentum_5"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_contraction_release_v3_h5d",
+        "thesis_family": "hypothesis_xs_contraction_release_v3_h5d",
+        "market_mechanism": "quiet spot names near the top of their local range can continue higher over five days when release conditions remain orderly across the cross section rather than being dominated by a handful of extreme breakout names",
+        "directional_claim": "own spot names with contraction near local highs and persistent relative strength, but score them primarily by stable cross-sectional ordering so the edge is monotone through the signal buckets instead of hinging on a small number of overheated tails",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "realized_volatility_20",
+          "atr_proxy_20",
+          "range_position_20",
+          "distance_to_high_20",
+          "momentum_5"
+        ],
+        "factor_formula": "favor contraction-release names with strong and orderly cross-sectional ranks, blend only a small amount of raw release strength, and compress final tails so monotonicity and quarter concentration improve without changing the family semantics",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "a2d279141c472383a1c3de60fab1e7b6da8d3722901d8a90771cf5f4fd2a482d"
+    }
+  ]
+}

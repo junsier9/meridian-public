@@ -1,0 +1,90 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_risk_brake_behavior_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze root-facade importability, signatures, and required behavior-test coverage for Binance-canonical h10d risk-brake behavior functions. This contract intentionally excludes broad formula snapshots and source movement.",
+  "validation_mode": "root_facade_signature_required_behavior_tests_only",
+  "risk_brake_behavior_targets": {
+    "add_short_squeeze_veto_multiplier": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "frame",
+            "required": true
+          }
+        ],
+        "return_annotation": "pd.DataFrame"
+      }
+    },
+    "add_binance_risk_brake_columns": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "frame",
+            "required": true
+          },
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "config",
+            "required": true
+          }
+        ],
+        "return_annotation": "pd.DataFrame"
+      }
+    },
+    "_add_high_vol_rebound_short_brake": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "frame",
+            "required": true
+          },
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "policy",
+            "required": true
+          }
+        ],
+        "return_annotation": "pd.DataFrame"
+      }
+    }
+  },
+  "required_behavior_test_file": "tests/test_binance_canonical_h10d.py",
+  "required_behavior_tests": [
+    "test_risk_brake_columns_are_retained_without_entering_alpha_features",
+    "test_high_vol_rebound_brake_uses_decision_time_market_state",
+    "test_ablation_runner_reports_long_only_short_disabled_and_short_veto"
+  ],
+  "required_column_registry_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_universe_membership_writer_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_universe_membership_writer_contract.v1",
+    "must_exclude_surface": "risk-brake formula behavior"
+  },
+  "excluded_surfaces": [
+    "source migration",
+    "internal module layout",
+    "exact risk-brake formula output snapshots",
+    "BINANCE_RISK_BRAKE_COLUMNS tuple ownership",
+    "full universe membership schema",
+    "validation report payloads",
+    "ablation metric values",
+    "funding behavior",
+    "PIT universe behavior",
+    "execution ledger behavior",
+    "_truthy_series as a generic utility",
+    "caller counts"
+  ]
+}

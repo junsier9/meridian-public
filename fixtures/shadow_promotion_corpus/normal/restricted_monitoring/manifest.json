@@ -1,0 +1,15 @@
+{
+  "category": "normal",
+  "scenario": "restricted_monitoring",
+  "subject": "ORBX",
+  "scope": "bridge",
+  "object_type": "asset",
+  "baseline_cex": {
+    "replay_root": "fixtures/golden_corpus/cex/normal",
+    "scenario": "restricted_monitoring"
+  },
+  "candidate_onchain": {
+    "replay_root": "fixtures/golden_corpus/onchain/normal",
+    "scenario": "restricted_monitoring"
+  }
+}

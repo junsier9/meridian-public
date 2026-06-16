@@ -1,0 +1,8 @@
+{
+  "case_id": "market_observer_blocked",
+  "expected_status": "blocked",
+  "object_id": "golden-blocked-aix",
+  "scope": "spot+perp",
+  "subject": "AIX",
+  "observation_text": "AIX stays active, but this note remains vague and does not establish a supported market-observer predicate."
+}

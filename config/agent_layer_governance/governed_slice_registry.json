@@ -1,0 +1,13 @@
+{
+  "contract_version": "governed_slice_registry.v1",
+  "admitted_controlled_slice_ids": [
+    "market_observer",
+    "evidence_agent",
+    "risk_signal_agent",
+    "risk_governance_agent",
+    "validation_agent",
+    "attention_allocator",
+    "research_synthesizer",
+    "research_lead"
+  ]
+}

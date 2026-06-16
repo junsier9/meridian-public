@@ -1,0 +1,132 @@
+{
+  "contract_version": "quant_deterministic_strategy_manifest.v1",
+  "selection_policy": "checked_in_manifest_order_enabled_only",
+  "entries": [
+    {
+      "strategy_id": "core-eth-conservative-breakout-volatility-expansion-single-asset",
+      "enabled": true,
+      "shape": "single_asset",
+      "dataset_profile": "single_asset",
+      "subject": "ETH",
+      "model_family": "breakout_volatility_expansion",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "core_context",
+        "structure",
+        "trend",
+        "volume",
+        "volatility"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "short_allowed": false,
+        "long_only": true,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "spec_hash": "1daeb0ac2a609b363588f709e0b1f29db910c26445a074bdcc4828550a28e34a"
+    },
+    {
+      "strategy_id": "core-btc-balanced-mean-reversion-single-asset",
+      "enabled": true,
+      "shape": "single_asset",
+      "dataset_profile": "single_asset",
+      "subject": "BTC",
+      "model_family": "mean_reversion",
+      "strategy_profile": "balanced",
+      "feature_groups": [
+        "core_context",
+        "structure",
+        "volatility",
+        "volume"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "short_allowed": true,
+        "long_only": false,
+        "max_gross_leverage": 1.5,
+        "long_leverage": 1.0,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.5
+      },
+      "spec_hash": "bd501d1d5252e09d4ef49e3ae731c9feff238f8e292378356062198d410796ea"
+    },
+    {
+      "strategy_id": "core-liquidity-balanced-ranking-scorer-cross-sectional",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "universe_filter": {
+        "liquidity_buckets": [
+          "top_liquidity",
+          "mid_liquidity"
+        ]
+      },
+      "model_family": "ranking_scorer",
+      "strategy_profile": "balanced",
+      "feature_groups": [
+        "core_context",
+        "structure",
+        "trend",
+        "volume"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "short_allowed": true,
+        "long_only": false,
+        "max_gross_leverage": 1.5,
+        "long_leverage": 1.0,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.5
+      },
+      "spec_hash": "5655911a287e3f781338d29ce592df9f251bb035120516f64c0dacfdf0919ba3"
+    },
+    {
+      "strategy_id": "core-liquidity-balanced-ranking-scorer-intraday-cross-sectional",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_intraday_1h",
+      "universe_filter": {
+        "liquidity_buckets": [
+          "top_liquidity",
+          "mid_liquidity"
+        ]
+      },
+      "model_family": "ranking_scorer",
+      "strategy_profile": "balanced",
+      "feature_groups": [
+        "core_context",
+        "structure",
+        "trend",
+        "volume"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "short_allowed": true,
+        "long_only": false,
+        "max_gross_leverage": 1.5,
+        "long_leverage": 1.0,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.5
+      },
+      "spec_hash": "046d04e465d823afdfcb9eec74665bd78e596049f6e6bd673b08550e7315321b"
+    }
+  ]
+}

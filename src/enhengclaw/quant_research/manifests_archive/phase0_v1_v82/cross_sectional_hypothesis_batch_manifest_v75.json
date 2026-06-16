@@ -1,0 +1,92 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v75",
+  "entries": [
+    {
+      "candidate_id": "xs_pair_spread_book_v8_h5d",
+      "base_mechanism_id": "xs_pair_spread_book_v8",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_pair_spread_book_v8",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 0.5,
+        "pair_construction": "quality_bucket_pairs",
+        "pair_bucket_count": 3,
+        "pair_count": 1,
+        "pair_score_spread_min": 0.12,
+        "pair_quality_floor": 0.35
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_pair_spread_book_v8_h5d",
+        "thesis_family": "hypothesis_xs_pair_spread_book_v8_h5d",
+        "market_mechanism": "inside the liquid perp-covered core, keep the v30 single-pair flipped book and add only a tiny near-high continuation tie-breaker while preserving the original turnover profile, so strict concentration can improve without the regime damage seen in heavier variants",
+        "directional_claim": "if v30 is already the best candidate, a minimal near-high continuation tie-breaker should spread quarter contribution a bit more while leaving the stable regime profile intact",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "return_1"
+        ],
+        "factor_formula": "start from the v30 smoothed flipped pair-book, then add only a very small distance-to-high tie-breaker before pair construction so strict concentration can improve without changing the execution structure",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "416b44adb93c5af924785296fd481aabe69231ec5fa6da5cfd0104e095d098e1"
+    }
+  ]
+}

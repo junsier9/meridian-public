@@ -1,0 +1,8 @@
+{
+  "case_id": "research_synthesizer_quarantine",
+  "expected_status": "quarantine",
+  "object_id": "golden-research-synthesizer-aix",
+  "scope": "spot+perp",
+  "subject": "AIX",
+  "synthesis_text": "Bullish synthesis preview remains the right bounded framing."
+}

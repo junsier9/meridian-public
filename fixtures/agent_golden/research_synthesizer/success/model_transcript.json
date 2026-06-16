@@ -1,0 +1,130 @@
+{
+  "backend_kind": "live",
+  "backend_name": "openai_compatible_chat_completions",
+  "compiler_output": {
+    "blocked_reason": null,
+    "candidate_payloads": [
+      {
+        "claim_type": "predictive",
+        "confidence_hint": 68,
+        "direction": "bullish",
+        "evidence_level": "E3",
+        "input_id": "research_synthesizer_success:1",
+        "predicate": "synthesis_preview_bullish",
+        "scope": "spot+perp",
+        "source_family": "analytics",
+        "subject": "AIX",
+        "time_horizon": "medium",
+        "value": "the bounded synthesis note previews a bullish synthesis without mutating the thesis graph"
+      }
+    ],
+    "notes": [
+      "deterministic compiler emitted one candidate payload",
+      "recorded success fixture for research_synthesizer"
+    ],
+    "status": "success"
+  },
+  "contract_version": "research_synthesizer_compiler_v1",
+  "input_fingerprint": "9be44741411836034940866aacd201fd930c9da8ea5370e5dbd518918a68ca23",
+  "model_request": {
+    "endpoint": "https://example.invalid/chat/completions",
+    "request_body": {
+      "messages": [
+        {
+          "content": "# Role\nYou compile one bounded synthesis-preview observation into exactly one machine-readable JSON envelope for the `research_synthesizer` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `synthesis_preview_monitor`, `synthesis_preview_bullish`, `synthesis_preview_bearish`, `synthesis_risk_preview`\n- `claim_type`: `predictive`, `risk_flag`\n- `direction`: `bullish`, `bearish`, `neutral`, `risk`\n- `source_family`: `analytics`, `official`\n- `evidence_level`: `E2`, `E3`, `E4`\n- `time_horizon`: `short`, `medium`, `structural`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- Emit one bounded synthesis-preview claim only.\n- Do not select a working thesis or bypass thesis review.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the synthesis text is too vague or would require inventing unsupported thesis posture.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing subjects, scopes, thesis ids, or conflicts.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+          "role": "system"
+        },
+        {
+          "content": "Compile one bounded synthesis-preview observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=research_synthesizer_success:1\nobject_id=golden-research-synthesizer-aix\nobject_context_fingerprint=557528e92509811b44eddeeee047f2c748f215d43826e4ac898d18bec077f0ba\nexisting_object_context_json:\n{\"claim_count\": 2, \"object_id\": \"golden-research-synthesizer-aix\", \"processing_state\": \"monitoring\", \"recent_claims\": [{\"confidence\": 82, \"direction\": \"bullish\", \"predicate\": \"spot_breakout\", \"scope\": \"spot+perp\", \"source_family\": \"cex\", \"time_horizon\": \"intraday\", \"value\": \"AIX spot structure remains constructive\"}, {\"confidence\": 78, \"direction\": \"bullish\", \"predicate\": \"wallet_buy\", \"scope\": \"spot+perp\", \"source_family\": \"onchain\", \"time_horizon\": \"intraday\", \"value\": \"AIX still shows supportive flow from large buyers\"}], \"research_synthesis_context\": {\"object_id\": \"golden-research-synthesizer-aix\", \"processing_state\": \"monitoring\", \"reasons\": [\"thesis_building is not legal in monitoring\"], \"risk_state\": \"normal\", \"stage_permitted\": false, \"thesis_count\": 1, \"thesis_ids\": [\"golden-research-synthesizer-aix:primary\"], \"working_opposing_thesis_id\": null, \"working_primary_conflict\": \"clean\", \"working_primary_thesis_id\": \"golden-research-synthesizer-aix:primary\", \"working_primary_type\": \"predictive\"}, \"risk_state\": \"normal\", \"scope\": \"spot+perp\", \"subject\": \"AIX\"}\nsynthesis_text:\nBullish synthesis preview remains the right bounded framing.",
+          "role": "user"
+        }
+      ],
+      "model": "fixture-test-model",
+      "temperature": 0.0
+    },
+    "request_headers": {
+      "Authorization": "Bearer ***redacted***",
+      "Content-Type": "application/json"
+    },
+    "timeout_seconds": 30.0
+  },
+  "object_context_fingerprint": "557528e92509811b44eddeeee047f2c748f215d43826e4ac898d18bec077f0ba",
+  "prompt_context": {
+    "contract_version": "research_synthesizer_compiler_v1",
+    "messages": [
+      {
+        "content": "# Role\nYou compile one bounded synthesis-preview observation into exactly one machine-readable JSON envelope for the `research_synthesizer` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `synthesis_preview_monitor`, `synthesis_preview_bullish`, `synthesis_preview_bearish`, `synthesis_risk_preview`\n- `claim_type`: `predictive`, `risk_flag`\n- `direction`: `bullish`, `bearish`, `neutral`, `risk`\n- `source_family`: `analytics`, `official`\n- `evidence_level`: `E2`, `E3`, `E4`\n- `time_horizon`: `short`, `medium`, `structural`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- Emit one bounded synthesis-preview claim only.\n- Do not select a working thesis or bypass thesis review.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the synthesis text is too vague or would require inventing unsupported thesis posture.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing subjects, scopes, thesis ids, or conflicts.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+        "role": "system"
+      },
+      {
+        "content": "Compile one bounded synthesis-preview observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=research_synthesizer_success:1\nobject_id=golden-research-synthesizer-aix\nobject_context_fingerprint=557528e92509811b44eddeeee047f2c748f215d43826e4ac898d18bec077f0ba\nexisting_object_context_json:\n{\"claim_count\": 2, \"object_id\": \"golden-research-synthesizer-aix\", \"processing_state\": \"monitoring\", \"recent_claims\": [{\"confidence\": 82, \"direction\": \"bullish\", \"predicate\": \"spot_breakout\", \"scope\": \"spot+perp\", \"source_family\": \"cex\", \"time_horizon\": \"intraday\", \"value\": \"AIX spot structure remains constructive\"}, {\"confidence\": 78, \"direction\": \"bullish\", \"predicate\": \"wallet_buy\", \"scope\": \"spot+perp\", \"source_family\": \"onchain\", \"time_horizon\": \"intraday\", \"value\": \"AIX still shows supportive flow from large buyers\"}], \"research_synthesis_context\": {\"object_id\": \"golden-research-synthesizer-aix\", \"processing_state\": \"monitoring\", \"reasons\": [\"thesis_building is not legal in monitoring\"], \"risk_state\": \"normal\", \"stage_permitted\": false, \"thesis_count\": 1, \"thesis_ids\": [\"golden-research-synthesizer-aix:primary\"], \"working_opposing_thesis_id\": null, \"working_primary_conflict\": \"clean\", \"working_primary_thesis_id\": \"golden-research-synthesizer-aix:primary\", \"working_primary_type\": \"predictive\"}, \"risk_state\": \"normal\", \"scope\": \"spot+perp\", \"subject\": \"AIX\"}\nsynthesis_text:\nBullish synthesis preview remains the right bounded framing.",
+        "role": "user"
+      }
+    ],
+    "object_context": {
+      "claim_count": 2,
+      "object_id": "golden-research-synthesizer-aix",
+      "processing_state": "monitoring",
+      "recent_claims": [
+        {
+          "confidence": 82,
+          "direction": "bullish",
+          "predicate": "spot_breakout",
+          "scope": "spot+perp",
+          "source_family": "cex",
+          "time_horizon": "intraday",
+          "value": "AIX spot structure remains constructive"
+        },
+        {
+          "confidence": 78,
+          "direction": "bullish",
+          "predicate": "wallet_buy",
+          "scope": "spot+perp",
+          "source_family": "onchain",
+          "time_horizon": "intraday",
+          "value": "AIX still shows supportive flow from large buyers"
+        }
+      ],
+      "research_synthesis_context": {
+        "object_id": "golden-research-synthesizer-aix",
+        "processing_state": "monitoring",
+        "reasons": [
+          "thesis_building is not legal in monitoring"
+        ],
+        "risk_state": "normal",
+        "stage_permitted": false,
+        "thesis_count": 1,
+        "thesis_ids": [
+          "golden-research-synthesizer-aix:primary"
+        ],
+        "working_opposing_thesis_id": null,
+        "working_primary_conflict": "clean",
+        "working_primary_thesis_id": "golden-research-synthesizer-aix:primary",
+        "working_primary_type": "predictive"
+      },
+      "risk_state": "normal",
+      "scope": "spot+perp",
+      "subject": "AIX"
+    },
+    "object_context_fingerprint": "557528e92509811b44eddeeee047f2c748f215d43826e4ac898d18bec077f0ba",
+    "prompt_fingerprint": "22354a297549d07e1b4a0f8dfb0ab18f7857cf4b975b5098f0157b37240fc7da",
+    "prompt_path": "C:\\Users\\user\\Documents\\Claude\\Projects\\EnhengClaw\\src\\enhengclaw\\agents\\prompts\\research_synthesizer.system.md",
+    "prompt_template_version": "research_synthesizer_prompt_template_v1"
+  },
+  "prompt_fingerprint": "22354a297549d07e1b4a0f8dfb0ab18f7857cf4b975b5098f0157b37240fc7da",
+  "raw_model_output": {
+    "assistant_text": "{\"blocked_reason\": null, \"candidate_payloads\": [{\"claim_type\": \"predictive\", \"confidence_hint\": 68, \"direction\": \"bullish\", \"evidence_level\": \"E3\", \"input_id\": \"research_synthesizer_success:1\", \"predicate\": \"synthesis_preview_bullish\", \"scope\": \"spot+perp\", \"source_family\": \"analytics\", \"subject\": \"AIX\", \"time_horizon\": \"medium\", \"value\": \"the bounded synthesis note previews a bullish synthesis without mutating the thesis graph\"}], \"notes\": [\"deterministic compiler emitted one candidate payload\", \"recorded success fixture for research_synthesizer\"], \"status\": \"success\"}",
+    "response_json": {
+      "choices": [
+        {
+          "message": {
+            "content": "{\"blocked_reason\": null, \"candidate_payloads\": [{\"claim_type\": \"predictive\", \"confidence_hint\": 68, \"direction\": \"bullish\", \"evidence_level\": \"E3\", \"input_id\": \"research_synthesizer_success:1\", \"predicate\": \"synthesis_preview_bullish\", \"scope\": \"spot+perp\", \"source_family\": \"analytics\", \"subject\": \"AIX\", \"time_horizon\": \"medium\", \"value\": \"the bounded synthesis note previews a bullish synthesis without mutating the thesis graph\"}], \"notes\": [\"deterministic compiler emitted one candidate payload\", \"recorded success fixture for research_synthesizer\"], \"status\": \"success\"}"
+          }
+        }
+      ]
+    },
+    "response_text": "{\"choices\": [{\"message\": {\"content\": \"{\\\"blocked_reason\\\": null, \\\"candidate_payloads\\\": [{\\\"claim_type\\\": \\\"predictive\\\", \\\"confidence_hint\\\": 68, \\\"direction\\\": \\\"bullish\\\", \\\"evidence_level\\\": \\\"E3\\\", \\\"input_id\\\": \\\"research_synthesizer_success:1\\\", \\\"predicate\\\": \\\"synthesis_preview_bullish\\\", \\\"scope\\\": \\\"spot+perp\\\", \\\"source_family\\\": \\\"analytics\\\", \\\"subject\\\": \\\"AIX\\\", \\\"time_horizon\\\": \\\"medium\\\", \\\"value\\\": \\\"the bounded synthesis note previews a bullish synthesis without mutating the thesis graph\\\"}], \\\"notes\\\": [\\\"deterministic compiler emitted one candidate payload\\\", \\\"recorded success fixture for research_synthesizer\\\"], \\\"status\\\": \\\"success\\\"}\"}}]}",
+    "status_code": 200
+  },
+  "transcript_fingerprint": "78cc90d1ec0ef16767363e23f7bb89b978d7a06fa826c73bbd2dbb78af1988fb"
+}

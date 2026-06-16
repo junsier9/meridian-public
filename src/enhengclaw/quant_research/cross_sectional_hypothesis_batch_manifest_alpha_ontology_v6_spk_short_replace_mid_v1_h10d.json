@@ -1,0 +1,217 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.alpha_ontology_v6_h10d_spk_short_replace_mid_v1",
+  "lineage": {
+    "doc": "docs/quant_research/00_roadmap_state/alpha_ontology_and_factor_library.md",
+    "doc_context_version": "2026-05-02.1",
+    "predecessor_baseline": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v6_lsk3_g_v2_h10d.json",
+    "scoring_family": "xs_alpha_ontology_v6",
+    "overlay_id": "alpha_ontology_regime_gating_v2",
+    "method": "SP-K short replacement / veto deployment on top of the former v6_h10d parent. Keep the core-20 universe, same regime-gating overlay, same top-3/bottom-3 construction; only allow one marginal short-slot replacement near the baseline cutoff when a mid-liquidity post-pump-stall name appears in the tail.",
+    "sub_path": "SP-K",
+    "doc_e12_falsification_2026_04_29": {
+      "test": "post-cascade 24h abnormal log return t-stat",
+      "n_events": 8858,
+      "n_subjects_with_events": 29,
+      "mean_abnormal_24h_log_return": 0.0074,
+      "std_abnormal_24h_log_return": 0.0647,
+      "t_stat": 10.75,
+      "doc_threshold_2_5_sigma": 2.5,
+      "result": "PASS - t=+10.75 strongly significant, 4x the doc 2.5 sigma floor"
+    },
+    "admission_audit_2026_04_29": {
+      "factor_id": "liq_cascade_recency_score_5d",
+      "raw_spearman_ic": 0.0522,
+      "raw_t_stat": 10.5,
+      "n_ts": 707,
+      "g1_pass_strict": true,
+      "g3_regime_same_sign_fraction": 1.0,
+      "g3_pass": true,
+      "g6_residual_ic_vs_lsk3": 0.0616,
+      "g6_t_stat": 10.77,
+      "g6_pass": true,
+      "all_4_variants_g6_pass": true,
+      "selected_strongest_variant": "liq_cascade_recency_score_5d (highest residual IC + highest t-stat)",
+      "alternative_variants_admitted": [
+        {
+          "factor": "liq_cascade_max_z_24h",
+          "raw_ic": 0.0448,
+          "g1_pass": true,
+          "g6_residual": 0.0578
+        },
+        {
+          "factor": "liq_cascade_count_24h_z25",
+          "raw_ic": 0.0225,
+          "g1_pass": false,
+          "g6_residual": 0.0523
+        },
+        {
+          "factor": "liq_cascade_signed_intensity_24h",
+          "raw_ic": 0.001,
+          "g1_pass": false,
+          "g6_residual": 0.0275
+        }
+      ],
+      "weight": 0.05,
+      "weight_calibration": "Conservative initial pick. Raw IC 0.052 x v91 ratio 3.25 = 0.17 (would be aggressive). F62 lesson at IC -0.024 -> w=-0.08 was Pareto-optimal; transferring that ratio (~3.3) to recency_score gives w~=0.17 but conservatism suggests starting at 0.10 (~50% of theoretical) and scanning up."
+    },
+    "spk_admission_extension_2026_05_01": {
+      "factor_id": "post_pump_stall_core_score_3d",
+      "target_universe": "mid_tail_ex_majors",
+      "target_horizon": "h5d",
+      "raw_spearman_ic": 0.0411,
+      "g1_pass_strict": true,
+      "g3_regime_same_sign_fraction": 1.0,
+      "g3_pass": true,
+      "g6_residual_ic_vs_lsk3": -0.0444,
+      "g6_pass": true,
+      "selected_over_sibling": "post_pump_stall_core_score_3d preferred over post_pump_stall_oi_score_3d after cycle-layer evaluation"
+    },
+    "promotion_decision_2026_05_02": {
+      "result": "PROMOTE_TO_CANONICAL_BASELINE",
+      "preferred_deployment": "replace_mid_v1_no_news",
+      "reason": "This is the first SP-K landing shape that materially improves the healthy h10d parent strategy while preserving the parent loss-window profile. Follow-up selected-short news and MF-01 challenger variants remain useful diagnostics, but none beats the stable tail-quality / basket-quality trade-off of the no-news short-slot replacement.",
+      "challengers_considered": [
+        "selected-short news veto (mini / adjudicated)",
+        "selected-short reduced exposure",
+        "MF-01 narrow confirmation / veto / guardrail"
+      ]
+    }
+  },
+  "entries": [
+    {
+      "candidate_id": "xs_alpha_ontology_v6_spk_short_replace_mid_v1_h10d",
+      "base_mechanism_id": "xs_alpha_ontology_v6_spk_short_replace_mid_v1",
+      "horizon_id": "h10d",
+      "target_horizon_bars": 10,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_alpha_ontology_v6_h10d_spk_short_replace_mid_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "downside_upside_vol_ratio_30",
+        "funding_basis_residual_implied_repo_30",
+        "liq_cascade_recency_score_5d",
+        "post_pump_stall_core_score_3d"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.0,
+        "top_long_count": 3,
+        "bottom_short_count": 3,
+        "position_multiplier_overlay_id": "alpha_ontology_regime_gating_v2"
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_alpha_ontology_v6_spk_short_replace_mid_v1_h10d",
+        "thesis_family": "hypothesis_xs_alpha_ontology_v6_spk_short_replace_mid_v1_h10d",
+        "market_mechanism": "Attach SP-K as a short-selection replacement rule to v6_h10d. Keep the active parent strategy on `liquid_perp_core_20`; preserve the long leg; only replace marginal baseline short names when a mid-liquidity post-pump-stall candidate sits just above the short cutoff.",
+        "directional_claim": "The main strategy already identifies the broad short book well. SP-K should help only on the boundary: do not perturb the whole cross-section, but allow a nearby mid-liquidity post-pump-stall name to replace a weaker baseline short. Claim fails if walk-forward / regime trade-offs do not improve or at least preserve the active parent while improving short-basket economics.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "downside_upside_vol_ratio_30",
+          "funding_basis_residual_implied_repo_30",
+          "liq_cascade_recency_score_5d",
+          "post_pump_stall_core_score_3d"
+        ],
+        "factor_formula": "baseline = v6_h10d_raw; longs unchanged; shorts start from baseline bottom-3. If a mid-liquidity name in the bottom tail has sufficiently negative post_pump_stall z-score, it may replace a weaker current short. Final score is re-ranked only to encode that discrete replacement rule.",
+        "intended_holding_horizon_bars": 10,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed",
+          "v6_walk_forward_median_drops_more_than_0_3_below_lsk3_g_v2_without_regime_improvement",
+          "doc_e12_post_cascade_24h_abnormal_return_t_stat_below_2_5"
+        ]
+      },
+      "spec_hash": "ca7462711ac0a7d9491eb152f06b6da4a6e2d28cd821e18cbd8ad4273a42e929"
+    }
+  ],
+  "lifecycle": "research_only",
+  "promotion_eligibility": "ineligible",
+  "active_alpha_ontology_candidate": false,
+  "former_active_marker_set_at": "2026-05-02",
+  "research_only_marker_set_at": "2026-05-03",
+  "supersedes": [
+    "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v6_lsk3_g_v2_h10d.json"
+  ],
+  "research_only_reason": "Demoted after the audit-repair sequence. The result remains useful SP-K factor evidence, but it is built on the legacy v6_h10d + regime_gating_v2 parent rather than the canonical v5_rw_bridge_no_overlay_h10d parent. Future SP-K variants must attach to v5_rw_bridge_no_overlay_h10d and pass fixed-set paired comparison plus overlay ablation before becoming promotable.",
+  "verified_outcome_2026_05_01": {
+    "contract_version": "quant_validation_contract.v10_h10d",
+    "validation_contract_status": "passed",
+    "walk_forward_median_oos_sharpe": 4.075659132177115,
+    "walk_forward_loss_window_fraction": 0.3125,
+    "regime_holdout_passed": true,
+    "positive_regime_fraction": 0.6666666666666666,
+    "worst_regime_median_oos_sharpe": -1.7832086004239043,
+    "validation_net_return": 0.2282531331922475,
+    "validation_sharpe": 2.3999348385421624,
+    "test_net_return": 0.13833886595148148,
+    "test_sharpe": 1.5285090520106124,
+    "delta_vs_predecessor_v6_h10d": {
+      "walk_forward_median_oos_sharpe": "+1.2436348619826072",
+      "walk_forward_loss_window_fraction": "+0.0",
+      "positive_regime_fraction": "+0.0",
+      "worst_regime_median_oos_sharpe": "+0.9523858736223298",
+      "mid_liquidity_short_fraction": "0.2841429880843263 -> 0.42529789184234645",
+      "next_10d_mean_short_payoff": "-0.0017163488727485613 -> -0.0027907348971525124",
+      "next_1d_squeeze_gt_5pct_fraction": "0.11834862385321102 -> 0.11437308868501529"
+    },
+    "selection_change_diagnostics": {
+      "timestamps_with_short_changes_fraction": 0.5270394133822182,
+      "replacement_position_fraction": 0.17567980446073939,
+      "entered_next_10d_mean": -0.008963199468118688,
+      "exited_next_10d_mean": -0.002818166175099262
+    },
+    "followup_challengers_2026_05_01": {
+      "selected_short_news_veto": "validation-pass but not promoted; loss_window_fraction worsens to 0.34375 and worst_regime worsens to -2.391725386150468",
+      "selected_short_reduced_exposure": "fast-reject-pass but not promoted; loss_window_fraction worsens to 0.34375 and weighted short-basket next_10d mean weakens to about -0.23%"
+    },
+    "note": "Promoted as the canonical baseline because it is the best validated parent-strategy landing shape for SP-K so far: it materially improves walk-forward and worst-regime outcomes without sacrificing loss-window stability."
+  }
+}

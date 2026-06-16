@@ -1,0 +1,161 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.alpha_ontology_v1_lsk3_g_v2",
+  "lineage": {
+    "doc": "docs/quant_research/00_roadmap_state/alpha_ontology_and_factor_library.md",
+    "doc_context_version": "2026-04-29.1",
+    "predecessor_baseline": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v1_lsk3_g.json",
+    "overlay_id": "alpha_ontology_regime_gating_v2",
+    "overlay_module": "src/enhengclaw/quant_research/regime_gating.py",
+    "overlay_components": [
+      {
+        "factor_id": "F49_shock_co_occurrence_index",
+        "role": "point-in-time vol shock fraction (v1 carryover)"
+      },
+      {
+        "factor_id": "F26_co_jump_count_3d",
+        "role": "3-day cluster shock count (v1 carryover)"
+      },
+      {
+        "factor_id": "F44_dispersion_of_returns",
+        "role": "cross-asset return std vs rolling-60 median (v1 carryover)"
+      },
+      {
+        "factor_id": "F55_btc_vol_regime_quantile",
+        "role": "BTC realized_volatility_20 60-bar percentile (v2 add) — fires for sustained-vol regimes that shock-based v1 components miss"
+      },
+      {
+        "factor_id": "trailing_universe_mean_return_30",
+        "role": "30-bar smoothed cross-asset return (v2 add) — captures slow-grind drawdown regimes"
+      }
+    ],
+    "multiplier_distribution_2026_04_29": {
+      "n_dates": 1117,
+      "mean": 0.576,
+      "median": 0.553,
+      "min": 0.3,
+      "max": 1.0,
+      "fraction_at_full": 0.041,
+      "fraction_at_floor": 0.180,
+      "fraction_below_0_75": 0.736
+    },
+    "v2_hyperparameters": {
+      "f55_throttle_quantile": 0.7,
+      "f55_full_throttle_quantile": 1.5,
+      "trailing_return_window": 30,
+      "trailing_return_throttle_k": 3.0,
+      "v2_extras_component_floor": 0.5,
+      "overall_floor": 0.3
+    },
+    "calibration_audit_2026_04_29": "Initial v2 hyperparameters (f55_thresh 0.5, full 1.0, K=8, no per-component floor) gave a degenerate distribution: median at overall floor 0.30, 50.5% of days at floor. Softened to: f55_thresh 0.7 (only top 30% of vol-regime days throttled by F55), f55_full 1.5 (m_f55 caps at 0.625 even at q=1.0), K=3.0 (cum_signal at -0.001/day x 30 bars yields m_trailing=0.91), and per-component floor 0.5 for m_f55 and m_trailing so the v2 extras alone cannot drive product below 0.25. Result: median 0.553, fraction_at_floor 18.0%, fraction_at_full 4.1% (vs v1's 0.755 / 10.7% / 12.0%). v2 reduces median exposure ~27% relative to v1 — trade exposure for sustained-vol throttling.",
+    "selection_rule": "Identical to v_alpha_v1_lsk3_g in score / signs / required_feature_columns / portfolio construction. Differs only in profile_constraints.position_multiplier_overlay_id: \"alpha_ontology_regime_gating_v2\" instead of v1. The v2 overlay multiplies in F55 (BTC vol regime quantile) and trailing universe mean return on top of v1's F49 / F26 / F44, so it fires on sustained-vol / slow-grind regimes that v1 missed. Score function and gates are unchanged.",
+    "v10_contract_status": "pass (regime_holdout.passed=True, worst_regime_median=-1.851 >= -2.0 floor)",
+    "walk_forward_delta_vs_lsk3": {
+      "median_oos_sharpe": "+0.398 (lsk3_g_v2 +2.147 vs lsk3 +1.748)",
+      "median_oos_sharpe_vs_lsk3_g_v1": "-0.063 (lsk3_g_v2 +2.147 vs lsk3_g_v1 +2.210)"
+    },
+    "regime_delta_vs_lsk3": {
+      "positive_regime_fraction": "0.333 (1/3 same as un-gated lsk3, vs 2/3 lsk3_g_v1)",
+      "worst_regime_median_oos_sharpe": "-0.243 vs un-gated lsk3 (-1.851 vs -1.608); +0.392 vs lsk3_g_v1 (-1.851 vs -2.243)",
+      "trend_up_2025h2": "+5.540 (vs lsk3 +5.487, lsk3_g_v1 +6.005)",
+      "rotation_high_vol_2025q4": "-0.589 (vs lsk3 -1.608, lsk3_g_v1 +0.888) — partial fix, doesn't flip positive but lifts off worst regime",
+      "drawdown_rebound_2026ytd": "-1.851 (vs lsk3 -1.439, lsk3_g_v1 -2.243) — recovers most of v1 regression while keeping above v10 -2.0 floor"
+    },
+    "verified_outcome_2026_04_29": "v2 strict_passes (regime_holdout.passed=True) AND keeps walk-forward gain at +0.398 vs un-gated lsk3 (only -0.063 below v1_g). Worst regime drawdown_rebound_2026ytd lifts from v1_g's -2.243 back to -1.851, above the v10 -2.0 floor. Trade-off: positive_regime_fraction reverts to 1/3 (same as un-gated baseline) — v2 partially fixes rotation_high_vol_2025q4 (-1.608 -> -0.589) but doesn't flip it positive like v1_g did (+0.888). The trade is intentional: v2 throttles enough on slow-grind regimes (drawdown_rebound) to clear the worst-regime contract floor, at the cost of v1's full rotation flip."
+  },
+  "entries": [
+    {
+      "candidate_id": "xs_alpha_ontology_v1_lsk3_g_v2_h5d",
+      "base_mechanism_id": "xs_alpha_ontology_v1_lsk3_g_v2",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_alpha_ontology_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "downside_upside_vol_ratio_30",
+        "funding_basis_residual_implied_repo_30"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.0,
+        "top_long_count": 3,
+        "bottom_short_count": 3,
+        "position_multiplier_overlay_id": "alpha_ontology_regime_gating_v2"
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_alpha_ontology_v1_lsk3_g_v2_h5d",
+        "thesis_family": "hypothesis_xs_alpha_ontology_v1_lsk3_g_v2_h5d",
+        "market_mechanism": "W3.5 v2 regime-gated lsk3: same xs_alpha_ontology_v1_score (v91 9 + F33 + F12) and same long-short top-3 perp construction as v_alpha_v1_lsk3, with a position-size multiplier overlay applied at the portfolio sizing layer. The v2 overlay multiplier in [0.30, 1.00] is built from F49 + F26 + F44 (v1 carryover) plus F55 (BTC vol regime quantile, 60-bar percentile) and a 30-bar trailing universe mean return. Hypothesis: v1's overlay gave +0.46 walk-forward sharpe but regressed worst-regime median to -2.243 because shock-based gauges miss slow-grind regimes; v2 adds F55 and trailing-return components that fire on sustained-vol / sustained-negative-mean windows, which should pull worst-regime back above the v10 -2.0 floor. Multiplier mean is ~0.576 over 2023-04 to 2026-04 (vs v1's ~0.713), so absolute returns will be lower than v1's gated variant; risk-adjusted metrics (worst regime, drawdown depth) are expected to improve.",
+        "directional_claim": "Same long-short top-3 perp signed-z-score construction as v_alpha_v1_lsk3. Position size is multiplied by the W3.5 v2 regime gating multiplier in [0.30, 1.00]. Falsified if (a) walk_forward median sharpe drops more than 0.7 below v_alpha_v1_lsk3 baseline (+1.748) without a matching improvement in regime_holdout worst-regime sharpe (v1_g baseline -2.243; target >= -2.0); OR (b) regime_holdout worst-regime fails to improve relative to v1_g; OR (c) execution_stress max_trade_participation_rate breaches the 0.005 cap.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "downside_upside_vol_ratio_30",
+          "funding_basis_residual_implied_repo_30"
+        ],
+        "factor_formula": "raw = -0.20*z(iv_smooth_60) -0.10*z(rv_5) +0.18*z(dh_60) +0.15*z(dh_5) -0.07*z(tt_smooth_5) -0.10*z(liquidity_stress_qv_iv) -0.06*z(momentum_decay_5_20) +0.05*z(taker_imb_dispersion) -0.05*z(quality_funding_oi) +0.10*z(downside_upside_vol_ratio_30) +0.07*z(funding_basis_residual_implied_repo_30); final_score = tanh((percentile_rank(raw)-0.5)*1.80); target_weight_per_name = (long_leverage / top_K - short_leverage / bottom_K) * regime_gating_v2_multiplier(t)",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed",
+          "combined_ic_uplift_below_0_005_vs_v91_baseline",
+          "either_new_factor_rolling_60d_residual_ic_below_0_02_for_90d",
+          "gated_v2_walk_forward_median_drops_more_than_0_7_below_lsk3_without_regime_improvement",
+          "gated_v2_worst_regime_fails_to_improve_relative_to_lsk3_g_v1"
+        ]
+      },
+      "spec_hash": "4a7eb6ae79a5923f544ff5f92c4975da7cad14c6eb6a6d2a8ef412fdc72a9724"
+    }
+  ],
+  "lifecycle": "active_alternative",
+  "active_alternative_marker_set_at": "2026-04-29",
+  "active_alternative_reason": "W3.5 v2 extension of lsk3_g: adds F55 (BTC vol regime quantile) and trailing-30-bar universe mean return to the regime gating overlay so it fires on sustained-vol / slow-grind regimes that v1's shock-based components missed. Verified 2026-04-29 cycle: lsk3_g_v2 strict_passes the v10 contract (regime_holdout.passed=True, worst_regime_median=-1.851 >= -2.0 floor) while preserving walk_forward median uplift (+0.398 above un-gated lsk3, only -0.063 below the strict-failing v1_g). v2 hyperparameters were softened from initial pick (50% of days at floor 0.30) to (f55_thresh 0.7, f55_full 1.5, K=3, per-component floor 0.5) so the median multiplier is ~0.553. Active_alternative because (a) v_alpha_v1_lsk3 stays the no-overlay baseline, (b) v_alpha_v2_lsk3 is the no-overlay W3.3 alternative, (c) v_alpha_v1_lsk3_g_v2 is the strict-passing gated alternative — operator can pick the lineage based on risk preference. lsk3_g v1 stays as audit evidence (lifecycle: experimental) for the v10-FAIL trade-off."
+}

@@ -1,0 +1,31 @@
+{
+  "contract_version": "src_quant_research_features_utility_compatibility_contract.v1",
+  "source_module": "enhengclaw.quant_research.features",
+  "source_path": "src/enhengclaw/quant_research/features.py",
+  "scope": "Freeze only the F1 utility-helper compatibility surface for direct imports and minimal behavior tests. This does not approve a full features.py scorer, raw-scorer, builder, label, or sidecar contract.",
+  "scan_roots": [
+    "scripts",
+    "tests"
+  ],
+  "utility_helper_targets": {
+    "_safe_rolling_skew": [
+      "scripts/quant_research/report_writers/compute_subday_funding_factor_report.py",
+      "tests/test_quant_features_utility_helpers.py"
+    ],
+    "_timestamp_percentile_rank": [
+      "scripts/quant_research/alpha_stage0_quarantine/evaluate_m3_2_canonical_parent_stage0.py",
+      "tests/test_quant_features_utility_helpers.py"
+    ],
+    "_timestamp_zscore": [
+      "scripts/quant_research/evaluate_v6_h10d_post_pump_news_veto_ab.py",
+      "tests/test_quant_features_utility_helpers.py"
+    ]
+  },
+  "excluded_surfaces": [
+    "raw alpha ontology private scorers",
+    "public scorer families",
+    "feature builders",
+    "label contract constants",
+    "sidecar merge behavior"
+  ]
+}

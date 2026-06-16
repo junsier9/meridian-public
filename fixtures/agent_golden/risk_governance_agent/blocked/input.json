@@ -1,0 +1,8 @@
+{
+  "case_id": "risk_governance_agent_blocked",
+  "expected_status": "blocked",
+  "governance_text": "Need some governance thoughts eventually.",
+  "object_id": "golden-risk-governance-agent-aix",
+  "scope": "spot+perp",
+  "subject": "AIX"
+}

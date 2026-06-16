@@ -1,0 +1,200 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_funding_facade_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only importability and inspect.signature shape for the Binance canonical h10d funding facade candidate. This does not approve source migration, provider behavior changes, path relocation, PIT eligibility behavior changes, artifact schema changes, or HTTP retry semantics.",
+  "validation_mode": "importability_signature_only",
+  "required_behavior_test": "tests/test_binance_canonical_h10d.py::BinanceCanonicalH10DTests::test_funding_cost_sync_writes_daily_cost_only_rows_and_attaches_to_panel",
+  "protected_entrypoints": [
+    "sync_funding_cost_history",
+    "fetch_funding_rate_rows",
+    "write_funding_cost_rows",
+    "load_funding_cost_daily",
+    "attach_funding_cost_to_panel"
+  ],
+  "facade_candidate_targets": {
+    "_funding_columns": {
+      "parameters": [],
+      "return_annotation": "list[str]"
+    },
+    "funding_symbol_root": {
+      "parameters": [
+        {
+          "annotation": "Path",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "funding_root",
+          "required": true
+        },
+        {
+          "annotation": "str",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "symbol",
+          "required": true
+        }
+      ],
+      "return_annotation": "Path"
+    },
+    "funding_partition_path": {
+      "parameters": [
+        {
+          "annotation": "Path",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "funding_root",
+          "required": true
+        },
+        {
+          "annotation": "str",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "symbol",
+          "required": true
+        },
+        {
+          "annotation": "str",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "month",
+          "required": true
+        }
+      ],
+      "return_annotation": "Path"
+    },
+    "funding_symbol_manifest_path": {
+      "parameters": [
+        {
+          "annotation": "Path",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "funding_root",
+          "required": true
+        },
+        {
+          "annotation": "str",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "symbol",
+          "required": true
+        }
+      ],
+      "return_annotation": "Path"
+    },
+    "funding_sync_summary_path": {
+      "parameters": [
+        {
+          "annotation": "Path",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "funding_root",
+          "required": true
+        }
+      ],
+      "return_annotation": "Path"
+    },
+    "_read_funding_partition": {
+      "parameters": [
+        {
+          "annotation": "Path",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "path",
+          "required": true
+        }
+      ],
+      "return_annotation": "list[dict[str, Any]]"
+    },
+    "_dedupe_funding_rows": {
+      "parameters": [
+        {
+          "annotation": "list[dict[str, Any]]",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "rows",
+          "required": true
+        }
+      ],
+      "return_annotation": "list[dict[str, Any]]"
+    },
+    "_http_get_json": {
+      "parameters": [
+        {
+          "annotation": "str",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "url",
+          "required": true
+        }
+      ],
+      "return_annotation": "Any"
+    },
+    "_resolve_funding_root": {
+      "parameters": [
+        {
+          "annotation": "dict[str, Any]",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "config",
+          "required": true
+        },
+        {
+          "annotation": "Path | None",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "funding_root",
+          "required": true
+        }
+      ],
+      "return_annotation": "Path"
+    },
+    "_month_key_from_ms": {
+      "parameters": [
+        {
+          "annotation": "int",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "timestamp_ms",
+          "required": true
+        }
+      ],
+      "return_annotation": "str"
+    },
+    "_month_start_ms": {
+      "parameters": [
+        {
+          "annotation": "str",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "month",
+          "required": true
+        }
+      ],
+      "return_annotation": "int"
+    },
+    "_month_end_ms": {
+      "parameters": [
+        {
+          "annotation": "str",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "month",
+          "required": true
+        }
+      ],
+      "return_annotation": "int"
+    }
+  },
+  "excluded_surfaces": [
+    "source migration",
+    "provider HTTP behavior",
+    "HTTP retry semantics",
+    "funding formula behavior",
+    "PIT eligibility behavior",
+    "funding root relocation",
+    "artifact schema changes",
+    "CSV compression changes",
+    "_partition_month archive/funding boundary",
+    "caller counts"
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v73",
+  "entries": [
+    {
+      "candidate_id": "xs_dual_regime_filter_v8_h5d",
+      "base_mechanism_id": "xs_dual_regime_filter_v8",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_dual_regime_filter_v8",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "range_position_20",
+        "return_1",
+        "coinglass_taker_imbalance_5d_sum",
+        "coinglass_global_account_long_pct",
+        "coinglass_liquidation_imbalance_24h",
+        "coinglass_top_trader_long_pct"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_dual_regime_filter_v8_h5d",
+        "thesis_family": "hypothesis_xs_dual_regime_filter_v8_h5d",
+        "market_mechanism": "in the liquid perp-covered core, the optimal sign of each CoinGlass positioning sub-feature varies independently across 4 regime quadrants (high-dispersion-up, high-dispersion-down, low-dispersion-up, low-dispersion-down); v73 introduces a per-feature per-quadrant sign matrix where retail crowding fades in 3 of 4 quadrants except drawdown-capitulation, liquidation imbalance flips between fade (in dispersed-up) and align (in negative-median regimes), and smart-money positioning takes a 4-quadrant configurable sign — taker_imbalance remains sign-positive across all regimes",
+        "directional_claim": "rank liquid perp-covered names by blending v64 dual-regime signal with a CoinGlass composite where each of the 3 positioning sub-features uses an independent 4-quadrant sign multiplier driven by per-timestamp (dispersion, sign of median momentum), allowing simultaneous fade-extremity in trend_up and align-with-positioning in drawdown_rebound, while taker_imbalance is always positive — composite weighted at 12% on the final signal stage",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "range_position_20",
+          "return_1",
+          "coinglass_taker_imbalance_5d_sum",
+          "coinglass_global_account_long_pct",
+          "coinglass_liquidation_imbalance_24h",
+          "coinglass_top_trader_long_pct"
+        ],
+        "factor_formula": "v64 raw_score and stable_rank_score remain unchanged; final blended_signal = 0.88 * v64_blended + 0.12 * xs_zscore(coinglass_composite_v8). composite_v8 = (1/4) * [z_taker + s_retail*z_retail + s_liq*z_liq + s_top*z_top] where the per-feature sign s_X(t) = HU(t)*c_X^HU + HD(t)*c_X^HD + LU(t)*c_X^LU + LD(t)*c_X^LD with quadrant indicators HU=disp*med_pos, HD=disp*med_neg, LU=(1-disp)*med_pos, LD=(1-disp)*med_neg, and per-feature config: retail (HU=-1, HD=-1, LU=-0.5, LD=+1); liq (HU=-1, HD=+1, LU=-0.5, LD=+1); top (HU=-1, HD=-0.5, LU=-0.5, LD=+1).",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "573b5035c5b814b8973a7267b2391579478215a798d8d5fe44e9a2142b8c5ce5"
+    }
+  ]
+}

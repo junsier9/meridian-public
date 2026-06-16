@@ -1,0 +1,30 @@
+{
+  "contract_version": "project_stage_contract.v1",
+  "stages": [
+    {
+      "stage_id": "stage_0_sandbox_framework_only",
+      "description": "Framework-only sandbox and bounded replay work."
+    },
+    {
+      "stage_id": "stage_1_research_readiness_only",
+      "description": "Research, verification, and readiness artifacts only; no manifest unlocks for broad rollout or execution."
+    },
+    {
+      "stage_id": "stage_2_manual_export_human_review",
+      "description": "Research outputs may be manually exported for human review, but execution stays disabled."
+    },
+    {
+      "stage_id": "stage_3_human_approved_execution",
+      "description": "Execution requires a distinct human approval record and independent read/write boundaries."
+    },
+    {
+      "stage_id": "stage_4_automated_execution",
+      "description": "Automated execution is allowed only after signed verdict and separated-process controls are in place."
+    }
+  ],
+  "unlock_minimum_stages": {
+    "broad_agent_layer_manual_unlock": "stage_2_manual_export_human_review",
+    "execution_manifest_unlock": "stage_3_human_approved_execution",
+    "automated_execution_unlock": "stage_4_automated_execution"
+  }
+}

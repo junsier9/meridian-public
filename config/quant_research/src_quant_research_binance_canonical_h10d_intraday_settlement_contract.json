@@ -1,0 +1,98 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_intraday_settlement_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only root-facade importability, inspect.signature shape, empty-frame schemas, and tiny synthetic in-memory samples for intraday realized volatility and settlement premium helpers. This contract does not freeze full feature-panel behavior, score formulas, target labels, archive IO, or source movement.",
+  "validation_mode": "root_facade_signature_tiny_in_memory_intraday_settlement_samples",
+  "approved_by_plan": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_intraday_settlement_contract_plan_2026_05_16.md",
+  "required_classification_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_root_surface_classification_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_root_surface_classification_contract.v1",
+    "required_group": "archive_data_foundation_and_feature_panel"
+  },
+  "intraday_target": {
+    "helper_name": "_intraday_realized_vol_by_day",
+    "signature": {
+      "parameters": [
+        {
+          "annotation": "pd.DataFrame",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "four_h",
+          "required": true
+        }
+      ],
+      "return_annotation": "pd.DataFrame"
+    },
+    "empty_expected_columns": [
+      "date_utc",
+      "intraday_realized_vol_4h_to_1d"
+    ],
+    "complete_day_sample": {
+      "target_day_start_utc": "2026-01-01T00:00:00+00:00",
+      "prior_anchor_hours": 4,
+      "target_bar_count": 6,
+      "log_return_per_bar": 0.01,
+      "initial_close": 100.0,
+      "expected_prior_date": "2025-12-31",
+      "expected_target_date": "2026-01-01",
+      "expected_target_value": 0.024494897427831782
+    },
+    "incomplete_day_sample": {
+      "target_bar_count": 5,
+      "expected_target_date": "2026-01-01",
+      "expected_target_is_nan": true
+    }
+  },
+  "settlement_target": {
+    "helper_name": "_settlement_premium_by_day",
+    "signature": {
+      "parameters": [
+        {
+          "annotation": "pd.DataFrame",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "one_h",
+          "required": true
+        }
+      ],
+      "return_annotation": "pd.DataFrame"
+    },
+    "empty_expected_columns": [
+      "date_utc",
+      "settlement_cycle_premium_60d"
+    ],
+    "rolling_sample": {
+      "target_start_utc": "2026-01-01T00:00:00+00:00",
+      "day_count": 60,
+      "settlement_hours_utc": [
+        7,
+        15,
+        23
+      ],
+      "settlement_log_return": 0.02,
+      "other_hour_log_return": 0.01,
+      "initial_close": 100.0,
+      "expected_output_row_count": 61,
+      "expected_non_null_count": 1,
+      "expected_prior_date": "2025-12-31",
+      "expected_first_target_date": "2026-01-01",
+      "expected_final_date": "2026-03-01",
+      "expected_final_rolling_60d_premium": 0.01
+    }
+  },
+  "excluded_surfaces": [
+    "source migration",
+    "full feature-panel schema",
+    "add_binance_ohlcv_core_features behavior",
+    "score output",
+    "target label construction",
+    "local archive path discovery",
+    "archive reader behavior",
+    "funding attachment",
+    "PIT universe behavior",
+    "build_symbol_feature_frame behavior",
+    "build_binance_canonical_dataset behavior",
+    "caller counts"
+  ]
+}

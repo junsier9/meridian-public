@@ -1,0 +1,134 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_ablation_rescore_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only root-facade importability, inspect.signature shape, and direct ablation smoke-test presence for the ablation/rescore bucket. This contract intentionally excludes ablation metric values, period-return payloads, exact core20 membership semantics, score formulas, risk-brake formulas, validation report payloads, and source movement.",
+  "validation_mode": "root_facade_signature_required_behavior_test_presence_only",
+  "approved_by_owner_delegated_status": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_owner_delegated_terminal_contracts_2026_05_16.md",
+  "required_classification_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_root_surface_classification_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_root_surface_classification_contract.v1",
+    "required_group": "ablations_and_feature_subset_rescore"
+  },
+  "ablation_rescore_targets": {
+    "run_binance_core_ablations": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "frame",
+            "required": true
+          },
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "config",
+            "required": true
+          }
+        ],
+        "return_annotation": "dict[str, Any]"
+      }
+    },
+    "add_core20_ablation_eligibility": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "frame",
+            "required": true
+          },
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "config",
+            "required": true
+          }
+        ],
+        "return_annotation": "pd.DataFrame"
+      }
+    },
+    "_reference_core20_subjects": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "config",
+            "required": true
+          }
+        ],
+        "return_annotation": "set[str]"
+      }
+    },
+    "_rescore_for_feature_subset": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "frame",
+            "required": true
+          },
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "config",
+            "required": true
+          },
+          {
+            "annotation": "list[str]",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "feature_columns",
+            "required": true
+          }
+        ],
+        "return_annotation": "pd.DataFrame"
+      }
+    }
+  },
+  "required_behavior_test_file": "tests/test_binance_canonical_h10d.py",
+  "required_behavior_tests": [
+    "test_ablation_runner_reports_long_only_short_disabled_and_short_veto"
+  ],
+  "required_adjacent_contracts": [
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_run_backtest_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_run_backtest_contract.v1",
+      "must_exclude_surface": "exact ablation metrics"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_score_surface_behavior_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_score_surface_behavior_contract.v1",
+      "must_exclude_surface": "golden score output snapshots beyond tiny fixture"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_risk_brake_behavior_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_risk_brake_behavior_contract.v1",
+      "must_exclude_surface": "ablation metric values"
+    }
+  ],
+  "excluded_surfaces": [
+    "source migration",
+    "internal module layout",
+    "exact ablation metric values",
+    "exact period-return payload values",
+    "exact core20 membership snapshots",
+    "score formula snapshots",
+    "risk-brake formula behavior",
+    "backtest metric values",
+    "validation report payloads",
+    "strategy promotion status",
+    "live-readiness authorization",
+    "caller counts"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "contract_version": "quant_execution_cost_model.v1",
+  "latency_bars": 1,
+  "venues": {
+    "spot": {
+      "fee_bps_one_way": 10.0,
+      "half_spread_bps": 2.0,
+      "impact_coefficient_bps": 35.0
+    },
+    "perp": {
+      "fee_bps_one_way": 6.0,
+      "half_spread_bps": 1.5,
+      "impact_coefficient_bps": 25.0
+    }
+  },
+  "spot_short_borrow_bps_per_day": 15.0,
+  "stress_multipliers": {
+    "spread_x": 1.5,
+    "impact_x": 1.5,
+    "liquidity_x": 0.5
+  }
+}

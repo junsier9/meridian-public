@@ -1,0 +1,89 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v89",
+  "entries": [
+    {
+      "candidate_id": "xs_minimal_v4_h5d",
+      "base_mechanism_id": "xs_minimal_v4",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_minimal_v4",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives"
+      ],
+      "required_feature_columns": [
+        "realized_volatility_5",
+        "realized_volatility_20",
+        "realized_volatility_60",
+        "intraday_realized_vol_4h_to_1d_smooth_5",
+        "intraday_realized_vol_4h_to_1d_smooth_20",
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "distance_to_high_5",
+        "distance_to_high_20",
+        "distance_to_high_60",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "coinglass_top_trader_long_pct_smooth_20",
+        "coinglass_top_trader_long_pct_smooth_60"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_minimal_v4_h5d",
+        "thesis_family": "hypothesis_xs_minimal_v4_h5d",
+        "market_mechanism": "Phase 1a multi-timescale extension of xs_minimal_v3 (v83). Same 4 v83 factor families (realized vol, intraday vol, distance to 20d high, coinglass top-trader long pct), but each averaged across 3 time scales (5d/20d/60d) before linear combination. Hypothesis: averaging across scales reduces single-window measurement noise, lifts rank IC modestly above v83 0.20 and improves walk-forward stability. This is Phase 1a in docs/quant_research/00_roadmap_state/strategy_upgrade_roadmap.md.",
+        "directional_claim": "rank top-20 liquid perp-covered names by 4-family multi-timescale linear z-score; 12 raw factor columns (4 families x 3 scales) collapsed to 4 family means, then -0.30/-0.25/+0.25/-0.20 weights matching v83. Expected: rank IC >= 0.22, walk-forward median sharpe >= 1.1, regime worst >= -2.5 (modest improvements over v83).",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "realized_volatility_5",
+          "realized_volatility_20",
+          "realized_volatility_60",
+          "intraday_realized_vol_4h_to_1d_smooth_5",
+          "intraday_realized_vol_4h_to_1d_smooth_20",
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "distance_to_high_5",
+          "distance_to_high_20",
+          "distance_to_high_60",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "coinglass_top_trader_long_pct_smooth_20",
+          "coinglass_top_trader_long_pct_smooth_60"
+        ],
+        "factor_formula": "family_X = mean(z(X_5d), z(X_20d), z(X_60d)) for X in {rv, iv, dh, tt}; raw = -0.30*family_rv -0.25*family_iv +0.25*family_dh -0.20*family_tt; final = tanh((percentile_rank(raw)-0.5)*1.80)",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "12d7e5b387933d737b6988fff218114530d0266b133fc9e762d7c4002c900f42"
+    }
+  ]
+}

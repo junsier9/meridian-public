@@ -1,0 +1,126 @@
+{
+  "backend_kind": "live",
+  "backend_name": "openai_compatible_chat_completions",
+  "compiler_output": {
+    "blocked_reason": null,
+    "candidate_payloads": [
+      {
+        "claim_type": "risk_flag",
+        "confidence_hint": 72,
+        "direction": "risk",
+        "evidence_level": "E4",
+        "input_id": "risk_governance_agent_success:1",
+        "predicate": "restricted_monitoring_required",
+        "scope": "spot+perp",
+        "source_family": "analytics",
+        "subject": "BADX",
+        "time_horizon": "short",
+        "value": "the bounded governance note indicates restricted monitoring should remain active until targeted review clears the object"
+      }
+    ],
+    "notes": [
+      "deterministic compiler emitted one candidate payload",
+      "recorded quarantine fixture",
+      "recorded quarantine fixture for risk_governance_agent"
+    ],
+    "status": "success"
+  },
+  "contract_version": "risk_governance_agent_compiler_v1",
+  "input_fingerprint": "1d6d74e6c66fae6a9d8631b12a377f68926256d8d7a55d8767bacc65a5d81d76",
+  "model_request": {
+    "endpoint": "https://example.invalid/chat/completions",
+    "request_body": {
+      "messages": [
+        {
+          "content": "# Role\nYou compile one bounded governance-pressure observation into exactly one machine-readable JSON envelope for the `risk_governance_agent` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `governance_suppression_required`, `risk_escalation_required`, `restricted_monitoring_required`, `governance_blocker_present`\n- `claim_type`: `risk_flag`, `invalidation`\n- `direction`: `risk`, `invalidating`\n- `source_family`: `safety`, `analytics`, `official`\n- `evidence_level`: `E2`, `E3`, `E4`, `E5`\n- `time_horizon`: `short`, `medium`, `structural`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- Emit one bounded governance-pressure claim only.\n- Do not generate publish unlocks, approvals, or broad orchestration instructions.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the governance text is too vague, contradictory, or would require stepping outside the bounded suppression/governance-pressure predicate set.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing subjects, scopes, or authorities.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+          "role": "system"
+        },
+        {
+          "content": "Compile one bounded governance-pressure observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=risk_governance_agent_quarantine:1\nobject_id=golden-risk-governance-agent-aix\nobject_context_fingerprint=a80da72e5900c7cb39ba7a7ac34aa5610b9f2b221f33109fe05a35b4bc1b0e8b\nexisting_object_context_json:\n{\"claim_count\": 2, \"object_id\": \"golden-risk-governance-agent-aix\", \"processing_state\": \"monitoring\", \"recent_claims\": [{\"confidence\": 82, \"direction\": \"bullish\", \"predicate\": \"spot_breakout\", \"scope\": \"spot+perp\", \"source_family\": \"cex\", \"time_horizon\": \"intraday\", \"value\": \"AIX spot structure remains constructive\"}, {\"confidence\": 78, \"direction\": \"bullish\", \"predicate\": \"wallet_buy\", \"scope\": \"spot+perp\", \"source_family\": \"onchain\", \"time_horizon\": \"intraday\", \"value\": \"AIX still shows supportive flow from large buyers\"}], \"risk_governance_context\": {\"current_risk_state\": \"normal\", \"derived_risk_state\": \"normal\", \"gate_status\": \"block\", \"governance_posture\": \"normal\", \"object_id\": \"golden-risk-governance-agent-aix\", \"processing_state\": \"monitoring\", \"publish_suppressed\": false, \"reasons\": [], \"review_name\": \"risk_governance_review\", \"spec_version\": 0}, \"risk_state\": \"normal\", \"scope\": \"spot+perp\", \"subject\": \"AIX\"}\ngovernance_text:\nRestricted monitoring should remain active and publish suppressed.",
+          "role": "user"
+        }
+      ],
+      "model": "fixture-test-model",
+      "temperature": 0.0
+    },
+    "request_headers": {
+      "Authorization": "Bearer ***redacted***",
+      "Content-Type": "application/json"
+    },
+    "timeout_seconds": 30.0
+  },
+  "object_context_fingerprint": "a80da72e5900c7cb39ba7a7ac34aa5610b9f2b221f33109fe05a35b4bc1b0e8b",
+  "prompt_context": {
+    "contract_version": "risk_governance_agent_compiler_v1",
+    "messages": [
+      {
+        "content": "# Role\nYou compile one bounded governance-pressure observation into exactly one machine-readable JSON envelope for the `risk_governance_agent` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `governance_suppression_required`, `risk_escalation_required`, `restricted_monitoring_required`, `governance_blocker_present`\n- `claim_type`: `risk_flag`, `invalidation`\n- `direction`: `risk`, `invalidating`\n- `source_family`: `safety`, `analytics`, `official`\n- `evidence_level`: `E2`, `E3`, `E4`, `E5`\n- `time_horizon`: `short`, `medium`, `structural`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- Emit one bounded governance-pressure claim only.\n- Do not generate publish unlocks, approvals, or broad orchestration instructions.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the governance text is too vague, contradictory, or would require stepping outside the bounded suppression/governance-pressure predicate set.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing subjects, scopes, or authorities.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+        "role": "system"
+      },
+      {
+        "content": "Compile one bounded governance-pressure observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=risk_governance_agent_quarantine:1\nobject_id=golden-risk-governance-agent-aix\nobject_context_fingerprint=a80da72e5900c7cb39ba7a7ac34aa5610b9f2b221f33109fe05a35b4bc1b0e8b\nexisting_object_context_json:\n{\"claim_count\": 2, \"object_id\": \"golden-risk-governance-agent-aix\", \"processing_state\": \"monitoring\", \"recent_claims\": [{\"confidence\": 82, \"direction\": \"bullish\", \"predicate\": \"spot_breakout\", \"scope\": \"spot+perp\", \"source_family\": \"cex\", \"time_horizon\": \"intraday\", \"value\": \"AIX spot structure remains constructive\"}, {\"confidence\": 78, \"direction\": \"bullish\", \"predicate\": \"wallet_buy\", \"scope\": \"spot+perp\", \"source_family\": \"onchain\", \"time_horizon\": \"intraday\", \"value\": \"AIX still shows supportive flow from large buyers\"}], \"risk_governance_context\": {\"current_risk_state\": \"normal\", \"derived_risk_state\": \"normal\", \"gate_status\": \"block\", \"governance_posture\": \"normal\", \"object_id\": \"golden-risk-governance-agent-aix\", \"processing_state\": \"monitoring\", \"publish_suppressed\": false, \"reasons\": [], \"review_name\": \"risk_governance_review\", \"spec_version\": 0}, \"risk_state\": \"normal\", \"scope\": \"spot+perp\", \"subject\": \"AIX\"}\ngovernance_text:\nRestricted monitoring should remain active and publish suppressed.",
+        "role": "user"
+      }
+    ],
+    "object_context": {
+      "claim_count": 2,
+      "object_id": "golden-risk-governance-agent-aix",
+      "processing_state": "monitoring",
+      "recent_claims": [
+        {
+          "confidence": 82,
+          "direction": "bullish",
+          "predicate": "spot_breakout",
+          "scope": "spot+perp",
+          "source_family": "cex",
+          "time_horizon": "intraday",
+          "value": "AIX spot structure remains constructive"
+        },
+        {
+          "confidence": 78,
+          "direction": "bullish",
+          "predicate": "wallet_buy",
+          "scope": "spot+perp",
+          "source_family": "onchain",
+          "time_horizon": "intraday",
+          "value": "AIX still shows supportive flow from large buyers"
+        }
+      ],
+      "risk_governance_context": {
+        "current_risk_state": "normal",
+        "derived_risk_state": "normal",
+        "gate_status": "block",
+        "governance_posture": "normal",
+        "object_id": "golden-risk-governance-agent-aix",
+        "processing_state": "monitoring",
+        "publish_suppressed": false,
+        "reasons": [],
+        "review_name": "risk_governance_review",
+        "spec_version": 0
+      },
+      "risk_state": "normal",
+      "scope": "spot+perp",
+      "subject": "AIX"
+    },
+    "object_context_fingerprint": "a80da72e5900c7cb39ba7a7ac34aa5610b9f2b221f33109fe05a35b4bc1b0e8b",
+    "prompt_fingerprint": "7655b6cff54701f0514bd7191426a3a29f1bdd9540fd54484169b3ec3bc1d180",
+    "prompt_path": "C:\\Users\\user\\Documents\\Claude\\Projects\\EnhengClaw\\src\\enhengclaw\\agents\\prompts\\risk_governance_agent.system.md",
+    "prompt_template_version": "risk_governance_agent_prompt_template_v1"
+  },
+  "prompt_fingerprint": "7655b6cff54701f0514bd7191426a3a29f1bdd9540fd54484169b3ec3bc1d180",
+  "raw_model_output": {
+    "assistant_text": "{\"blocked_reason\": null, \"candidate_payloads\": [{\"claim_type\": \"risk_flag\", \"confidence_hint\": 72, \"direction\": \"risk\", \"evidence_level\": \"E4\", \"input_id\": \"risk_governance_agent_success:1\", \"predicate\": \"restricted_monitoring_required\", \"scope\": \"spot+perp\", \"source_family\": \"analytics\", \"subject\": \"BADX\", \"time_horizon\": \"short\", \"value\": \"the bounded governance note indicates restricted monitoring should remain active until targeted review clears the object\"}], \"notes\": [\"deterministic compiler emitted one candidate payload\", \"recorded quarantine fixture\", \"recorded quarantine fixture for risk_governance_agent\"], \"status\": \"success\"}",
+    "response_json": {
+      "choices": [
+        {
+          "message": {
+            "content": "{\"blocked_reason\": null, \"candidate_payloads\": [{\"claim_type\": \"risk_flag\", \"confidence_hint\": 72, \"direction\": \"risk\", \"evidence_level\": \"E4\", \"input_id\": \"risk_governance_agent_success:1\", \"predicate\": \"restricted_monitoring_required\", \"scope\": \"spot+perp\", \"source_family\": \"analytics\", \"subject\": \"BADX\", \"time_horizon\": \"short\", \"value\": \"the bounded governance note indicates restricted monitoring should remain active until targeted review clears the object\"}], \"notes\": [\"deterministic compiler emitted one candidate payload\", \"recorded quarantine fixture\", \"recorded quarantine fixture for risk_governance_agent\"], \"status\": \"success\"}"
+          }
+        }
+      ]
+    },
+    "response_text": "{\"choices\": [{\"message\": {\"content\": \"{\\\"blocked_reason\\\": null, \\\"candidate_payloads\\\": [{\\\"claim_type\\\": \\\"risk_flag\\\", \\\"confidence_hint\\\": 72, \\\"direction\\\": \\\"risk\\\", \\\"evidence_level\\\": \\\"E4\\\", \\\"input_id\\\": \\\"risk_governance_agent_success:1\\\", \\\"predicate\\\": \\\"restricted_monitoring_required\\\", \\\"scope\\\": \\\"spot+perp\\\", \\\"source_family\\\": \\\"analytics\\\", \\\"subject\\\": \\\"BADX\\\", \\\"time_horizon\\\": \\\"short\\\", \\\"value\\\": \\\"the bounded governance note indicates restricted monitoring should remain active until targeted review clears the object\\\"}], \\\"notes\\\": [\\\"deterministic compiler emitted one candidate payload\\\", \\\"recorded quarantine fixture\\\", \\\"recorded quarantine fixture for risk_governance_agent\\\"], \\\"status\\\": \\\"success\\\"}\"}}]}",
+    "status_code": 200
+  },
+  "transcript_fingerprint": "9155f14c05a06642433a4b01af4ed45d4e438caf1268aa62a38d680d9b021cb1"
+}

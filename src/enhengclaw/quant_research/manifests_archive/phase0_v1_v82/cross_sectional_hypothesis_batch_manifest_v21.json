@@ -1,0 +1,79 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v21",
+  "entries": [
+    {
+      "candidate_id": "xs_basis_funding_dislocation_v1_h3d",
+      "base_mechanism_id": "xs_basis_funding_dislocation_v1",
+      "horizon_id": "h3d",
+      "target_horizon_bars": 3,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_basis_funding_dislocation_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility"
+      ],
+      "required_feature_columns": [
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "quote_volume_expansion",
+        "realized_volatility_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_basis_funding_dislocation_v1_h3d",
+        "thesis_family": "hypothesis_xs_basis_funding_dislocation_v1_h3d",
+        "market_mechanism": "inside the liquid perp-covered subset, deeply negative basis and funding can reflect crowded downside hedging; when open interest remains orderly and spot leadership does not fully break, that dislocation can mean-revert into a short-horizon spot rebound",
+        "directional_claim": "rank liquid perp-covered names higher when basis and funding are unusually depressed, but only if open-interest behavior is contained and the spot tape still retains relative strength instead of outright structural breakdown",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "quote_volume_expansion",
+          "realized_volatility_20",
+          "return_1"
+        ],
+        "factor_formula": "reward negative basis and funding dislocations inside the perp-covered core, but only when open interest remains stable, spot relative strength persists, daily tape is not overheated, and the reset day is mild rather than capitulative",
+        "intended_holding_horizon_bars": 3,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "f416f8ad9d5ddc5bbcfe715167c18baf149e6dd8fd4267f0cff13a59ae982413"
+    }
+  ]
+}

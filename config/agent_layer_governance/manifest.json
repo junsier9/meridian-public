@@ -1,0 +1,15 @@
+{
+  "contract_version": "agent_layer_governance.v2",
+  "agent_layer_governance_enabled": true,
+  "allowed_controlled_slice_ids": [
+    "market_observer",
+    "evidence_agent",
+    "risk_signal_agent",
+    "risk_governance_agent",
+    "validation_agent",
+    "attention_allocator",
+    "research_synthesizer",
+    "research_lead"
+  ],
+  "broad_agent_layer_enabled": false
+}

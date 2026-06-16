@@ -1,0 +1,120 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_attribution_runner_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only root-facade importability, inspect.signature shape, and direct behavior-test presence for attribution runners and the paper-shadow ledger builder. This contract intentionally excludes exact attribution metrics, factor leave-one-out deltas, paper-shadow ledger schema snapshots, JSON record payloads, validation report payloads, and source movement.",
+  "validation_mode": "root_facade_signature_required_behavior_test_presence_only",
+  "approved_by_owner_delegated_status": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_owner_delegated_terminal_contracts_2026_05_16.md",
+  "required_classification_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_root_surface_classification_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_root_surface_classification_contract.v1",
+    "required_group": "attribution_and_paper_shadow"
+  },
+  "attribution_runner_targets": {
+    "compute_position_attribution": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "frame",
+            "required": true
+          },
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "config",
+            "required": true
+          }
+        ],
+        "return_annotation": "dict[str, Any]"
+      }
+    },
+    "compute_factor_leave_one_out_attribution": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "frame",
+            "required": true
+          },
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "config",
+            "required": true
+          }
+        ],
+        "return_annotation": "dict[str, Any]"
+      }
+    },
+    "build_paper_shadow_execution_ledger": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "frame",
+            "required": true
+          },
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "config",
+            "required": true
+          }
+        ],
+        "return_annotation": "dict[str, Any]"
+      }
+    }
+  },
+  "required_behavior_test_file": "tests/test_binance_canonical_h10d.py",
+  "required_behavior_tests": [
+    "test_attribution_exposes_short_leg_loss",
+    "test_factor_leave_one_out_reports_realized_metric_deltas",
+    "test_paper_shadow_execution_ledger_records_no_live_orders"
+  ],
+  "required_adjacent_contracts": [
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_paper_shadow_tiny_helpers_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_paper_shadow_tiny_helpers_contract.v1",
+      "must_exclude_surface": "paper-shadow ledger schemas"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_run_backtest_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_run_backtest_contract.v1",
+      "must_exclude_surface": "exact portfolio return metrics"
+    }
+  ],
+  "deferred_surfaces": [
+    "_empty_position_attribution",
+    "_empty_factor_leave_one_out",
+    "_empty_paper_shadow_execution_ledger",
+    "_apply_short_position_multiplier",
+    "_records",
+    "full report payload schemas"
+  ],
+  "excluded_surfaces": [
+    "source migration",
+    "internal module layout",
+    "exact attribution metrics",
+    "exact factor leave-one-out deltas",
+    "paper-shadow ledger schema snapshots",
+    "empty payload helper schemas",
+    "aggregation formula snapshots",
+    "_apply_short_position_multiplier behavior",
+    "_records JSON payload behavior",
+    "validation report payloads",
+    "report text output",
+    "strategy promotion status",
+    "live-readiness authorization",
+    "caller counts"
+  ]
+}

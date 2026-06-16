@@ -1,0 +1,67 @@
+strategy:
+  label: v5_binance_pit_top_mid_h10d_pruned3_hv_balanced_soft_budget
+  frozen_config_path: config/quant_research/binance_pit_top_mid_h10d_pruned3_hv_balanced_soft_budget.json
+  frozen_config_sha256: 9867437bc74733d46f1a4292c84bbdf4f09c6c49f4862a0616d95ebc43f31938
+  rebalance_interval_days: 10
+
+binance:
+  venue: usdm_futures
+  base_url_env: ENHENGCLAW_BINANCE_USDM_BASE_URL
+  api_key_env: Trade
+  api_secret_env: Secret_Key
+  recv_window_ms: 5000
+  position_mode: one_way
+  margin_type: cross
+  max_leverage: 2
+  auto_prepare_planned_symbol_settings: false
+
+capital:
+  review_only: true
+  sizing_basis: total_wallet_balance_usdt_x_2
+  sizing_snapshot_utc: 2026-05-17T14:05:50.0Z
+  total_wallet_balance_usdt_snapshot: 1500.0
+  allocated_capital_usdt: 3000.0
+  max_gross_leverage: 2.0
+  max_symbol_notional_usdt: 600.0
+  max_order_notional_usdt: 600.0
+
+market_data:
+  public_data_enabled: true
+  symbols: BTCUSDT,ETHUSDT,BNBUSDT,SOLUSDT,XRPUSDT,DOGEUSDT,ADAUSDT,AVAXUSDT,LINKUSDT,LTCUSDT,BCHUSDT,TRXUSDT,DOTUSDT,UNIUSDT,AAVEUSDT,NEARUSDT,FILUSDT,ETCUSDT,APTUSDT,ARBUSDT
+  daily_limit: 140
+  four_hour_limit: 840
+
+risk:
+  trading_enabled: false
+  require_manual_live_confirm: true
+  review_only_candidate: true
+  full_balance_2x_candidate: true
+  max_allocated_capital_usdt: 3000.0
+  max_gross_notional_usdt: 3000.0
+  max_symbol_notional_usdt: 600.0
+  max_order_notional_usdt: 600.0
+  min_available_balance_after_plan_usdt: 100.0
+  min_available_balance_ratio_after_plan: 0.05
+  min_margin_cushion_after_plan_usdt: 100.0
+  max_spread_bps: 20
+  max_market_data_age_seconds: 300
+  max_account_snapshot_age_seconds: 30
+  max_heartbeat_age_seconds: 900
+  allow_new_shorts: true
+  reduce_only_on_gate_failure: true
+
+core_loop:
+  max_cycles_per_invocation: 1
+  interval_seconds: 0
+  mode: account_reconcile_target_delta_risk_execution_reconcile
+  target_as_of: latest_closed_rebalance_slot
+  live_delta_enabled: false
+  submit_orders: false
+  min_clean_cycles_before_live_delta: 3
+  require_post_trade_reconcile: true
+  require_data_freshness_gate: true
+  require_margin_cushion_gate: true
+
+state:
+  sqlite_path: artifacts/live_trading/hv_balanced_binance_usdm_live_2x_full_balance_candidate/state/live_trading.sqlite3
+  artifact_root: artifacts/live_trading/hv_balanced_binance_usdm_live_2x_full_balance_candidate/runs

@@ -1,0 +1,97 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_symbol_feature_builder_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only root-facade importability, inspect.signature shape, and direct synthetic archive-smoke test presence for build_symbol_feature_frame. This contract intentionally excludes real local archive path discovery, daily feature formulas, dataset manifests, funding attachment, PIT universe behavior, validation metrics, and source movement.",
+  "validation_mode": "root_facade_signature_required_behavior_test_presence_only",
+  "approved_by_owner_delegated_status": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_owner_delegated_terminal_contracts_2026_05_16.md",
+  "required_classification_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_root_surface_classification_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_root_surface_classification_contract.v1",
+    "required_group": "archive_data_foundation_and_feature_panel"
+  },
+  "symbol_feature_builder_target": {
+    "helper_name": "build_symbol_feature_frame",
+    "signature": {
+      "parameters": [
+        {
+          "annotation": "Path",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "store_root",
+          "required": true
+        },
+        {
+          "annotation": "str",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "symbol",
+          "required": true
+        },
+        {
+          "annotation": "str | date",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "as_of",
+          "required": true
+        },
+        {
+          "annotation": "str | None",
+          "default_repr": "None",
+          "kind": "KEYWORD_ONLY",
+          "name": "start_month",
+          "required": false
+        },
+        {
+          "annotation": "str | None",
+          "default_repr": "None",
+          "kind": "KEYWORD_ONLY",
+          "name": "end_month",
+          "required": false
+        }
+      ],
+      "return_annotation": "tuple[pd.DataFrame, dict[str, Any]]"
+    }
+  },
+  "required_behavior_test_file": "tests/test_binance_canonical_h10d.py",
+  "required_behavior_tests": [
+    "test_symbol_feature_builder_reads_archive_partition_and_marks_daily_coverage"
+  ],
+  "required_adjacent_contracts": [
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_archive_helpers_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_archive_helpers_contract.v1",
+      "must_exclude_surface": "build_symbol_feature_frame behavior"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_aggregate_1m_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_aggregate_1m_contract.v1",
+      "must_exclude_surface": "build_symbol_feature_frame behavior"
+    }
+  ],
+  "deferred_surfaces": [
+    "_daily_bars_to_feature_panel",
+    "add_binance_ohlcv_core_features",
+    "build_binance_canonical_dataset",
+    "funding attachment",
+    "PIT universe behavior"
+  ],
+  "excluded_surfaces": [
+    "source migration",
+    "internal module layout",
+    "real local archive path discovery",
+    "full archive schemas",
+    "parquet engine behavior",
+    "full daily feature-panel schema",
+    "daily feature formula snapshots",
+    "target label construction",
+    "build_binance_canonical_dataset behavior",
+    "dataset manifest payloads",
+    "funding attachment",
+    "PIT universe behavior",
+    "validation metrics",
+    "strategy promotion status",
+    "live-readiness authorization",
+    "caller counts"
+  ]
+}

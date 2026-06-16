@@ -1,0 +1,87 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v52",
+  "entries": [
+    {
+      "candidate_id": "xs_relative_value_spread_v2_h5d",
+      "base_mechanism_id": "xs_relative_value_spread_v2",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_relative_value_spread_v2",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_relative_value_spread_v2_h5d",
+        "thesis_family": "hypothesis_xs_relative_value_spread_v2_h5d",
+        "market_mechanism": "inside the liquid perp-covered core, the better medium-horizon longs can come from names where perp carry is still unusually cheap relative to peers while spot quality and reset behavior stay intact; this is a single-name residual relative-value spread rather than a pair book",
+        "directional_claim": "rank liquid perp-covered names higher when raw basis and funding stay unusually depressed relative to peers, but only if spot leadership, slope, and support distance remain healthy and the reset is orderly instead of capitulative",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "return_1"
+        ],
+        "factor_formula": "combine raw basis and funding cheapness with spot quality, stable open-interest behavior, balanced volume, and mild reset conditions, while penalizing stress and chasey rebounds",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "d6646be4cc515018044d3c7f30682e0ac9c7482c1a777442eeec4ea50a0b706f"
+    }
+  ]
+}

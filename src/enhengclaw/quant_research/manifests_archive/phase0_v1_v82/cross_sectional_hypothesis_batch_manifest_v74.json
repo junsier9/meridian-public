@@ -1,0 +1,105 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v74",
+  "entries": [
+    {
+      "candidate_id": "xs_dual_regime_filter_v9_h5d",
+      "base_mechanism_id": "xs_dual_regime_filter_v9",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_dual_regime_filter_v9",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "range_position_20",
+        "return_1",
+        "coinglass_taker_imbalance_5d_sum",
+        "coinglass_global_account_long_pct",
+        "coinglass_liquidation_imbalance_24h",
+        "coinglass_top_trader_long_pct"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_dual_regime_filter_v9_h5d",
+        "thesis_family": "hypothesis_xs_dual_regime_filter_v9_h5d",
+        "market_mechanism": "v73 4-quadrant sign matrix architecture with reduced composite injection weight (0.12 → 0.08) to test whether less aggressive CoinGlass blending preserves the per-regime PASS profile while restoring out-of-sample portfolio Sharpe; isolates the composite_weight as the only variable changed from v73",
+        "directional_claim": "rank liquid perp-covered names by blending v64 dual-regime signal with the CoinGlass 4-quadrant sign-matrix composite at 8% weight (instead of v73's 12%) on the final signal stage; identical per-feature 4-quadrant sign config (retail/liq/top); identical taker_imbalance positive sign",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "range_position_20",
+          "return_1",
+          "coinglass_taker_imbalance_5d_sum",
+          "coinglass_global_account_long_pct",
+          "coinglass_liquidation_imbalance_24h",
+          "coinglass_top_trader_long_pct"
+        ],
+        "factor_formula": "v73 architecture with composite_weight reduced from 0.12 to 0.08; final blended_signal = 0.92 * v64_blended + 0.08 * xs_zscore(coinglass_composite_v8); sign matrix unchanged: retail (HU=-1,HD=-1,LU=-0.5,LD=+1), liq (HU=-1,HD=+1,LU=-0.5,LD=+1), top (HU=-1,HD=-0.5,LU=-0.5,LD=+1), taker always +1",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "6bcab9a35912be7fc3b19f85106edb2d96226bf038f9f8f4064dbbaa7f57258a"
+    }
+  ]
+}

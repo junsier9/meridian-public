@@ -1,0 +1,105 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v86",
+  "entries": [
+    {
+      "candidate_id": "xs_xgboost_v1_h5d",
+      "base_mechanism_id": "xs_xgboost_v1",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "hist_gradient_boosting",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "range_position_20",
+        "return_1",
+        "coinglass_taker_imbalance_5d_sum",
+        "coinglass_global_account_long_pct",
+        "coinglass_liquidation_imbalance_24h",
+        "coinglass_top_trader_long_pct"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_xgboost_v1_h5d",
+        "thesis_family": "hypothesis_xs_xgboost_v1_h5d",
+        "market_mechanism": "gradient-boosted decision trees (HistGradientBoostingClassifier, max_depth=6, max_iter=200, lr=0.05) on the full 27-feature panel. Tests whether the structural break (2025-08+ regime sign inversion observed for v74/v80/v81/v83 linear models) is in the linear weight assumption rather than in the underlying alpha. Hypothesis: a tree model that captures non-linear feature interactions and adapts to local feature regimes can pass walk_forward and possibly regime_holdout where linear single-shot ranking cannot.",
+        "directional_claim": "classify forward 5-day return positive vs negative on full feature panel via boosted trees; rank by predict_proba shift. Expected: walk_forward median sharpe and rank IC at least match v83 linear baseline; regime_holdout is the decisive test — if non-linear model also FAILS regime, the structural break is in the data not the model class.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "range_position_20",
+          "return_1",
+          "coinglass_taker_imbalance_5d_sum",
+          "coinglass_global_account_long_pct",
+          "coinglass_liquidation_imbalance_24h",
+          "coinglass_top_trader_long_pct"
+        ],
+        "factor_formula": "score = HistGradientBoostingClassifier(max_depth=6, max_iter=200, learning_rate=0.05).fit(train[27_features], train[target_up]).predict_proba(.)[:, 1] - 0.5",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "cb1c174be1729e3d343707d3a0402169a8e62c1ed591ad0622013bb441dd5a6a"
+    }
+  ]
+}

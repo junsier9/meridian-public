@@ -1,0 +1,144 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.alpha_ontology_v10_regime_conditional_lsk3_g_v2_h10d",
+  "lineage": {
+    "doc": "docs/quant_research/00_roadmap_state/alpha_ontology_and_factor_library.md",
+    "doc_context_version": "2026-04-29.1",
+    "predecessor_baseline": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v6_lsk3_g_v2_h10d.json",
+    "scoring_family": "xs_alpha_ontology_v10_regime_conditional_h10d",
+    "overlay_id": "alpha_ontology_regime_gating_v2",
+    "method": "SP-J regime-conditional alpha architecture: base = v6_h10d (lsk3 + F-cascade w=0.025); regime-conditional F1 addition (trend_up: 0, rotation_high_vol: +0.025, drawdown_rebound: +0.030). Regime label sourced from production-realistic trailing W3.5 v2 components (BTC vol regime quantile + trailing_30d / trailing_60d universe mean return). NO LOOKAHEAD.",
+    "sub_path": "SP-J (data_utilization_roadmap.md)",
+    "sp_j_convergent_evidence_2026_04_30": {
+      "source_1_sp_f_cycle_non_additivity": "F1 G6-passes admission (residual IC +0.040 t=+7.24 vs lsk3+F08 at h10d) but cycle non-additive at constant weight when stacked on F-cascade.",
+      "source_2_tt_smooth_per_regime": "drawdown_rebound IC -0.033 t=-3.55 vs trend_up IC=0.000. Regime-fragile factor pattern.",
+      "source_3_momentum_decay_per_regime": "rotation_high_vol IC +0.075 t=+3.01 (sign-flipped strong) vs other regimes ~0.",
+      "source_4_dual_horizon_ensemble": "Pearson +0.843 same-sign 87.5% confirms shared alpha source. v6_h10d advantage isolated to drawdown_rebound (h5d -3.37 vs h10d +2.17 sharpe).",
+      "source_5_w35_v2_overlay_precedent": "trailing_universe_mean_return throttle works specifically because it overlaps lsk3 losing days. Regime-conditional pattern empirically validated at overlay layer."
+    },
+    "regime_classifier_v10": {
+      "module": "src/enhengclaw/quant_research/regime_gating.py",
+      "function": "classify_regime_v10",
+      "thresholds": {
+        "trailing_return_negative": -0.005,
+        "btc_vol_quantile_high": 0.50,
+        "trailing_30d_window": 30,
+        "trailing_60d_window": 60
+      },
+      "regime_distribution_2026_04_29_panel": {
+        "trend_up": 0.567,
+        "drawdown_rebound": 0.319,
+        "rotation_high_vol": 0.115
+      },
+      "lookahead_status": "NO LOOKAHEAD — uses trailing_30d/60d universe mean return + BTC vol regime quantile, all >=10 days lagged"
+    },
+    "f1_regime_weights_2026_04_30": {
+      "trend_up": 0.0,
+      "rotation_high_vol": 0.025,
+      "drawdown_rebound": 0.030,
+      "rationale": "F1 weight = 0 in trend_up because v9 cycle showed F1 cycle-flat at constant weight. Rotation regime weight matches v9 locked weight w=+0.015 scaled up to reflect single-regime concentration. Drawdown_rebound weight slightly higher because F-cascade mean-reversion alpha is strongest in cascade-recovery period (matches SP-A doc §E.12 mechanism)."
+    },
+    "pre_registered_decision_criteria": {
+      "PROMOTE": "walk_forward_median_oos_sharpe > v6_h10d +2.832 AND positive_regime_fraction >= 0.667 AND worst_regime_median_oos_sharpe >= -2.828 (sqrt-scaled floor)",
+      "AT_PAR": "walk_forward_median_oos_sharpe within v6_h10d +/- 0.10 AND regime breadth preserved",
+      "DECLINE": "walk_forward_median_oos_sharpe < v6_h10d -0.10 OR regime worst breaks -2.828 floor"
+    }
+  },
+  "entries": [
+    {
+      "candidate_id": "xs_alpha_ontology_v10_regime_conditional_lsk3_g_v2_h10d",
+      "base_mechanism_id": "xs_alpha_ontology_v10_regime_conditional_lsk3_g_v2",
+      "horizon_id": "h10d",
+      "target_horizon_bars": 10,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_alpha_ontology_v10_regime_conditional_h10d",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "downside_upside_vol_ratio_30",
+        "funding_basis_residual_implied_repo_30",
+        "liq_cascade_recency_score_5d",
+        "funding_intraday_dispersion_30d"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.0,
+        "top_long_count": 3,
+        "bottom_short_count": 3,
+        "position_multiplier_overlay_id": "alpha_ontology_regime_gating_v2"
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_alpha_ontology_v10_regime_conditional_lsk3_g_v2_h10d",
+        "thesis_family": "hypothesis_xs_alpha_ontology_v10_regime_conditional_lsk3_g_v2_h10d",
+        "market_mechanism": "SP-J regime-conditional alpha architecture. Base score = v6_h10d (lsk3 + F-cascade w=0.025). Regime-conditional F1 funding_intraday_dispersion_30d term: trend_up regime: 0; rotation_high_vol regime: +0.025; drawdown_rebound regime: +0.030. Regime label from production-realistic trailing W3.5 v2 components (no lookahead). 5 convergent investigations motivate this architecture: SP-F cycle non-additivity + tt_smooth_5/momentum_decay regime-fragility + dual-horizon ensemble shared alpha + W3.5 v2 overlay precedent.",
+        "directional_claim": "Same long-short top-3 perp construction. Score = v6_h10d base + regime-conditional F1. F1 active only in regimes where prior deep dives showed F1/momentum_decay alpha activation (rotation_high_vol, drawdown_rebound). Stacked with W3.5 v2 regime-gating overlay. Pre-registered: PROMOTE if walk-forward median > +2.832 AND positive_regime_fraction >= 2/3 AND no regime worst breaks -2.828; AT-PAR if metrics within +/- 0.10; DECLINE otherwise.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "downside_upside_vol_ratio_30",
+          "funding_basis_residual_implied_repo_30",
+          "liq_cascade_recency_score_5d",
+          "funding_intraday_dispersion_30d"
+        ],
+        "factor_formula": "base = -0.20*z(iv_smooth_60) -0.10*z(rv_5) +0.18*z(dh_60) +0.15*z(dh_5) -0.07*z(tt_smooth_5) -0.10*z(liquidity_stress_qv_iv) -0.06*z(momentum_decay_5_20) +0.05*z(taker_imb_dispersion) -0.05*z(quality_funding_oi) +0.10*z(downside_upside_vol_ratio_30) +0.07*z(funding_basis_residual_implied_repo_30) +0.025*z(liq_cascade_recency_score_5d); regime_addition = (regime==drawdown_rebound)*0.030 + (regime==rotation_high_vol)*0.025; raw = base + regime_addition * z(funding_intraday_dispersion_30d); final_score = tanh((percentile_rank(raw)-0.5)*1.80); target_weight_per_name = (long_leverage/top_K - short_leverage/bottom_K) * regime_gating_v2_multiplier(t)",
+        "intended_holding_horizon_bars": 10,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed",
+          "v10_walk_forward_median_drops_more_than_0_2_below_v6_h10d_without_regime_improvement",
+          "sp_j_regime_conditional_architecture_no_marginal_value_over_v6_h10d"
+        ]
+      },
+      "spec_hash": "a5299621e4480323de722f47d68dc98415d953e0ae39dcf36deb5a8c74127a1f"
+    }
+  ],
+  "lifecycle": "experimental",
+  "experimental_marker_set_at": "2026-05-01",
+  "experimental_reason": "SP-J regime-conditional architecture cycle test pending. Pre-registered decision criteria: PROMOTE if walk-forward median > v6_h10d +2.832 with regime breadth preserved; AT-PAR if metrics within +/- 0.10; DECLINE otherwise. Either outcome is informative — PROMOTE establishes regime-conditional architecture as Stage-2 primitive; DECLINE confirms F1 alpha is fundamentally F-cascade-overlapping (cycle non-additivity is not architecture-driven)."
+}

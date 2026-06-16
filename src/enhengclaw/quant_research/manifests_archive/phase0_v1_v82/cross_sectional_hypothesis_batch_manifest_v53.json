@@ -1,0 +1,91 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v53",
+  "entries": [
+    {
+      "candidate_id": "xs_relative_value_spread_v3_h5d",
+      "base_mechanism_id": "xs_relative_value_spread_v3",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_relative_value_spread_v3",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_relative_value_spread_v3_h5d",
+        "thesis_family": "hypothesis_xs_relative_value_spread_v3_h5d",
+        "market_mechanism": "inside the liquid perp-covered core, the better medium-horizon longs come from names with moderately cheap derivatives relative to peers, not from the most distressed contracts; spot quality, stable open interest, and orderly resets should separate repairable dislocations from structural breakdowns",
+        "directional_claim": "rank liquid perp-covered names higher when basis and funding are cheap but not capitulative, and only when spot leadership, slope, and support distance remain intact with balanced participation and contained stress",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "return_1"
+        ],
+        "factor_formula": "reward moderate derivatives cheapness rather than the most extreme dislocations, then combine it with spot quality, stable open-interest behavior, balanced volume, and orderly reset conditions while penalizing stress, chase, and capitulative cheapness",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "a88a8605a4fbd1a5f8c43c094508344e42f612f2c68895f20ed98886e82e672f"
+    }
+  ]
+}

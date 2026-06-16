@@ -1,0 +1,73 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v7",
+  "entries": [
+    {
+      "candidate_id": "xs_strength_on_reset_v2_h5d",
+      "base_mechanism_id": "xs_strength_on_reset_v2",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_strength_on_reset_v2",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "range_position_20",
+        "distance_to_high_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_strength_on_reset_v2_h5d",
+        "thesis_family": "hypothesis_xs_strength_on_reset_v2_h5d",
+        "market_mechanism": "liquid spot leaders should outperform after shallow consolidation near highs rather than after deep pullback",
+        "directional_claim": "own liquid names that retain relative strength, slope and supportive participation while staying near the upper part of the range, but avoid immediate one-day chase",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "range_position_20",
+          "distance_to_high_20",
+          "return_1"
+        ],
+        "factor_formula": "0.34*relative_strength_20 + 0.24*ema_slope_5_20 + 0.20*(quote_volume_expansion-1) + 0.12*range_position_20 + 0.10*distance_to_high_20 - 0.04*return_1",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "27826bcae41eefaf71c7e63a7735a9a172e38f55e5a411d6d67a24061adfc084"
+    }
+  ]
+}

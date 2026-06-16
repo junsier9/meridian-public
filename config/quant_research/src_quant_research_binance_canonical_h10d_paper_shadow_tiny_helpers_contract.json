@@ -1,0 +1,116 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_paper_shadow_tiny_helpers_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only root-level importability, inspect.signature shape, and tiny synthetic behavior samples for _row_float and _paper_shadow_action. This contract intentionally excludes attribution runners, paper-shadow ledger schemas, validation report payloads, risk-brake formulas, source movement, and caller counts.",
+  "validation_mode": "root_facade_signature_tiny_synthetic_samples",
+  "approved_by_dry_run": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_attribution_paper_shadow_owner_gated_dry_run_2026_05_16.md",
+  "required_classification_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_root_surface_classification_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_root_surface_classification_contract.v1",
+    "required_group": "attribution_and_paper_shadow"
+  },
+  "tiny_helper_targets": {
+    "_row_float": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.Series | None",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "row",
+            "required": true
+          },
+          {
+            "annotation": "str",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "field_name",
+            "required": true
+          }
+        ],
+        "return_annotation": "float"
+      },
+      "sample_row": {
+        "values": {
+          "price": "12.5",
+          "bad": "nan"
+        },
+        "expected": {
+          "price": 12.5,
+          "bad": 0.0,
+          "missing": 0.0,
+          "none_row": 0.0
+        }
+      }
+    },
+    "_paper_shadow_action": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "float",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "previous_weight",
+            "required": true
+          },
+          {
+            "annotation": "float",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "target_weight",
+            "required": true
+          }
+        ],
+        "return_annotation": "str"
+      },
+      "action_samples": [
+        {
+          "previous_weight": 0.0,
+          "target_weight": 0.5,
+          "expected": "open_long"
+        },
+        {
+          "previous_weight": 0.5,
+          "target_weight": 0.0,
+          "expected": "close_long"
+        },
+        {
+          "previous_weight": -0.5,
+          "target_weight": 0.5,
+          "expected": "flip_to_long"
+        },
+        {
+          "previous_weight": 0.25,
+          "target_weight": 0.5,
+          "expected": "increase_long"
+        },
+        {
+          "previous_weight": -0.75,
+          "target_weight": -0.25,
+          "expected": "reduce_short"
+        }
+      ]
+    }
+  },
+  "required_behavior_test_file": "tests/test_binance_canonical_h10d.py",
+  "required_behavior_tests": [
+    "test_paper_shadow_tiny_helpers_use_synthetic_inputs"
+  ],
+  "excluded_surfaces": [
+    "source migration",
+    "internal module layout",
+    "compute_position_attribution behavior",
+    "compute_factor_leave_one_out_attribution behavior",
+    "build_paper_shadow_execution_ledger behavior",
+    "empty payload helper schemas",
+    "paper-shadow ledger schemas",
+    "exact attribution metrics",
+    "exact factor leave-one-out deltas",
+    "validation report payloads",
+    "risk-brake formula behavior",
+    "_apply_short_position_multiplier behavior",
+    "_records JSON payload behavior",
+    "caller counts"
+  ]
+}

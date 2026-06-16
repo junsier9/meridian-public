@@ -1,0 +1,143 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.alpha_ontology_v3_lsk3_g_v2",
+  "lineage": {
+    "doc": "docs/quant_research/00_roadmap_state/alpha_ontology_and_factor_library.md",
+    "doc_context_version": "2026-04-29.1",
+    "predecessor_baseline": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v1_lsk3_g_v2.json",
+    "scoring_family": "xs_alpha_ontology_v3",
+    "weights_artifact": "config/quant_research/alpha_ontology_v3_weights.json",
+    "overlay_id": "alpha_ontology_regime_gating_v2",
+    "overlay_module": "src/enhengclaw/quant_research/regime_gating.py",
+    "method": "Bayesian-IR shrunk weights on the 11 lsk3 score factors, in-sample window = first 60% of panel timestamps (2023-04 to ~2025-04), tau_t=2.0, ic_to_weight_scale=3.25.",
+    "weight_summary": {
+      "n_factors": 11,
+      "sign_match_count": 11,
+      "sum_abs_hand_tuned": 1.130,
+      "sum_abs_v3": 0.643,
+      "biggest_shrinkage": [
+        "distance_to_high_60: hand=+0.180 -> v3=+0.041 (-77%)",
+        "downside_upside_vol_ratio_30: hand=+0.100 -> v3=+0.043 (-57%)",
+        "quality_funding_oi: hand=-0.050 -> v3=-0.004 (-92%, basically zeroed)",
+        "intraday_realized_vol_4h_to_1d_smooth_60: hand=-0.200 -> v3=-0.065 (-67%)"
+      ],
+      "biggest_amplification": [
+        "realized_volatility_5: hand=-0.100 -> v3=-0.121 (+21%)",
+        "funding_basis_residual_implied_repo_30: hand=+0.070 -> v3=+0.075 (+7%)"
+      ]
+    }
+  },
+  "entries": [
+    {
+      "candidate_id": "xs_alpha_ontology_v3_lsk3_g_v2_h5d",
+      "base_mechanism_id": "xs_alpha_ontology_v3_lsk3_g_v2",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_alpha_ontology_v3",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "downside_upside_vol_ratio_30",
+        "funding_basis_residual_implied_repo_30"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.0,
+        "top_long_count": 3,
+        "bottom_short_count": 3,
+        "position_multiplier_overlay_id": "alpha_ontology_regime_gating_v2"
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_alpha_ontology_v3_lsk3_g_v2_h5d",
+        "thesis_family": "hypothesis_xs_alpha_ontology_v3_lsk3_g_v2_h5d",
+        "market_mechanism": "W3.6 v3 score: identical 11 factors to v_alpha_v1_lsk3 but weights are Bayesian-IR-shrunk from the first 60% of panel timestamps (rather than hand-tuned from full-history IC). The in-sample weight estimation uses prior IC=0 with tau_t=2.0 (factors with |t-stat|<2 get heavily shrunk toward 0); weight = posterior_IC * 3.25 (matching v91's |w|/|IC| ratio). Stacks with the W3.5 v2 regime-gating overlay (alpha_ontology_regime_gating_v2) for the gated portfolio sizing layer. Hypothesis: hand-tuned weights inadvertently over-allocate to factors with strong magnitude but weak in-sample t-stats (e.g. distance_to_high_60 at +0.18 with t=2.25); shrinking those toward the posterior should reduce overfit and improve walk-forward robustness, especially in regimes where the over-weighted factor under-performs.",
+        "directional_claim": "Same long-short top-3 perp signed-z-score construction. Score uses Bayesian-IR-shrunk weights instead of hand-tuned. Position size multiplied by W3.5 v2 regime-gating overlay. Falsified if (a) walk_forward median sharpe drops more than 0.5 below v_alpha_v1_lsk3_g_v2 (+2.147) AND worst-regime fails to improve relative to v1_lsk3_g_v2 (-1.851); OR (b) any new strict gate fails (regime_holdout, walk_forward, factor_evidence, execution_stress).",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "downside_upside_vol_ratio_30",
+          "funding_basis_residual_implied_repo_30"
+        ],
+        "factor_formula": "raw = sum_i (weight_v3_i * z(factor_i)) where weight_v3_i is loaded from config/quant_research/alpha_ontology_v3_weights.json (Bayesian shrinkage, in-sample first 60% of panel, tau_t=2, scale 3.25). final_score = tanh((percentile_rank(raw)-0.5)*1.80); target_weight_per_name = (long_leverage/top_K - short_leverage/bottom_K) * regime_gating_v2_multiplier(t)",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed",
+          "v3_walk_forward_median_drops_more_than_0_5_below_v1_lsk3_g_v2_without_regime_improvement",
+          "v3_worst_regime_fails_to_clear_v10_floor"
+        ]
+      },
+      "spec_hash": "173c83860cfce3a8620421b194ee2b076b992541438d4144eac285b6d8f390d1"
+    }
+  ],
+  "verified_outcome_2026_04_29": {
+    "v10_contract_status": "pass",
+    "walk_forward_median_oos_sharpe": 1.870,
+    "regime_holdout_passed": true,
+    "positive_regime_fraction": 0.667,
+    "worst_regime_median_oos_sharpe": -1.612,
+    "regimes": {
+      "trend_up_2025h2": 3.880,
+      "rotation_high_vol_2025q4": -1.612,
+      "drawdown_rebound_2026ytd": 1.809
+    },
+    "delta_vs_lsk3_g_v2": {
+      "walk_forward_median": -0.277,
+      "positive_regime_fraction": "+33.3pp (1/3 -> 2/3)",
+      "worst_regime_median": "+0.239 (-1.851 -> -1.612)",
+      "trend_up_2025h2": -1.660,
+      "drawdown_rebound_2026ytd": "+3.660 (lsk3_g_v2 -1.851 -> v3 +1.809)"
+    },
+    "interpretation": "Bayesian-IR shrinkage reduced reliance on factors with strong hand-tuned weight but weak in-sample t-stat (notably distance_to_high_60: hand 0.18, t=2.25, v3 0.04). That cost peak trend-regime alpha (+5.54 -> +3.88) but flipped the previously-negative drawdown_rebound_2026ytd regime to strongly positive (-1.85 -> +1.81), giving v3 a more balanced 2/3 positive_regime_fraction. v3's walk-forward median (+1.87) is below v1_lsk3_g_v2's +2.15 because the trend regime carries less peak alpha; in exchange v3 has the lowest worst regime among gated variants (-1.612 vs lsk3_g_v2 -1.851). The two are sibling strict-passing variants with different risk profiles: lsk3_g_v2 = max walk-forward peak; v3_lsk3_g_v2 = max regime breadth + worst-regime safety."
+  },
+  "lifecycle": "active_alternative",
+  "active_alternative_marker_set_at": "2026-04-29",
+  "active_alternative_reason": "W3.6 v3 score (Bayesian-IR-shrunk weights) + W3.5 v2 overlay = the structural three-layer architecture from doc H.2 (score factors + Bayesian-IR weighting + gating multipliers). Strict-passes v10 contract with positive_regime_fraction 2/3 (better than lsk3_g_v2's 1/3) and worst regime -1.612 (better than lsk3_g_v2's -1.851). Walk-forward median (+1.870) is below lsk3_g_v2 (+2.147) but well above un-gated lsk3 (+1.748). v3_lsk3_g_v2 is the active_alternative when operator wants regime breadth and worst-regime safety; lsk3_g_v2 stays active_alternative when operator wants max walk-forward peak."
+}

@@ -1,0 +1,105 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v82",
+  "entries": [
+    {
+      "candidate_id": "xs_ensemble_v74_v80_h5d",
+      "base_mechanism_id": "xs_ensemble_v74_v80",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_ensemble_v74_v80",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "range_position_20",
+        "return_1",
+        "coinglass_taker_imbalance_5d_sum",
+        "coinglass_global_account_long_pct",
+        "coinglass_liquidation_imbalance_24h",
+        "coinglass_top_trader_long_pct"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_ensemble_v74_v80_h5d",
+        "thesis_family": "hypothesis_xs_ensemble_v74_v80_h5d",
+        "market_mechanism": "ensemble of v74 (xs_dual_regime_filter_v9, regime-stable PASS but weak test P&L) and v80 (xs_minimal_v1, strongest rank IC and best P&L but regime FAIL). Hypothesis: averaging the two final scores at 50/50 weight, then re-ranking, will combine v74's regime robustness with v80's stronger alpha — capturing both architectures' complementary strengths while damping their individual weaknesses. Both component scores are tanh-compressed in [-1, +1], making linear average well-behaved.",
+        "directional_claim": "rank top-20 liquid perp-covered names by combining v74 and v80 scores: ensemble_score = (s_v74 + s_v80) / 2, then percentile-rank and tanh-compress; expected to retain 3/3 regime POS profile from v74 while preserving v80's higher rank IC and lower test loss. Required features = v74's 19 (v80's 6 are subset).",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "range_position_20",
+          "return_1",
+          "coinglass_taker_imbalance_5d_sum",
+          "coinglass_global_account_long_pct",
+          "coinglass_liquidation_imbalance_24h",
+          "coinglass_top_trader_long_pct"
+        ],
+        "factor_formula": "s_v74 = xs_dual_regime_filter_v9_score(frame); s_v80 = xs_minimal_v1_score(frame); ensemble = 0.5*s_v74 + 0.5*s_v80; final = tanh((percentile_rank(ensemble) - 0.5) * 1.80). Both component scores are tanh outputs in [-1, +1].",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "73695a9daed7b06a6344bf983e920692fac9060f0cda50bf66584856f6d9fa34"
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_hash_identity_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only importability, inspect.signature shape, feature-manifest hash identity samples, and deterministic subject holdout bucket identity for _stable_hash and _stable_int. This does not approve source migration or freeze broader falsification metrics.",
+  "validation_mode": "importability_signature_identity_samples",
+  "stable_hash_target": {
+    "helper_name": "_stable_hash",
+    "signature": {
+      "parameters": [
+        {
+          "annotation": "Any",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "payload",
+          "required": true
+        }
+      ],
+      "return_annotation": "str"
+    },
+    "sample_payloads": {
+      "feature_manifest_minimal": {
+        "payload": {
+          "strategy_label": "v5_binance_ohlcv_core_h10d",
+          "allowed_alpha_features": [
+            "distance_to_high_5",
+            "realized_volatility_5"
+          ],
+          "excluded_source_patterns": [
+            "coinglass_",
+            "open_interest"
+          ],
+          "purity_check": {
+            "passed": true,
+            "forbidden_columns": []
+          }
+        },
+        "expected_sha256": "f0a433056b44b0defe86f057ed93cb7b650c7e357bc8ff0323496f7a1765f808"
+      },
+      "feature_manifest_order_invariance": {
+        "payload": {
+          "b": 2,
+          "a": 1,
+          "nested": {
+            "z": [
+              3,
+              2,
+              1
+            ],
+            "a": "x"
+          }
+        },
+        "expected_sha256": "cdd1c458e11d7376ba93ec1b402451212ff0136839b1f9a4300dddc0db62dd43"
+      }
+    }
+  },
+  "stable_int_target": {
+    "helper_name": "_stable_int",
+    "signature": {
+      "parameters": [
+        {
+          "annotation": "str",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "value",
+          "required": true
+        }
+      ],
+      "return_annotation": "int"
+    },
+    "subject_buckets": {
+      "BTC": {
+        "expected_int": 3666174695,
+        "expected_mod_2": 1,
+        "expected_holdout_bucket": "holdout_b"
+      },
+      "ETH": {
+        "expected_int": 4104353286,
+        "expected_mod_2": 0,
+        "expected_holdout_bucket": "holdout_a"
+      },
+      "SOL": {
+        "expected_int": 690580487,
+        "expected_mod_2": 1,
+        "expected_holdout_bucket": "holdout_b"
+      },
+      "DOGE": {
+        "expected_int": 1735851283,
+        "expected_mod_2": 1,
+        "expected_holdout_bucket": "holdout_b"
+      },
+      "ARB": {
+        "expected_int": 2487615236,
+        "expected_mod_2": 0,
+        "expected_holdout_bucket": "holdout_a"
+      },
+      "BTCUSDT": {
+        "expected_int": 430577326,
+        "expected_mod_2": 0,
+        "expected_holdout_bucket": "holdout_a"
+      }
+    }
+  },
+  "excluded_surfaces": [
+    "source migration",
+    "full feature manifest content",
+    "falsification metrics",
+    "backtest output",
+    "pass/fail decisions",
+    "subject normalization",
+    "other module hash helpers",
+    "caller counts"
+  ]
+}

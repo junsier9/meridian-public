@@ -1,0 +1,13 @@
+# Draft only. Install disabled in a future approved remote apply window.
+[Unit]
+Description=Run Meridian Alpha unattended daily policy after the UTC daily rebalance close
+
+[Timer]
+OnCalendar=*-*-* 00:20:00 UTC
+AccuracySec=30s
+RandomizedDelaySec=30s
+Persistent=false
+Unit=meridian-alpha-mainnet-unattended-daily-policy.service
+
+[Install]
+WantedBy=timers.target

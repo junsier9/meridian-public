@@ -1,0 +1,8 @@
+{
+  "contract_version": "runtime_ownership_contract.v1",
+  "runtime_ownership_phase": "partial",
+  "owner_verification_required": true,
+  "owner_verification_enforced_in_boundary_gates": true,
+  "owner_topology_manifest_path": "config/agent_architecture/main_owner_manifest.json",
+  "last_reviewed_utc": "2026-04-22T00:00:00Z"
+}

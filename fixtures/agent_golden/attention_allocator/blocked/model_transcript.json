@@ -1,0 +1,111 @@
+{
+  "backend_kind": "live",
+  "backend_name": "openai_compatible_chat_completions",
+  "compiler_output": {
+    "blocked_reason": "attention_allocator_recorded_fixture_blocked",
+    "candidate_payloads": [],
+    "notes": [
+      "recorded blocked fixture",
+      "recorded blocked fixture for attention_allocator"
+    ],
+    "status": "blocked"
+  },
+  "contract_version": "attention_allocator_compiler_v1",
+  "input_fingerprint": "8c7dbc7aaa9f13e572306e3717eef6d8eabcb57c1d62fb97398d7c92b2eaf68e",
+  "model_request": {
+    "endpoint": "https://example.invalid/chat/completions",
+    "request_body": {
+      "messages": [
+        {
+          "content": "# Role\nYou compile one bounded attention-posture observation into exactly one machine-readable JSON envelope for the `attention_allocator` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `attention_posture_monitor`, `attention_posture_advance`, `attention_posture_archive`, `attention_posture_hold`\n- `claim_type`: `measurement`\n- `direction`: `neutral`\n- `source_family`: `analytics`\n- `evidence_level`: `E2`, `E3`, `E4`\n- `time_horizon`: `short`, `medium`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- Emit one bounded attention posture claim only.\n- Do not directly mutate processing state or allocate resources.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the attention text is too vague or would require inventing stage/legality details.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing subjects, scopes, or resource state.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+          "role": "system"
+        },
+        {
+          "content": "Compile one bounded attention-posture observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=attention_allocator_blocked:1\nobject_id=golden-attention-allocator-aix\nobject_context_fingerprint=4ce84b936b3ab8bec433e44ef32fbf874d18b0b521c943b91a44fec132740040\nexisting_object_context_json:\n{\"attention_context\": {\"current_attention\": 63, \"object_id\": \"golden-attention-allocator-aix\", \"processing_state\": \"monitoring\", \"reasons\": [\"attention is high enough for continued research budget\"], \"recalculated_attention\": 63, \"recommendation\": \"advance\", \"risk_state\": \"normal\", \"stage_permitted\": true}, \"claim_count\": 2, \"object_id\": \"golden-attention-allocator-aix\", \"processing_state\": \"monitoring\", \"recent_claims\": [{\"confidence\": 82, \"direction\": \"bullish\", \"predicate\": \"spot_breakout\", \"scope\": \"spot+perp\", \"source_family\": \"cex\", \"time_horizon\": \"intraday\", \"value\": \"AIX spot structure remains constructive\"}, {\"confidence\": 78, \"direction\": \"bullish\", \"predicate\": \"wallet_buy\", \"scope\": \"spot+perp\", \"source_family\": \"onchain\", \"time_horizon\": \"intraday\", \"value\": \"AIX still shows supportive flow from large buyers\"}], \"risk_state\": \"normal\", \"scope\": \"spot+perp\", \"subject\": \"AIX\"}\nattention_text:\nConsider resources in some way.",
+          "role": "user"
+        }
+      ],
+      "model": "fixture-test-model",
+      "temperature": 0.0
+    },
+    "request_headers": {
+      "Authorization": "Bearer ***redacted***",
+      "Content-Type": "application/json"
+    },
+    "timeout_seconds": 30.0
+  },
+  "object_context_fingerprint": "4ce84b936b3ab8bec433e44ef32fbf874d18b0b521c943b91a44fec132740040",
+  "prompt_context": {
+    "contract_version": "attention_allocator_compiler_v1",
+    "messages": [
+      {
+        "content": "# Role\nYou compile one bounded attention-posture observation into exactly one machine-readable JSON envelope for the `attention_allocator` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `attention_posture_monitor`, `attention_posture_advance`, `attention_posture_archive`, `attention_posture_hold`\n- `claim_type`: `measurement`\n- `direction`: `neutral`\n- `source_family`: `analytics`\n- `evidence_level`: `E2`, `E3`, `E4`\n- `time_horizon`: `short`, `medium`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- Emit one bounded attention posture claim only.\n- Do not directly mutate processing state or allocate resources.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the attention text is too vague or would require inventing stage/legality details.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing subjects, scopes, or resource state.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+        "role": "system"
+      },
+      {
+        "content": "Compile one bounded attention-posture observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=attention_allocator_blocked:1\nobject_id=golden-attention-allocator-aix\nobject_context_fingerprint=4ce84b936b3ab8bec433e44ef32fbf874d18b0b521c943b91a44fec132740040\nexisting_object_context_json:\n{\"attention_context\": {\"current_attention\": 63, \"object_id\": \"golden-attention-allocator-aix\", \"processing_state\": \"monitoring\", \"reasons\": [\"attention is high enough for continued research budget\"], \"recalculated_attention\": 63, \"recommendation\": \"advance\", \"risk_state\": \"normal\", \"stage_permitted\": true}, \"claim_count\": 2, \"object_id\": \"golden-attention-allocator-aix\", \"processing_state\": \"monitoring\", \"recent_claims\": [{\"confidence\": 82, \"direction\": \"bullish\", \"predicate\": \"spot_breakout\", \"scope\": \"spot+perp\", \"source_family\": \"cex\", \"time_horizon\": \"intraday\", \"value\": \"AIX spot structure remains constructive\"}, {\"confidence\": 78, \"direction\": \"bullish\", \"predicate\": \"wallet_buy\", \"scope\": \"spot+perp\", \"source_family\": \"onchain\", \"time_horizon\": \"intraday\", \"value\": \"AIX still shows supportive flow from large buyers\"}], \"risk_state\": \"normal\", \"scope\": \"spot+perp\", \"subject\": \"AIX\"}\nattention_text:\nConsider resources in some way.",
+        "role": "user"
+      }
+    ],
+    "object_context": {
+      "attention_context": {
+        "current_attention": 63,
+        "object_id": "golden-attention-allocator-aix",
+        "processing_state": "monitoring",
+        "reasons": [
+          "attention is high enough for continued research budget"
+        ],
+        "recalculated_attention": 63,
+        "recommendation": "advance",
+        "risk_state": "normal",
+        "stage_permitted": true
+      },
+      "claim_count": 2,
+      "object_id": "golden-attention-allocator-aix",
+      "processing_state": "monitoring",
+      "recent_claims": [
+        {
+          "confidence": 82,
+          "direction": "bullish",
+          "predicate": "spot_breakout",
+          "scope": "spot+perp",
+          "source_family": "cex",
+          "time_horizon": "intraday",
+          "value": "AIX spot structure remains constructive"
+        },
+        {
+          "confidence": 78,
+          "direction": "bullish",
+          "predicate": "wallet_buy",
+          "scope": "spot+perp",
+          "source_family": "onchain",
+          "time_horizon": "intraday",
+          "value": "AIX still shows supportive flow from large buyers"
+        }
+      ],
+      "risk_state": "normal",
+      "scope": "spot+perp",
+      "subject": "AIX"
+    },
+    "object_context_fingerprint": "4ce84b936b3ab8bec433e44ef32fbf874d18b0b521c943b91a44fec132740040",
+    "prompt_fingerprint": "6b75dd370f0887e5e6c5cfaed1a6851c3540e1f01069544c5aadaf88b5475a5f",
+    "prompt_path": "C:\\Users\\user\\Documents\\Claude\\Projects\\EnhengClaw\\src\\enhengclaw\\agents\\prompts\\attention_allocator.system.md",
+    "prompt_template_version": "attention_allocator_prompt_template_v1"
+  },
+  "prompt_fingerprint": "6b75dd370f0887e5e6c5cfaed1a6851c3540e1f01069544c5aadaf88b5475a5f",
+  "raw_model_output": {
+    "assistant_text": "{\"blocked_reason\": \"attention_allocator_recorded_fixture_blocked\", \"candidate_payloads\": [], \"notes\": [\"recorded blocked fixture\", \"recorded blocked fixture for attention_allocator\"], \"status\": \"blocked\"}",
+    "response_json": {
+      "choices": [
+        {
+          "message": {
+            "content": "{\"blocked_reason\": \"attention_allocator_recorded_fixture_blocked\", \"candidate_payloads\": [], \"notes\": [\"recorded blocked fixture\", \"recorded blocked fixture for attention_allocator\"], \"status\": \"blocked\"}"
+          }
+        }
+      ]
+    },
+    "response_text": "{\"choices\": [{\"message\": {\"content\": \"{\\\"blocked_reason\\\": \\\"attention_allocator_recorded_fixture_blocked\\\", \\\"candidate_payloads\\\": [], \\\"notes\\\": [\\\"recorded blocked fixture\\\", \\\"recorded blocked fixture for attention_allocator\\\"], \\\"status\\\": \\\"blocked\\\"}\"}}]}",
+    "status_code": 200
+  },
+  "transcript_fingerprint": "30c9fd5d9cbc8e2373b0d92edaada657d1fc157acd148b0ed602b0ec32072248"
+}

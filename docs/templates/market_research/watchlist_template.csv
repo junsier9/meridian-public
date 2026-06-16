@@ -1,0 +1,9 @@
+asset,theme,object_id,scope,status,priority,last_cycle_date,next_cycle_target,next_step
+SOL,breakout,sol-breakout-20260419,spot+perp,watch,high,,,confirm whether higher-timeframe trend support is still intact
+BTC,range-resolution,btc-range-resolution-20260419,spot+perp,watch,high,,,check whether funding and price structure still agree
+ETH,relative-strength,eth-relative-strength-20260419,spot+perp,watch,medium,,,compare ETH strength against BTC and majors
+AIX,momentum,aix-momentum-20260419,spot+perp,watch,medium,,,validate whether current momentum is still supported by evidence
+ARB,reversal,arb-reversal-20260419,spot+perp,watch,medium,,,check for invalidation around the latest support zone
+DOGE,meme-flow,doge-meme-flow-20260419,spot+perp,watch,low,,,check whether social narrative still supports continuation
+BNB,ecosystem-rotation,bnb-ecosystem-rotation-20260419,spot+perp,watch,medium,,,look for ecosystem-specific flow and attention changes
+LINK,oracle-repricing,link-oracle-repricing-20260419,spot+perp,watch,low,,,confirm whether repricing has evidence beyond price action

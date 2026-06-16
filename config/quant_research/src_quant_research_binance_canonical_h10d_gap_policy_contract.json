@@ -1,0 +1,104 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_gap_policy_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only root-level importability, inspect.signature shape, and required behavior-test presence for selected-path gap policy helpers. This contract intentionally excludes source movement, exact blocker strings, real excluded-subject snapshots, exact audit schemas, validation status, report text, and execution metric values.",
+  "validation_mode": "root_facade_signature_required_behavior_tests_only",
+  "approved_by_dry_run": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_gap_policy_owner_gated_dry_run_2026_05_16.md",
+  "approved_by_owner_decision": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_gap_policy_owner_decision_2026_05_16.md",
+  "required_classification_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_root_surface_classification_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_root_surface_classification_contract.v1",
+    "required_group": "backtest_and_gap_policy"
+  },
+  "gap_policy_targets": {
+    "apply_selected_path_gap_symbol_exclusion": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "frame",
+            "required": true
+          },
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "config",
+            "required": true
+          }
+        ],
+        "return_annotation": "tuple[pd.DataFrame, dict[str, Any]]"
+      }
+    },
+    "_execution_data_gap_blockers_for_frame": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "frame",
+            "required": true
+          },
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "config",
+            "required": true
+          }
+        ],
+        "return_annotation": "list[str]"
+      }
+    },
+    "_subjects_from_data_gap_blockers": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "Iterable[str]",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "blockers",
+            "required": true
+          }
+        ],
+        "return_annotation": "list[str]"
+      }
+    }
+  },
+  "required_behavior_test_file": "tests/test_binance_canonical_h10d.py",
+  "required_behavior_tests": [
+    "test_selected_path_gap_policy_excludes_entire_gap_symbols",
+    "test_gap_policy_subject_parser_uses_only_missing_blocker_prefix"
+  ],
+  "required_adjacent_contracts": [
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_run_backtest_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_run_backtest_contract.v1",
+      "must_exclude_surface": "exact data-gap blocker strings"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_reporting_metric_sanitation_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_reporting_metric_sanitation_contract.v1",
+      "must_exclude_surface": "_run_backtest behavior"
+    }
+  ],
+  "excluded_surfaces": [
+    "source migration",
+    "internal module layout",
+    "_run_backtest behavior",
+    "execution_backtest.backtest_cross_sectional behavior",
+    "exact blocker strings",
+    "real artifact excluded-subject snapshots",
+    "exact audit payload schemas",
+    "validation pass/fail status",
+    "report text output",
+    "execution metric values",
+    "strategy promotion status",
+    "live-readiness authorization",
+    "caller counts"
+  ]
+}

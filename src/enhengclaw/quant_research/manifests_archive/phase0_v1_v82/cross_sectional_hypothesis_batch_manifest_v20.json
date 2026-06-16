@@ -1,0 +1,80 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v20",
+  "entries": [
+    {
+      "candidate_id": "xs_regime_switch_ranking_v1_h5d",
+      "base_mechanism_id": "xs_regime_switch_ranking_v1",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_regime_switch_ranking_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "quote_volume_expansion",
+        "range_position_20",
+        "distance_to_high_20",
+        "distance_to_low_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_regime_switch_ranking_v1_h5d",
+        "thesis_family": "hypothesis_xs_regime_switch_ranking_v1_h5d",
+        "market_mechanism": "the cross section can require different ranking logic in different states: calmer names near the upper half of the range should be ranked by quiet trend quality, while hotter names should only rank well if they are reclaiming support after a contained shakeout rather than extending into euphoria",
+        "directional_claim": "own spot names with strong relative strength and slope, but switch the ranking logic by state: quiet trend setups are rewarded near orderly upper-half positioning, while hotter states are only allowed to score well when the name is reclaiming support on a mild rebound day instead of chasing breakout extension",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "quote_volume_expansion",
+          "range_position_20",
+          "distance_to_high_20",
+          "distance_to_low_20",
+          "return_1"
+        ],
+        "factor_formula": "blend a quiet-trend leg and a reclaim leg using a state switch driven by intraday churn, realized volatility, volume expansion, and range extension; calm states favor upper-half trend quality, while hot states only favor support reclaims after a mild rebound and penalize euphoric extension",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "d0718c11f0c04e026dd470a0d093e4ab119f888d51154f7d0d6b4fbab580b4f1"
+    }
+  ]
+}

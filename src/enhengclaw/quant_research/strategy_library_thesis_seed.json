@@ -1,0 +1,174 @@
+{
+  "manifest_version": 2,
+  "library_mode": "thesis_task",
+  "entries": [
+    {
+      "strategy_id": "thesis-funding-extreme-reversal-cross-sectional",
+      "lifecycle": "watch",
+      "shape": "cross_sectional",
+      "strategy_profile": "balanced",
+      "subject": null,
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "model_family": "carry_funding",
+      "feature_groups": ["derivatives"],
+      "profile_constraints_override": {},
+      "source": "proposal",
+      "family_id": "carry_funding",
+      "research_lane": "hypothesis_factor",
+      "promotion_eligibility": "eligible",
+      "thesis_family": "funding_extreme_reversal",
+      "requires_derivatives_features": true,
+      "daily_executable": false,
+      "rationale": "Test whether crowding extremes in perp funding combined with open-interest expansion mean-revert on the liquid perp core.",
+      "expected_edge": "If the crowding thesis is real, extreme positive funding with OI expansion should reverse over the next rebalance horizon after realistic execution costs.",
+      "invalidates_if": "Rank IC, top-minus-bottom spread, or executable capacity fail once the signal is evaluated on the liquid perp core with perp-first execution.",
+      "data_dependencies": {
+        "spot_ohlcv_intervals": ["1d", "1h"],
+        "usdm_ohlcv_intervals": ["4h", "1d"],
+        "derivatives_fields": ["funding_rate", "open_interest_value", "perp_close", "perp_quote_volume_usd"],
+        "universe_snapshot_required": true
+      },
+      "review_priority": 100.0,
+      "thesis_profile": {
+        "thesis_id": "funding_extreme_reversal",
+        "thesis_family": "funding_extreme_reversal",
+        "market_mechanism": "Extreme perp funding with concurrent open-interest expansion proxies one-sided crowding that should mean-revert once positioning is saturated.",
+        "directional_claim": "Short the most crowded positive-funding names and long the most crowded negative-funding names after OI expands.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 365,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": ["funding_zscore_20", "oi_change_5"],
+        "factor_formula": "reverse(sign(funding_zscore_20) * abs(funding_zscore_20)) filtered by positive oi_change_5",
+        "intended_holding_horizon_bars": 1,
+        "falsification_conditions": [
+          "rank_ic_mean_abs_below_threshold",
+          "capacity_constraint_breach",
+          "top_minus_bottom_return_non_positive"
+        ],
+        "promotion_path": [
+          "hypothesis_factor",
+          "hypothesis_portfolio",
+          "hypothesis_model"
+        ]
+      }
+    },
+    {
+      "strategy_id": "thesis-basis-mean-reversion-cross-sectional",
+      "lifecycle": "watch",
+      "shape": "cross_sectional",
+      "strategy_profile": "balanced",
+      "subject": null,
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "model_family": "basis_divergence",
+      "feature_groups": ["derivatives"],
+      "profile_constraints_override": {},
+      "source": "proposal",
+      "family_id": "basis_divergence",
+      "research_lane": "hypothesis_factor",
+      "promotion_eligibility": "eligible",
+      "thesis_family": "basis_mean_reversion",
+      "requires_derivatives_features": true,
+      "daily_executable": false,
+      "rationale": "Test whether cross-sectional basis dislocations on the liquid perp core converge once execution friction and inventory capacity are enforced.",
+      "expected_edge": "If basis dislocations are compensating mispricings rather than noise, the most stretched names should mean-revert after ranking on basis z-scores.",
+      "invalidates_if": "The spread disappears after realistic perp execution, or the signal only survives in a single quarter/window.",
+      "data_dependencies": {
+        "spot_ohlcv_intervals": ["1d", "1h"],
+        "usdm_ohlcv_intervals": ["4h", "1d"],
+        "derivatives_fields": ["basis_proxy", "perp_close", "open_interest_value", "perp_quote_volume_usd"],
+        "universe_snapshot_required": true
+      },
+      "review_priority": 99.0,
+      "thesis_profile": {
+        "thesis_id": "basis_mean_reversion",
+        "thesis_family": "basis_mean_reversion",
+        "market_mechanism": "Perp basis extremes proxy transient imbalance between perp and spot demand that should compress once liquidity providers re-anchor pricing.",
+        "directional_claim": "Fade the largest positive and negative basis z-score extremes on the liquid perp core.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 365,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": ["basis_proxy", "basis_zscore_20"],
+        "factor_formula": "-basis_zscore_20",
+        "intended_holding_horizon_bars": 1,
+        "falsification_conditions": [
+          "basis_spread_non_positive",
+          "rank_ic_instability",
+          "inventory_capacity_breach"
+        ],
+        "promotion_path": [
+          "hypothesis_factor",
+          "hypothesis_portfolio",
+          "hypothesis_model"
+        ]
+      }
+    },
+    {
+      "strategy_id": "thesis-event-drift-cross-sectional",
+      "lifecycle": "watch",
+      "shape": "cross_sectional",
+      "strategy_profile": "balanced",
+      "subject": null,
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "model_family": "event_drift",
+      "feature_groups": ["events", "derivatives"],
+      "profile_constraints_override": {},
+      "source": "proposal",
+      "family_id": "event_drift",
+      "research_lane": "hypothesis_factor",
+      "promotion_eligibility": "eligible",
+      "thesis_family": "event_drift",
+      "requires_derivatives_features": false,
+      "daily_executable": false,
+      "rationale": "Keep an explicit event-drift research slot, but do not execute it daily until event coverage is real and auditable.",
+      "expected_edge": "If narrative and event shocks create post-event drift, event features should pass factor evidence before any model overlay is considered.",
+      "invalidates_if": "Event coverage is missing, event features do not survive factor evidence, or the setup falls back to generic momentum.",
+      "data_dependencies": {
+        "spot_ohlcv_intervals": ["1d", "1h"],
+        "usdm_ohlcv_intervals": ["4h", "1d"],
+        "derivatives_fields": [],
+        "universe_snapshot_required": true
+      },
+      "review_priority": 95.0,
+      "thesis_profile": {
+        "thesis_id": "event_drift",
+        "thesis_family": "event_drift",
+        "market_mechanism": "Exogenous event and narrative shocks can create short-lived continuation or decay that should be tested explicitly rather than approximated with generic trend features.",
+        "directional_claim": "Trade post-event continuation or exhaustion only when explicit event or narrative columns are present.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "execution_venue": "perp",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [],
+        "factor_formula": "requires_explicit_pit_event_tape",
+        "intended_holding_horizon_bars": 1,
+        "falsification_conditions": [
+          "event_coverage_missing",
+          "event_signal_non_monotonic",
+          "fallback_to_generic_momentum_detected"
+        ],
+        "promotion_path": [
+          "hypothesis_factor",
+          "hypothesis_portfolio",
+          "hypothesis_model"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "backend_kind": "live",
+  "backend_name": "openai_compatible_chat_completions",
+  "compiler_output": {
+    "blocked_reason": null,
+    "candidate_payloads": [
+      {
+        "claim_type": "market_structure",
+        "confidence_hint": 72,
+        "direction": "bullish",
+        "evidence_level": "E4",
+        "input_id": "market_observer_quarantine:1",
+        "predicate": "agent_market_structure_support",
+        "scope": "spot+perp",
+        "source_family": "analytics",
+        "subject": "BTC",
+        "time_horizon": "intraday",
+        "value": "facts=subject=BTC still shows supportive structure with a higher low above support; interpretation=structure remains locally constructive; uncertainty=host subject alignment still requires confirmation"
+      }
+    ],
+    "notes": [
+      "recorded live-style success transcript that should quarantine locally"
+    ],
+    "status": "success"
+  },
+  "contract_version": "market_observer_compiler_v3",
+  "input_fingerprint": "b49dca3c8167b20ef883fc2ff181335cbc2c7a058891688ded3f4fb065a5effe",
+  "model_request": {
+    "endpoint": "https://example.invalid/chat/completions",
+    "request_body": {
+      "messages": [
+        {
+          "content": "# Role\nYou compile one bounded market observation into exactly one machine-readable JSON envelope for the `market_observer` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `agent_market_structure_support`, `fresh_supportive_flow`, `fresh_invalidation_risk`, `headline_risk`, `neutral_range_observation`\n- `claim_type`: `fact`, `measurement`, `flow`, `market_structure`, `causal`, `predictive`, `risk_flag`, `invalidation`\n- `direction`: `bullish`, `bearish`, `neutral`, `risk`, `invalidating`\n- `source_family`: `infoflow`, `cex`, `onchain`, `analytics`, `safety`, `official`\n- `evidence_level`: `E1`, `E2`, `E3`, `E4`, `E5`\n- `time_horizon`: `intraday`, `short`, `medium`, `structural`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- `value` must preserve this order:\n  `facts=...; interpretation=...; uncertainty=...`\n- Emit one bounded claim only. Do not bundle multiple observations.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the observation is too vague, conflicting, unsupported, or cannot honestly fill `facts`, `interpretation`, and `uncertainty`.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing entities, scopes, directions, or timeframes.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+          "role": "system"
+        },
+        {
+          "content": "Compile one bounded market observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=market_observer_quarantine:1\nobject_id=golden-quarantine-aix\nobservation_text:\nsubject=BTC supportive structure remains intact with a higher low above support and confidence=72.",
+          "role": "user"
+        }
+      ],
+      "model": "market-observer-test-model",
+      "temperature": 0.0
+    },
+    "request_headers": {
+      "Authorization": "Bearer ***redacted***",
+      "Content-Type": "application/json"
+    },
+    "timeout_seconds": 30.0
+  },
+  "prompt_context": {
+    "messages": [
+      {
+        "content": "# Role\nYou compile one bounded market observation into exactly one machine-readable JSON envelope for the `market_observer` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `agent_market_structure_support`, `fresh_supportive_flow`, `fresh_invalidation_risk`, `headline_risk`, `neutral_range_observation`\n- `claim_type`: `fact`, `measurement`, `flow`, `market_structure`, `causal`, `predictive`, `risk_flag`, `invalidation`\n- `direction`: `bullish`, `bearish`, `neutral`, `risk`, `invalidating`\n- `source_family`: `infoflow`, `cex`, `onchain`, `analytics`, `safety`, `official`\n- `evidence_level`: `E1`, `E2`, `E3`, `E4`, `E5`\n- `time_horizon`: `intraday`, `short`, `medium`, `structural`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- `value` must preserve this order:\n  `facts=...; interpretation=...; uncertainty=...`\n- Emit one bounded claim only. Do not bundle multiple observations.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the observation is too vague, conflicting, unsupported, or cannot honestly fill `facts`, `interpretation`, and `uncertainty`.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing entities, scopes, directions, or timeframes.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+        "role": "system"
+      },
+      {
+        "content": "Compile one bounded market observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=market_observer_quarantine:1\nobject_id=golden-quarantine-aix\nobservation_text:\nsubject=BTC supportive structure remains intact with a higher low above support and confidence=72.",
+        "role": "user"
+      }
+    ],
+    "prompt_template_version": "market_observer_prompt_template_v1",
+    "system_prompt": "# Role\nYou compile one bounded market observation into exactly one machine-readable JSON envelope for the `market_observer` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `agent_market_structure_support`, `fresh_supportive_flow`, `fresh_invalidation_risk`, `headline_risk`, `neutral_range_observation`\n- `claim_type`: `fact`, `measurement`, `flow`, `market_structure`, `causal`, `predictive`, `risk_flag`, `invalidation`\n- `direction`: `bullish`, `bearish`, `neutral`, `risk`, `invalidating`\n- `source_family`: `infoflow`, `cex`, `onchain`, `analytics`, `safety`, `official`\n- `evidence_level`: `E1`, `E2`, `E3`, `E4`, `E5`\n- `time_horizon`: `intraday`, `short`, `medium`, `structural`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- `value` must preserve this order:\n  `facts=...; interpretation=...; uncertainty=...`\n- Emit one bounded claim only. Do not bundle multiple observations.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the observation is too vague, conflicting, unsupported, or cannot honestly fill `facts`, `interpretation`, and `uncertainty`.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing entities, scopes, directions, or timeframes.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+    "system_prompt_path": "C:\\Users\\user\\Documents\\Claude\\Projects\\EnhengClaw\\src\\enhengclaw\\agents\\prompts\\market_observer.system.md",
+    "user_prompt": "Compile one bounded market observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=market_observer_quarantine:1\nobject_id=golden-quarantine-aix\nobservation_text:\nsubject=BTC supportive structure remains intact with a higher low above support and confidence=72."
+  },
+  "prompt_fingerprint": "5d4b1ee461f459f1194ba7a5cf22370e45d206d7b3725391d50d445106bf68bb",
+  "raw_model_output": {
+    "assistant_text": "{\"blocked_reason\": null, \"candidate_payloads\": [{\"claim_type\": \"market_structure\", \"confidence_hint\": 72, \"direction\": \"bullish\", \"evidence_level\": \"E4\", \"input_id\": \"market_observer_quarantine:1\", \"predicate\": \"agent_market_structure_support\", \"scope\": \"spot+perp\", \"source_family\": \"analytics\", \"subject\": \"BTC\", \"time_horizon\": \"intraday\", \"value\": \"facts=subject=BTC still shows supportive structure with a higher low above support; interpretation=structure remains locally constructive; uncertainty=host subject alignment still requires confirmation\"}], \"notes\": [\"recorded live-style success transcript that should quarantine locally\"], \"status\": \"success\"}",
+    "response_json": {
+      "choices": [
+        {
+          "message": {
+            "content": "{\"blocked_reason\": null, \"candidate_payloads\": [{\"claim_type\": \"market_structure\", \"confidence_hint\": 72, \"direction\": \"bullish\", \"evidence_level\": \"E4\", \"input_id\": \"market_observer_quarantine:1\", \"predicate\": \"agent_market_structure_support\", \"scope\": \"spot+perp\", \"source_family\": \"analytics\", \"subject\": \"BTC\", \"time_horizon\": \"intraday\", \"value\": \"facts=subject=BTC still shows supportive structure with a higher low above support; interpretation=structure remains locally constructive; uncertainty=host subject alignment still requires confirmation\"}], \"notes\": [\"recorded live-style success transcript that should quarantine locally\"], \"status\": \"success\"}"
+          }
+        }
+      ]
+    },
+    "response_text": "{\"choices\": [{\"message\": {\"content\": \"{\\\"blocked_reason\\\": null, \\\"candidate_payloads\\\": [{\\\"claim_type\\\": \\\"market_structure\\\", \\\"confidence_hint\\\": 72, \\\"direction\\\": \\\"bullish\\\", \\\"evidence_level\\\": \\\"E4\\\", \\\"input_id\\\": \\\"market_observer_quarantine:1\\\", \\\"predicate\\\": \\\"agent_market_structure_support\\\", \\\"scope\\\": \\\"spot+perp\\\", \\\"source_family\\\": \\\"analytics\\\", \\\"subject\\\": \\\"BTC\\\", \\\"time_horizon\\\": \\\"intraday\\\", \\\"value\\\": \\\"facts=subject=BTC still shows supportive structure with a higher low above support; interpretation=structure remains locally constructive; uncertainty=host subject alignment still requires confirmation\\\"}], \\\"notes\\\": [\\\"recorded live-style success transcript that should quarantine locally\\\"], \\\"status\\\": \\\"success\\\"}\"}}]}",
+    "status_code": 200
+  },
+  "transcript_fingerprint": "1d1a1e15dc2cba5ea9d989618543dfafd295262c9437c6db057ddf337c14d07d"
+}

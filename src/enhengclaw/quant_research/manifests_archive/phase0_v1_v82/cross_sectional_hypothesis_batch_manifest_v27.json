@@ -1,0 +1,90 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v27",
+  "entries": [
+    {
+      "candidate_id": "xs_pair_spread_book_v2_h5d",
+      "base_mechanism_id": "xs_pair_spread_book_v2",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_pair_spread_book_v2",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.0,
+        "pair_construction": "quality_bucket_pairs",
+        "pair_bucket_count": 4,
+        "pair_count": 2,
+        "pair_score_spread_min": 0.08,
+        "pair_quality_floor": 0.35
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_pair_spread_book_v2_h5d",
+        "thesis_family": "hypothesis_xs_pair_spread_book_v2_h5d",
+        "market_mechanism": "inside the liquid perp-covered core, keep the flipped pair-book direction but extend the holding horizon so the cohort-matched long-short spread has more time to mean-revert after rich-vs-cheap derivatives dislocation has been expressed",
+        "directional_claim": "if the flipped pair book needs more time to work, the same rich-over-cheap quality-matched spread should look better on a 5-day horizon than on the 3-day horizon",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "return_1"
+        ],
+        "factor_formula": "take the same cohort-matched pair construction as v2 and keep the flipped spread direction, but evaluate it on a 5-day horizon instead of 3 days",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "8460c2091dc03fff965514171ef304adf3c52141e76a78548db6fe7ea10f3980"
+    }
+  ]
+}

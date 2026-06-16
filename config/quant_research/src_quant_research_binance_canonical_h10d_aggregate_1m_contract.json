@@ -1,0 +1,91 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_aggregate_1m_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only root-facade importability, inspect.signature shape, and tiny in-memory behavior samples for aggregate_1m_klines. This contract does not read archive files, freeze full feature-panel behavior, or approve source movement.",
+  "validation_mode": "root_facade_signature_tiny_in_memory_aggregation_samples",
+  "approved_by_plan": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_aggregate_1m_contract_plan_2026_05_15.md",
+  "required_classification_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_root_surface_classification_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_root_surface_classification_contract.v1",
+    "required_group": "archive_data_foundation_and_feature_panel"
+  },
+  "aggregate_target": {
+    "helper_name": "aggregate_1m_klines",
+    "signature": {
+      "parameters": [
+        {
+          "annotation": "pd.DataFrame",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "frame",
+          "required": true
+        },
+        {
+          "annotation": "str",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "interval",
+          "required": true
+        },
+        {
+          "annotation": "bool",
+          "default_repr": "True",
+          "kind": "KEYWORD_ONLY",
+          "name": "drop_incomplete",
+          "required": false
+        }
+      ],
+      "return_annotation": "pd.DataFrame"
+    },
+    "complete_1h_sample": {
+      "symbol": "BTCUSDT",
+      "start_open_time_ms": 1767225600000,
+      "minute_count": 60,
+      "interval": "1h",
+      "expected_row_count": 1,
+      "expected_open_time_ms": 1767225600000,
+      "expected_close_time_ms": 1767229199999,
+      "expected_open": 100.0,
+      "expected_high": 160.0,
+      "expected_low": 99.0,
+      "expected_close": 159.5,
+      "expected_volume": 60.0,
+      "expected_quote_volume": 600.0,
+      "expected_trade_count": 60,
+      "expected_taker_buy_base_volume": 30.0,
+      "expected_taker_buy_quote_volume": 300.0,
+      "expected_minute_count": 60,
+      "expected_observed_minute_row_count": 60,
+      "expected_unique_open_time_count": 60,
+      "expected_bar_complete": true
+    },
+    "incomplete_1h_sample": {
+      "drop_trailing_minutes": 1,
+      "expected_drop_incomplete_row_count": 0,
+      "expected_audit_row_count": 1,
+      "expected_observed_minute_row_count": 59,
+      "expected_unique_open_time_count": 59,
+      "expected_bar_complete": false
+    },
+    "unsupported_interval_sample": {
+      "interval": "2h",
+      "expected_error_substring": "unsupported aggregation interval"
+    }
+  },
+  "excluded_surfaces": [
+    "source migration",
+    "full OHLCV aggregation schema",
+    "all interval behavior",
+    "local archive path discovery",
+    "parquet or csv.gz reader behavior",
+    "build_symbol_feature_frame behavior",
+    "daily feature-panel behavior",
+    "build_binance_canonical_dataset behavior",
+    "feature formulas",
+    "target label construction",
+    "funding attachment",
+    "PIT universe behavior",
+    "caller counts"
+  ]
+}

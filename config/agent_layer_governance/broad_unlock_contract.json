@@ -1,0 +1,17 @@
+{
+  "contract_version": "broad_agent_layer_unlock.v1",
+  "manual_manifest_unlock_required": true,
+  "minimum_project_stage_for_manual_unlock": "stage_2_manual_export_human_review",
+  "required_command_labels": [
+    "owner architecture contract",
+    "boundary gates verify",
+    "operational readiness verify",
+    "real shadow verify"
+  ],
+  "required_fresh_evidence_families": [
+    "openclaw_deployment_gate",
+    "real_shadow_verify",
+    "real_24h_preflight",
+    "real_24h_bundle"
+  ]
+}

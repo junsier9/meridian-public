@@ -1,0 +1,287 @@
+{
+  "contract_version": "src_quant_research_manifest_lifecycle_catalog.v1",
+  "scope": "src/enhengclaw/quant_research root JSON files",
+  "generated_as_of": "2026-05-14",
+  "allowed_lifecycle_classes": [
+    "active_runtime_loaded",
+    "b_batch_ic_extension_evidence",
+    "documented_evidence",
+    "documented_static_baseline",
+    "historical_archive_candidate",
+    "recent_evidence",
+    "runtime_path_sensitive",
+    "source_truth",
+    "unknown_pending_owner"
+  ],
+  "allowed_move_stances": [
+    "catalog_only",
+    "do_not_move",
+    "owner_gated_dry_run_only"
+  ],
+  "entries": [
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v1.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=superseded enabled=false"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v1_lsk3.json",
+      "lifecycle_class": "runtime_path_sensitive",
+      "move_stance": "do_not_move",
+      "evidence": "one-off alpha ontology runner default manifest"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v1_lsk3_g.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=experimental"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v1_lsk3_g_v2.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=active_alternative"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v1_lsk3_g_v2_h10d.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=experimental"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v1_topk7.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=falsified enabled=false"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v10_regime_conditional_lsk3_g_v2_h10d.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=experimental"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v2_lsk3.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=active_alternative"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v3_lsk3_g_v2.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=active_alternative"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v4_lsk3_g_v2.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=experimental"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v5_lsk3_g_v2.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=experimental"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v5_lsk3_g_v2_h10d.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=experimental"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v5_rw_bridge_lsk3_g_v2_h10d.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=legacy_comparator"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v5_rw_bridge_no_overlay_lsk3_g_v2_h10d.json",
+      "lifecycle_class": "runtime_path_sensitive",
+      "move_stance": "do_not_move",
+      "evidence": "config/quant_research/active_h10d_registry.json canonical_parent.manifest_path"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v5_rw_bridge_no_overlay_mf01_combo_replace_v1_h10d.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=experimental"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v5_rw_bridge_no_overlay_spk_short_replace_mid_v1_h10d.json",
+      "lifecycle_class": "runtime_path_sensitive",
+      "move_stance": "do_not_move",
+      "evidence": "manifest lifecycle=quarantined; script-hardref candidate"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v6_lsk3_g_v2.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=active_alternative"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v6_lsk3_g_v2_h10d.json",
+      "lifecycle_class": "runtime_path_sensitive",
+      "move_stance": "do_not_move",
+      "evidence": "manifest lifecycle=retired; h10d script-hardref candidate"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v6_lsk3_g_v3_h10d.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=experimental"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v6_spk_short_replace_mid_v1_h10d.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=research_only"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v7_lsk3_g_v2.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=active_alternative"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v8_lsk3_g_v2.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=experimental"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v8_lsk3_g_v2_h10d.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=experimental"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v9_lsk3_g_v2_h10d.json",
+      "lifecycle_class": "recent_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "manifest lifecycle=experimental"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_r1a_top_liquidity_ex_trx_h10d.json",
+      "lifecycle_class": "runtime_path_sensitive",
+      "move_stance": "do_not_move",
+      "evidence": "manifest lifecycle=quarantined; Coinglass quarantine runner target"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v100.json",
+      "lifecycle_class": "unknown_pending_owner",
+      "move_stance": "catalog_only",
+      "evidence": "no lifecycle field or direct owner decision found"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v83.json",
+      "lifecycle_class": "documented_static_baseline",
+      "move_stance": "do_not_move",
+      "evidence": "Phase 0 documented baseline and static-contract artifact"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v85.json",
+      "lifecycle_class": "historical_archive_candidate",
+      "move_stance": "owner_gated_dry_run_only",
+      "evidence": "phase0_v1_v82 README names v85-v88 as possible future follow-up archive"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v86.json",
+      "lifecycle_class": "historical_archive_candidate",
+      "move_stance": "owner_gated_dry_run_only",
+      "evidence": "phase0_v1_v82 README names v85-v88 as possible future follow-up archive"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v87.json",
+      "lifecycle_class": "historical_archive_candidate",
+      "move_stance": "owner_gated_dry_run_only",
+      "evidence": "phase0_v1_v82 README names v85-v88 as possible future follow-up archive"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v88.json",
+      "lifecycle_class": "historical_archive_candidate",
+      "move_stance": "owner_gated_dry_run_only",
+      "evidence": "phase0_v1_v82 README names v85-v88 as possible future follow-up archive"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v89.json",
+      "lifecycle_class": "unknown_pending_owner",
+      "move_stance": "catalog_only",
+      "evidence": "no lifecycle field or direct owner decision found"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v90.json",
+      "lifecycle_class": "unknown_pending_owner",
+      "move_stance": "catalog_only",
+      "evidence": "no lifecycle field or direct owner decision found"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v91.json",
+      "lifecycle_class": "documented_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "mechanism docs and threshold provenance reference predecessor or active 9-factor manifest"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v92.json",
+      "lifecycle_class": "b_batch_ic_extension_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "threshold provenance notes v92-v99 as in-flight v64 B-batch IC-extension experiments"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v93.json",
+      "lifecycle_class": "b_batch_ic_extension_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "threshold provenance notes v92-v99 as in-flight v64 B-batch IC-extension experiments"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v94.json",
+      "lifecycle_class": "b_batch_ic_extension_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "threshold provenance notes v92-v99 as in-flight v64 B-batch IC-extension experiments"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v95.json",
+      "lifecycle_class": "b_batch_ic_extension_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "threshold provenance notes v92-v99 as in-flight v64 B-batch IC-extension experiments"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v96.json",
+      "lifecycle_class": "b_batch_ic_extension_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "threshold provenance notes v92-v99 as in-flight v64 B-batch IC-extension experiments"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v97.json",
+      "lifecycle_class": "active_runtime_loaded",
+      "move_stance": "do_not_move",
+      "evidence": "current hypothesis_batch.py HYPOTHESIS_BATCH_MANIFEST_PATH default"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v98.json",
+      "lifecycle_class": "b_batch_ic_extension_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "threshold provenance notes v92-v99 as in-flight v64 B-batch IC-extension experiments"
+    },
+    {
+      "file": "cross_sectional_hypothesis_batch_manifest_v99.json",
+      "lifecycle_class": "b_batch_ic_extension_evidence",
+      "move_stance": "catalog_only",
+      "evidence": "threshold provenance notes v92-v99 as in-flight v64 B-batch IC-extension experiments; script-path docs reference"
+    },
+    {
+      "file": "deterministic_strategy_manifest.json",
+      "lifecycle_class": "active_runtime_loaded",
+      "move_stance": "do_not_move",
+      "evidence": "current deterministic_core.py DETERMINISTIC_STRATEGY_MANIFEST_PATH default"
+    },
+    {
+      "file": "strategy_library_thesis_seed.json",
+      "lifecycle_class": "source_truth",
+      "move_stance": "do_not_move",
+      "evidence": "governance.py THESIS_TASK_SEED_FILENAME source manifest"
+    }
+  ]
+}

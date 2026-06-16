@@ -1,0 +1,97 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v70",
+  "entries": [
+    {
+      "candidate_id": "xs_dual_regime_filter_v5_h5d",
+      "base_mechanism_id": "xs_dual_regime_filter_v5",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_dual_regime_filter_v5",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "range_position_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_dual_regime_filter_v5_h5d",
+        "thesis_family": "hypothesis_xs_dual_regime_filter_v5_h5d",
+        "market_mechanism": "in the liquid perp-covered core, the v64 dual-regime architecture (leader-continuation plus carry-dislocation blended by per-timestamp dispersion of |momentum_20| with optional contrarian in broad-uniform regimes) extracts cross-sectional alpha when the universe spans approximately 20 distinct names; adding a name-level intraday-churn quality filter further suppresses high-vol distorted ranks without shifting regime weights",
+        "directional_claim": "rank liquid perp-covered names higher by blending leader-continuation and carry-dislocation sub-signals through dispersion-driven weights, plus a strictly-gated contrarian tilt in broad-uniform regimes, with an additional intraday-churn quality screen that down-weights names exhibiting elevated intraday-vs-daily realized volatility ratios",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "range_position_20",
+          "return_1"
+        ],
+        "factor_formula": "compute v64-style leader and carry sub-scores, blend by per-timestamp |momentum_20| dispersion with broad-uniform contrarian tilt, then apply an intraday-churn quality filter that reduces score for names where intraday_realized_vol_4h_to_1d sits in the cross-sectional top quartile, preserving the v64 regime architecture while improving stability",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "ac7891386bd114e5b250583d8399b29784ee318dafbd980a216da46e139d4c09"
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "frontier_namespace": "frozen_12factor_frontier",
+  "strategy_label": "v5_rw_bridge_no_overlay_h10d_12factor_frozen_frontier",
+  "parent_label": "v5_binance_pit_top_mid_h10d_pruned3_hv_balanced_soft_budget",
+  "dataset_profile": "binance_canonical_daily_1m_to_1d",
+  "label_contract_id": "forward_return_execution_aligned.v1",
+  "as_of": "2026-04-30",
+  "_purpose": "前置-2: the 12-factor scoring machinery the FROZEN frontier weight vector is consumed by. This config pins EVERYTHING EXCEPT the factor weights; the weights are pinned verbatim by the frozen frontier weight contract (feature_weights_source below) and are injected by frozen_frontier_live.resolve_frontier_live_plan. Unlike the 5-factor baseline, the frontier namespace deliberately admits derivatives sources (CoinGlass / funding / basis / OI). DEFAULT-OFF: nothing consumes this until strategy.frontier.enabled is set AND every enable_precondition below is satisfied; live admission is contract-hash-pinned, not pattern-gated.",
+  "feature_columns": [
+    "intraday_realized_vol_4h_to_1d_smooth_60",
+    "realized_volatility_5",
+    "distance_to_high_60",
+    "distance_to_high_5",
+    "coinglass_top_trader_long_pct_smooth_5",
+    "liquidity_stress_qv_iv",
+    "momentum_decay_5_20",
+    "coinglass_taker_imb_intraday_dispersion_24h",
+    "quality_funding_oi",
+    "downside_upside_vol_ratio_30",
+    "funding_basis_residual_implied_repo_30",
+    "settlement_cycle_premium_60d"
+  ],
+  "feature_weights_source": "frozen_frontier_weights_contract",
+  "frozen_frontier_weights_contract": "config/quant_research/frontier_12factor/v5_rw_bridge_no_overlay_h10d__2026-05-02-54814da2622b__frozen_frontier_weights.json",
+  "feature_subset_policy": {
+    "allow_pruned_subset": false,
+    "rationale": "The frozen frontier is the full 12-factor signed-IR vector; no pruning at go-live."
+  },
+  "allowed_alpha_sources": [
+    "binance_public_archive_1m_ohlcv",
+    "coinglass_top_trader_long_short_ratio",
+    "coinglass_taker_buy_sell_volume",
+    "binance_funding_rate",
+    "binance_open_interest",
+    "binance_basis_implied_repo"
+  ],
+  "excluded_source_patterns": [
+    "forward_return",
+    "target_execution",
+    "target_up",
+    "future_",
+    "_label$"
+  ],
+  "cost_only_sources": [
+    "binance_funding_rate"
+  ],
+  "funding_cost_root": "E:\\EnhengClawData\\market_history\\binance_funding_cost_only",
+  "gap_policy": {
+    "complete_1m_buckets_only": true,
+    "forward_fill_ohlcv": false
+  },
+  "execution_gap_policy": {
+    "mode": "pit_recent_completeness_only"
+  },
+  "capacity_limits": {
+    "max_trade_participation_rate_max": 0.005
+  },
+  "split_realization": {
+    "interval": "1d",
+    "target_horizon_bars": 10
+  },
+  "reference_capital_usd": 1000.0,
+  "pit_data_eligibility_policy": {
+    "lookback_days": 30,
+    "min_consecutive_valid_days": 10,
+    "min_coverage_ratio": 0.95,
+    "min_funding_sample_count": 1,
+    "min_lifetime_valid_days": 30,
+    "min_same_bucket_days": 10,
+    "mode": "rolling_recent_completeness",
+    "require_current_funding_sample": true,
+    "short_max_universe_rank": 18
+  },
+  "risk_overlay_policy": {
+    "enabled": true,
+    "mode": "pruned3_hv_balanced_soft_portfolio_budget",
+    "source_boundary": "binance_ohlcv_features_and_closed_strategy_pnl_only",
+    "allowed_sources": [
+      "binance_public_archive_1m_ohlcv",
+      "closed_period_strategy_equity"
+    ],
+    "portfolio_drawdown_brake": {
+      "enabled": true,
+      "window_days": 180,
+      "dd_5pct_threshold": 0.05,
+      "dd_10pct_threshold": 0.1,
+      "dd_5pct_multiplier": 0.7,
+      "dd_10pct_multiplier": 0.5,
+      "mode": "soft_linear",
+      "start_threshold": 0.1,
+      "full_threshold": 0.25,
+      "min_multiplier": 0.8
+    },
+    "short_squeeze_brake": {
+      "enabled": false
+    },
+    "high_vol_rebound_short_brake": {
+      "enabled": true,
+      "lookback_decisions": 120,
+      "min_periods": 20,
+      "vol_quantile": 0.6,
+      "close_to_high_threshold": -0.05,
+      "min_median_momentum_20": 0.03,
+      "min_positive_momentum_share": 0.6,
+      "min_close_to_high_share": 0.4,
+      "short_multiplier": 0.5,
+      "severe_min_median_momentum_20": 0.08,
+      "severe_min_positive_momentum_share": 0.7,
+      "severe_min_close_to_high_share": 0.5,
+      "severe_short_multiplier": 0.25
+    }
+  },
+  "strategy_profile": {
+    "bottom_short_count": 3,
+    "dd_10pct_multiplier": 0.8,
+    "dd_10pct_threshold": 0.25,
+    "dd_5pct_multiplier": 1.0,
+    "dd_5pct_threshold": 0.1,
+    "dd_throttle_window_days": 180,
+    "decision_eligible_column": "binance_decision_eligible",
+    "drawdown_throttle_enabled": true,
+    "execution_venue": "perp",
+    "long_decision_eligible_column": "binance_pit_top_long_eligible",
+    "long_leverage": 0.5,
+    "max_gross_leverage": 1.0,
+    "max_turnover_per_rebalance": 1.0,
+    "short_allowed": true,
+    "short_decision_eligible_column": "binance_pit_mid_short_eligible",
+    "short_leverage": 0.5,
+    "short_position_weight_multiplier_column": "binance_risk_brake_short_multiplier",
+    "spot_only": false,
+    "top_long_count": 3,
+    "dd_throttle_mode": "soft_linear",
+    "dd_throttle_start_threshold": 0.1,
+    "dd_throttle_full_threshold": 0.25,
+    "dd_throttle_min_multiplier": 0.8
+  },
+  "universe_policy": {
+    "coverage_threshold": 0.85,
+    "freeze_as_of": "2026-04-30",
+    "lookback_days": 30,
+    "market_type": "usdm_perp",
+    "preset": "binance_pit_top_mid_20",
+    "selection_mode": "rolling_quote_volume",
+    "top_n": 20
+  },
+  "validation_gates": {
+    "base_max_drawdown_max": 0.325,
+    "legacy_symbol_holdout_hard_gate": false,
+    "liquidity_positive_bucket_count_min": 2,
+    "max_trade_participation_rate_max": 0.005,
+    "min_oos_periods": 60,
+    "require_base_positive_return": true,
+    "require_holdout_positive_return": true,
+    "require_stress_positive_return": true,
+    "stratified_holdout_min_positive_fraction": 0.75,
+    "stratified_holdout_repeat_count": 8,
+    "stratified_holdout_require_gap_free": true
+  },
+  "enable_preconditions": {
+    "note": "ALL must hold before strategy.frontier.enabled may be flipped true. The live resolver (frozen_frontier_live) and the scorer fail closed until they do; this block is operator-facing documentation of WHY a real arm is still gated.",
+    "frozen_frontier_weights_contract_pinned": "weights_file_sha256 + weights_spec_hash pinned in the live config and matching the contract.",
+    "scoring_config_sha256_pinned": "this file's sha256 pinned in the live config (arm→submit binding).",
+    "real_12factor_derivatives_panel": "前置-2 DATA: the live market-data panel must actually carry all 12 feature columns incl. CoinGlass/funding/OI/basis derivatives; absent columns block the snapshot (missing_feature_columns).",
+    "real_pit_overlay_thresholds": "前置-1: if the dth60 overlay is enabled, shock_co_occurrence_index_q90 / co_jump_count_3d_q90 must be re-derived from a REAL PIT input panel (synthetic thresholds are forbidden and fail closed)."
+  }
+}

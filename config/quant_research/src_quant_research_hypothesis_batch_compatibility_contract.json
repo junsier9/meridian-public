@@ -1,0 +1,285 @@
+{
+  "contract_version": "src_quant_research_hypothesis_batch_compatibility_contract.v1",
+  "global_read_targets": {
+    "BATCH_SUMMARY_CONTRACT_VERSION": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py"
+    ],
+    "DEFAULT_LABEL_CONTRACT_ID": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py"
+    ],
+    "EXPECTED_BASE_MECHANISM_IDS": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "EXPECTED_CANDIDATE_IDS": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "EXPECTED_HORIZON_MAP": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "EXPECTED_HORIZON_SPECS": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "FAST_REJECT_CONTRACT_VERSION": [
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "FAST_REJECT_REPORT_CONTRACT_VERSION": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py"
+    ],
+    "HYPOTHESIS_BATCH_DATASET_PROFILE": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py"
+    ],
+    "HYPOTHESIS_BATCH_FEATURE_SET_VERSION": [
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "HYPOTHESIS_BATCH_MANIFEST_CONTRACT_VERSION": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "HYPOTHESIS_BATCH_MANIFEST_PATH": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/coinglass_quarantine/run_coinglass_r1a_top_liquidity_ex_trx_strict.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "HYPOTHESIS_BATCH_SOURCE": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "HYPOTHESIS_BATCH_TARGET_HORIZONS": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/feature_panel_tools/generate_versioned_panel.py",
+      "scripts/quant_research/provider_diagnostics/audit_coinglass_dataset_feature_smoke.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "LITE_ADVISORY_REGIME": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py"
+    ],
+    "LITE_BLOCKER_FACTOR": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "LITE_BLOCKER_REGIME": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py"
+    ],
+    "LITE_BLOCKER_WALK_FORWARD": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py"
+    ],
+    "STRICT_CANDIDATE_LIST_CONTRACT_VERSION": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py"
+    ],
+    "STRICT_RESULT_CONTRACT_VERSION": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py"
+    ]
+  },
+  "mutable_global_patch_targets": {
+    "BATCH_SUMMARY_CONTRACT_VERSION": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py"
+    ],
+    "EXPECTED_BASE_MECHANISM_IDS": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "EXPECTED_CANDIDATE_IDS": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "EXPECTED_HORIZON_MAP": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "EXPECTED_HORIZON_SPECS": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "FAST_REJECT_REPORT_CONTRACT_VERSION": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py"
+    ],
+    "HYPOTHESIS_BATCH_MANIFEST_CONTRACT_VERSION": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "HYPOTHESIS_BATCH_MANIFEST_PATH": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "HYPOTHESIS_BATCH_SOURCE": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "HYPOTHESIS_BATCH_TARGET_HORIZONS": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "STRICT_CANDIDATE_LIST_CONTRACT_VERSION": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py"
+    ],
+    "STRICT_RESULT_CONTRACT_VERSION": [
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_horizon_cycle_oneoff.py",
+      "scripts/quant_research/alpha_ontology_cycles/run_alpha_ontology_v1_cycle_oneoff.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py"
+    ]
+  },
+  "private_helper_targets": {
+    "_apply_universe_filter": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py"
+    ],
+    "_backtest_cross_sectional": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py"
+    ],
+    "_build_factor_evidence_lite_section": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py",
+      "scripts/quant_research/historical_h10d_diagnostics/audit_coinglass_h10d_parent_rebaseline.py"
+    ],
+    "_build_factor_evidence_section": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py"
+    ],
+    "_chronological_split": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py"
+    ],
+    "_compute_hypothesis_candidate_spec_hash": [
+      "scripts/quant_research/evaluate_v6_h10d_mf01_narrow_ab.py",
+      "scripts/quant_research/evaluate_v6_h10d_orderbook_short_replacement.py",
+      "scripts/quant_research/evaluate_v6_h10d_post_pump_news_veto_ab.py",
+      "scripts/quant_research/evaluate_v6_h10d_post_pump_selected_short_exposure_ab.py",
+      "scripts/quant_research/evaluate_v6_h10d_post_pump_selected_short_news_veto_ab.py",
+      "scripts/quant_research/evaluate_v6_h10d_post_pump_short_replacement.py",
+      "scripts/quant_research/historical_h10d_diagnostics/evaluate_v6_h10d_post_pump_short_overlay.py",
+      "scripts/quant_research/m3_mf_spk_support/evaluate_m3_3_strict_event_state_ab.py",
+      "scripts/quant_research/m3_mf_spk_support/evaluate_mf13_tron_cross_sectional_gate_increment.py",
+      "scripts/quant_research/m3_mf_spk_support/evaluate_mf13_tron_regime_gate_ab.py",
+      "scripts/quant_research/m3_mf_spk_support/evaluate_mf14_cross_sectional_gate_increment.py",
+      "scripts/quant_research/m3_mf_spk_support/evaluate_mf14_regime_gate_ab.py",
+      "scripts/quant_research/m3_mf_spk_support/evaluate_post_pump_stall_cycle_increment.py",
+      "scripts/quant_research/m3_mf_spk_support/evaluate_stablecoin_flow_interaction_cycle_increment.py",
+      "scripts/quant_research/m3_mf_spk_support/evaluate_stablecoin_overlay_cycle_increment.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "_feature_set_for_candidate": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py",
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "_fit_and_score": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py"
+    ],
+    "_initial_data_gap_blockers": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py"
+    ],
+    "_materialize_strict_strategy_entry": [
+      "scripts/quant_research/analyze_v5_rw_baseline_rebalance_phase_sensitivity.py",
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py",
+      "scripts/quant_research/coinglass_quarantine/run_coinglass_r1a_top_liquidity_ex_trx_strict.py",
+      "scripts/quant_research/historical_h10d_diagnostics/audit_coinglass_h10d_parent_rebaseline.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py",
+      "tests/test_quant_m3_3_strict_event_state_scorer.py"
+    ],
+    "_normalize_profile_constraints": [
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "_resolved_execution_cost_models": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py"
+    ],
+    "_run_fast_reject_candidate": [
+      "scripts/quant_research/coinglass_quarantine/run_coinglass_r1a_top_liquidity_ex_trx_strict.py"
+    ],
+    "_run_walk_forward": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py"
+    ],
+    "_select_candidate_feature_columns": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py",
+      "scripts/quant_research/historical_h10d_diagnostics/audit_coinglass_h10d_parent_rebaseline.py"
+    ],
+    "_strict_result_payload": [
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "_write_evidence": [
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py"
+    ],
+    "_write_fast_reject_report": [
+      "scripts/quant_research/audit_coinglass_h10d_parent_fast_reject_stages.py"
+    ],
+    "_write_strict_candidate_list": [
+      "scripts/quant_research/coinglass_quarantine/run_coinglass_r1a_top_liquidity_ex_trx_strict.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py"
+    ],
+    "_write_strict_results": [
+      "scripts/quant_research/coinglass_quarantine/run_coinglass_r1a_top_liquidity_ex_trx_strict.py",
+      "scripts/quant_research/run_coinglass_h10d_parent_frozen_reset_strict.py"
+    ]
+  },
+  "scan_roots": [
+    "scripts",
+    "tests"
+  ],
+  "scope": "Freeze existing external mutable globals, private helper facade usage, and string patch targets before any facade-first split.",
+  "source_module": "enhengclaw.quant_research.hypothesis_batch",
+  "source_path": "src/enhengclaw/quant_research/hypothesis_batch.py",
+  "string_patch_targets": {
+    "_apply_spot_gap_backfill_for_cross_sectional_profiles": [
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "_run_fast_reject_candidate": [
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "build_quant_datasets": [
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "build_quant_feature_sets": [
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "load_quant_universe_snapshot": [
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "require_derivatives_sync_summary": [
+      "tests/test_quant_hypothesis_batch.py"
+    ],
+    "run_quant_experiments_for_strategies": [
+      "tests/test_quant_hypothesis_batch.py"
+    ]
+  }
+}

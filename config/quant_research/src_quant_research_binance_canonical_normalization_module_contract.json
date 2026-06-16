@@ -1,0 +1,32 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_normalization_module_contract.v1",
+  "source_module": "enhengclaw.quant_research._binance_canonical_normalization",
+  "source_path": "src/enhengclaw/quant_research/_binance_canonical_normalization.py",
+  "facade_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "facade_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only timestamp-normalization internal-module importability, root-facade re-export identity, and signatures delegated to the existing root facade timestamp-normalization contract. Tiny normalization samples remain owned by the existing root contract.",
+  "validation_mode": "internal_module_facade_identity_existing_contract_samples",
+  "approved_by_review": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_identity_normalization_post_extraction_review_2026_05_15.md",
+  "signature_source_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_timestamp_normalization_helpers_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_timestamp_normalization_helpers_contract.v1",
+    "required_approved_module_after_move": "enhengclaw.quant_research._binance_canonical_normalization"
+  },
+  "normalization_module_targets": [
+    "_timestamp_zscore",
+    "_timestamp_percentile_rank"
+  ],
+  "excluded_surfaces": [
+    "features.py helper behavior",
+    "full alpha formula behavior",
+    "score_binance_ohlcv_core_alpha output snapshots",
+    "feature weights",
+    "feature subset selection",
+    "backtest metrics",
+    "validation pass/fail status",
+    "risk-brake behavior",
+    "partition or month-key helpers",
+    "generic repo-wide normalization utility migration",
+    "caller counts"
+  ]
+}

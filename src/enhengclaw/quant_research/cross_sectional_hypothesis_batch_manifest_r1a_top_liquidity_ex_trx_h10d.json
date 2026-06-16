@@ -1,0 +1,145 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.r1a_top_liquidity_ex_trx_h10d",
+  "lineage": {
+    "doc": "docs/quant_research/01_data_foundation/coinglass_full_stack_data_research_roadmap.md",
+    "doc_context_version": "2026-05-07.R-1a",
+    "predecessor_baseline": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v5_rw_bridge_no_overlay_lsk3_g_v2_h10d.json",
+    "scoring_family": "xs_alpha_ontology_v5_h10d_rw_bridge",
+    "overlay_id": null,
+    "method": "R-1a quarantined residual sublane: keep the canonical v5 rolling-weight no-overlay score and h10d execution-aligned label, but restrict the formal candidate to top_liquidity names excluding TRX.",
+    "goal": "Test whether the parent blocker-audit residual top_liquidity_ex_trx sublane survives as a separate candidate under fixed-set and full strict statistical falsification. This manifest must not inherit the R-1 parent promotion status."
+  },
+  "entries": [
+    {
+      "candidate_id": "r1a_top_liquidity_ex_trx_h10d",
+      "base_mechanism_id": "r1a_top_liquidity_ex_trx",
+      "horizon_id": "h10d",
+      "target_horizon_bars": 10,
+      "label_contract_id": "forward_return_execution_aligned.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_alpha_ontology_v5_h10d_rw_bridge",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "downside_upside_vol_ratio_30",
+        "funding_basis_residual_implied_repo_30",
+        "settlement_cycle_premium_60d"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.0,
+        "top_long_count": 3,
+        "bottom_short_count": 3
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20",
+        "liquidity_buckets": [
+          "top_liquidity"
+        ],
+        "subjects": [
+          "AAVE",
+          "ADA",
+          "AVAX",
+          "BNB",
+          "BTC",
+          "DOGE",
+          "ETH",
+          "LINK",
+          "LTC",
+          "NEAR",
+          "SOL",
+          "XRP"
+        ]
+      },
+      "thesis_profile": {
+        "thesis_id": "r1a_top_liquidity_ex_trx_h10d",
+        "thesis_family": "hypothesis_r1a_top_liquidity_ex_trx_h10d",
+        "market_mechanism": "R-1a quarantined residual sublane from the CoinGlass h10d parent blocker audit: keep the canonical v5 rolling-weight no-overlay score, but restrict validation to top_liquidity names excluding TRX after the parent failed symbol/bucket strict attribution.",
+        "directional_claim": "Same h10d long-short top-3/bottom-3 perp construction as the canonical parent, trained and evaluated only on the top_liquidity ex-TRX whitelist. This tests whether the residual sublane is a new candidate, not a rescued parent promotion.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20",
+          "liquidity_buckets": [
+            "top_liquidity"
+          ],
+          "subjects": [
+            "AAVE",
+            "ADA",
+            "AVAX",
+            "BNB",
+            "BTC",
+            "DOGE",
+            "ETH",
+            "LINK",
+            "LTC",
+            "NEAR",
+            "SOL",
+            "XRP"
+          ]
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "downside_upside_vol_ratio_30",
+          "funding_basis_residual_implied_repo_30",
+          "settlement_cycle_premium_60d"
+        ],
+        "factor_formula": "For each train split/window: compute daily cross-sectional Spearman IC of each required factor z-score versus target_execution_forward_return, convert to IR = mean(IC)/std(IC), assign sign by mean(IC), normalize signed |IR| weights to abs-sum 1.0, then raw = sum(weight_f * z_f) on validation/test; final_score = tanh((percentile_rank(raw)-0.5)*1.80); target_weight_per_name = long_leverage/top_K - short_leverage/bottom_K with no position_multiplier_overlay_id. Universe is restricted to top_liquidity subjects excluding TRX.",
+        "intended_holding_horizon_bars": 10,
+        "falsification_conditions": [
+          "fast_reject_lite_failed",
+          "fixed_set_pairing_fails_against_v5_rw_bridge_no_overlay_h10d",
+          "time_shuffle_failed",
+          "symbol_shuffle_failed",
+          "label_shuffle_failed",
+          "delay_stress_failed",
+          "cost_stress_failed",
+          "symbol_holdout_failed",
+          "liquidity_bucket_consistency_failed"
+        ]
+      },
+      "spec_hash": "6368591a8964cb65ff7fd793595c6626f7ee02ecd6bfb9a973ea6dadad050bc1"
+    }
+  ],
+  "lifecycle": "quarantined",
+  "promotion_eligibility": "quarantined_research_candidate",
+  "canonical_parent": "v5_rw_bridge_no_overlay_h10d",
+  "quarantine_reason": "Parent strict symbol/bucket gate failed on top_bucket_only and TRX symbol_holdout_dependency; residual top_liquidity_ex_trx must be validated as a separate candidate before any new alpha claim."
+}

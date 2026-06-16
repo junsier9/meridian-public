@@ -1,0 +1,85 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v91",
+  "entries": [
+    {
+      "candidate_id": "xs_minimal_v6_h5d",
+      "base_mechanism_id": "xs_minimal_v6",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_minimal_v6",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_minimal_v6_h5d",
+        "thesis_family": "hypothesis_xs_minimal_v6_h5d",
+        "market_mechanism": "Phase 1c IC-pruned and sign-corrected revision of v90. Phase 1c factor analysis (correlation + VIF + per-factor IC measurement) reduced 17 v90 factors to 9: kept the strongest IC representative within each high-correlation cluster, dropped 8 factors with VIF>5 plus 1 with IC near zero, sign-flipped coinglass_taker_imb_intraday_dispersion_24h (full-panel IC = +0.023, opposite of v90 hypothesis). Weights are IC-proportional with absolute sum near 1.00. This is the corrected static-weight baseline before Phase 1d dynamic weighting.",
+        "directional_claim": "rank top-20 liquid perp-covered names by 9 IC-pruned z-score factors. Expected: rank IC >= 0.21 (above v90 0.192), walk-forward median sharpe >= 0.85 (above v90 0.57 since redundancy removed), regime worst >= -2.0 (above v90 -3.39 since wrong-sign factor removed and noise reduced).",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi"
+        ],
+        "factor_formula": "raw = -0.20*z(iv_smooth_60) -0.10*z(rv_5) +0.18*z(dh_60) +0.15*z(dh_5) -0.07*z(tt_smooth_5) -0.10*z(liquidity_stress_qv_iv) -0.06*z(momentum_decay_5_20) +0.05*z(taker_imb_dispersion) -0.05*z(quality_funding_oi); final = tanh((percentile_rank(raw)-0.5)*1.80)",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "cc652350f531c5f546a7c63a4e15b2773b92009b1cc772426c2ba97d4c028f31"
+    }
+  ]
+}

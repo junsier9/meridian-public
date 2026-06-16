@@ -1,0 +1,1 @@
+{"provider":"snapshot-safety-lab","retrieved_at":"2026-04-07T06:00:30Z","incident":{"asset":"VRTX","code":"overheating_risk","summary":"funding is elevated and leverage is building"},"classification":{"claim":"risk_flag","direction":"risk","evidence_level":"E3","confidence":66,"horizon":"short"},"extra":{"venue":"perps","severity":"medium"}}

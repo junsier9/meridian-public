@@ -1,0 +1,105 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v72",
+  "entries": [
+    {
+      "candidate_id": "xs_dual_regime_filter_v7_h5d",
+      "base_mechanism_id": "xs_dual_regime_filter_v7",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_dual_regime_filter_v7",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "range_position_20",
+        "return_1",
+        "coinglass_taker_imbalance_5d_sum",
+        "coinglass_global_account_long_pct",
+        "coinglass_liquidation_imbalance_24h",
+        "coinglass_top_trader_long_pct"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_dual_regime_filter_v7_h5d",
+        "thesis_family": "hypothesis_xs_dual_regime_filter_v7_h5d",
+        "market_mechanism": "in the liquid perp-covered core, the v71 CoinGlass extended composite (+taker - retail_long - liq_imbalance - top_trader_long) works in dispersed-up regimes where extreme positioning fades, but flips sign in broad-down and drawdown-rebound regimes where positioning extremes signal capitulation pre-bounce; v72 introduces a per-timestamp regime-conditional sign multiplier on the 3 positioning sub-features driven by the cross-sectional median momentum sign, leaving the taker-imbalance term sign-invariant",
+        "directional_claim": "rank liquid perp-covered names by blending the v64 dual-regime signal with a regime-conditional CoinGlass composite where the 3 positioning sub-features (retail_long, liq_imbalance, top_trader_long) use fade-extremity signs in positive-median-momentum regimes and align-with-positioning signs in negative-median-momentum regimes, weighted at 12% on the final signal stage",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "range_position_20",
+          "return_1",
+          "coinglass_taker_imbalance_5d_sum",
+          "coinglass_global_account_long_pct",
+          "coinglass_liquidation_imbalance_24h",
+          "coinglass_top_trader_long_pct"
+        ],
+        "factor_formula": "v64 raw_score and stable_rank_score remain unchanged; final blended_signal = 0.88 * v64_blended + 0.12 * xs_zscore(coinglass_composite_v7), where coinglass_composite_v7 = (1/4) * [z_taker + sign_flip * (-z_retail_long - z_liq_imbalance - z_top_trader_long)] and sign_flip = 1 - 2 * med_neg with med_neg = clip(-cross_sectional_median(momentum_20)/0.06, 0, 1); when median momentum is positive (sign_flip=+1) the composite reproduces v71 fade-extremity behavior, when median is negative (sign_flip=-1) the 3 positioning sub-features flip to align with positioning",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "40f3440f59446e8972b0f595bb776e71b8d4c8fdb757984eb73a5b993ac77c4a"
+    }
+  ]
+}

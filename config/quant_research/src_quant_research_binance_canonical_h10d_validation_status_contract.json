@@ -1,0 +1,73 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_validation_status_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only root-facade importability, signature, and required behavior-test coverage for _validation_status. This contract intentionally excludes the falsification suite, full validation runner, artifact writer, funding blocker behavior, and source movement.",
+  "validation_mode": "root_facade_signature_required_behavior_tests_only",
+  "approved_by_dry_run": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_validation_falsification_owner_gated_dry_run_2026_05_15.md",
+  "validation_status_target": {
+    "helper_name": "_validation_status",
+    "signature": {
+      "parameters": [
+        {
+          "annotation": "dict[str, Any]",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "metrics",
+          "required": true
+        },
+        {
+          "annotation": "dict[str, Any]",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "falsification",
+          "required": true
+        },
+        {
+          "annotation": "list[dict[str, Any]]",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "blockers",
+          "required": true
+        },
+        {
+          "annotation": "dict[str, Any]",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "config",
+          "required": true
+        }
+      ],
+      "return_annotation": "tuple[str, dict[str, Any]]"
+    }
+  },
+  "required_behavior_test_file": "tests/test_binance_canonical_h10d.py",
+  "required_behavior_tests": [
+    "test_validation_status_uses_stratified_holdout_as_hard_gate",
+    "test_validation_status_fails_when_stratified_holdout_has_gaps",
+    "test_validation_status_can_hard_fail_drawdown_cap"
+  ],
+  "deferred_surfaces": [
+    "run_binance_canonical_validation",
+    "write_validation_artifacts",
+    "_run_falsification_suite",
+    "_run_stratified_repeated_symbol_holdout",
+    "_decision_time_liquidity_bucket_frame",
+    "_funding_cost_status"
+  ],
+  "excluded_surfaces": [
+    "source migration",
+    "internal module layout",
+    "falsification suite behavior",
+    "full validation runner behavior",
+    "artifact writer behavior",
+    "funding blocker behavior",
+    "full validation report payloads",
+    "full falsification outputs",
+    "backtest metric values",
+    "artifact path selection",
+    "strategy promotion status",
+    "live-readiness authorization",
+    "caller counts"
+  ]
+}

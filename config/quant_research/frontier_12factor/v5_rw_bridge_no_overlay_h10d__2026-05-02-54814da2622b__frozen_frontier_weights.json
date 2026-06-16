@@ -1,0 +1,56 @@
+{
+  "contract_version": "hv_balanced_12factor_frozen_frontier_weights.v1",
+  "frontier_namespace": "frozen_12factor_frontier",
+  "strategy_id": "xs_alpha_ontology_v5_rw_bridge_no_overlay_lsk3_g_v2_h10d",
+  "derived_and_pinned_at_utc": "2026-06-09T12:17:59Z",
+  "provenance": {
+    "source_artifact_kind": "full_train_model_fit_summary.weights",
+    "source_card_id": "2026-05-02-xs_alpha_ontology_v5_rw_bridg-54814da2622b",
+    "source_card_path": "artifacts/quant_research/experiments/2026-05-02-xs_alpha_ontology_v5_rw_bridg-54814da2622b/alpha_card.json",
+    "source_card_sha256": "ee2c8da3df8095890466fc677e0bad06751b2a83ff7d47c366d040b101dda9d6",
+    "manifest_spec_hash": "23ab75ff3a2a0013d650aae4ef08c7eb3aa493a909c64851d68684cbc24d8c52",
+    "fit_mode": "train_ir_absnorm_bridge",
+    "train_row_count": 11130,
+    "abs_sum": 1.0,
+    "canonical_mainline_marker_set_at": "2026-05-02",
+    "registry_note": "registry/PROJECT_STATE previously cited 2026-04-29-...6054571c70ef (stale); manifest canonical_mainline_marker_set_at=2026-05-02; owner pinned 2026-05-02 after per-factor comparison (sum|diff|~1%, all same sign, lower max_drawdown 0.0894).",
+    "no_modify_principle": "weights snapshotted VERBATIM from research full-train fit; NOT re-fit at go-live; latest_wfo_carry_forward is FORBIDDEN."
+  },
+  "feature_columns": [
+    "intraday_realized_vol_4h_to_1d_smooth_60",
+    "realized_volatility_5",
+    "distance_to_high_60",
+    "distance_to_high_5",
+    "coinglass_top_trader_long_pct_smooth_5",
+    "liquidity_stress_qv_iv",
+    "momentum_decay_5_20",
+    "coinglass_taker_imb_intraday_dispersion_24h",
+    "quality_funding_oi",
+    "downside_upside_vol_ratio_30",
+    "funding_basis_residual_implied_repo_30",
+    "settlement_cycle_premium_60d"
+  ],
+  "feature_weights": {
+    "coinglass_taker_imb_intraday_dispersion_24h": 0.0,
+    "coinglass_top_trader_long_pct_smooth_5": 0.0,
+    "distance_to_high_5": 0.0,
+    "distance_to_high_60": 0.0,
+    "downside_upside_vol_ratio_30": 0.0,
+    "funding_basis_residual_implied_repo_30": 0.0,
+    "intraday_realized_vol_4h_to_1d_smooth_60": 0.0,
+    "liquidity_stress_qv_iv": 0.0,
+    "momentum_decay_5_20": 0.0,
+    "quality_funding_oi": 0.0,
+    "realized_volatility_5": 0.0,
+    "settlement_cycle_premium_60d": 0.0
+  },
+  "feature_subset_policy": {
+    "allow_pruned_subset": false
+  },
+  "forbidden_carry_forward_signature": {
+    "funding_basis_residual_implied_repo_30_must_be_negative": true,
+    "note": "latest_wfo_carry_forward produced funding_basis_residual_implied_repo_30=+0.0184 (sign-flipped) + materially different magnitudes; any vector with this factor >=0 must be rejected."
+  },
+  "frozen_frontier_spec_hash": "REDACTED",
+  "_public_mirror_notice": "Fitted frontier weights REDACTED in this public mirror; values below are non-functional placeholders (0.0)."
+}

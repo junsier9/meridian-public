@@ -1,0 +1,38 @@
+{
+  "contract_version": "quant_feature_admission_v2.v1",
+  "doc_reference": "docs/quant_research/00_roadmap_state/alpha_ontology_and_factor_library.md §G.2",
+  "g1_ic_mean": {
+    "abs_min": 0.04
+  },
+  "g2_ic_stability": {
+    "window": 60,
+    "pos_fraction_min": 0.55
+  },
+  "g3_regime_consistency": {
+    "same_sign_fraction_min": 0.60
+  },
+  "g4_concentration": {
+    "top1_share_max": 0.30
+  },
+  "g5_vif": {
+    "vif_max": 5.0
+  },
+  "g6_orthogonal_residual_ic": {
+    "abs_min": 0.02
+  },
+  "g7_turnover": {
+    "lag": 30,
+    "turnover_max": 0.80
+  },
+  "g8_capacity_aware_ic": {
+    "top_capacity_quantile": 0.5,
+    "retention_min": 0.70
+  },
+  "g9_crowding": {
+    "abs_min": 0.02
+  },
+  "g10_out_of_universe": {
+    "capacity_quantile_max": 0.5,
+    "ic_abs_min": 0.03
+  }
+}

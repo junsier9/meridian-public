@@ -1,0 +1,86 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v22",
+  "entries": [
+    {
+      "candidate_id": "xs_relative_value_spread_v1_h3d",
+      "base_mechanism_id": "xs_relative_value_spread_v1",
+      "horizon_id": "h3d",
+      "target_horizon_bars": 3,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_relative_value_spread_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_relative_value_spread_v1_h3d",
+        "thesis_family": "hypothesis_xs_relative_value_spread_v1_h3d",
+        "market_mechanism": "inside the liquid perp-covered core, the best long opportunities can come from names where perp pricing becomes too pessimistic relative to still-intact spot leadership; this is a cross-sectional relative-value spread between derivatives dislocation and spot quality rather than a pure directional chart pattern",
+        "directional_claim": "own liquid perp-covered names when basis and funding are unusually depressed relative to peers, but only if spot relative strength, slope, and support distance still imply the cash market has not structurally broken",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "return_1"
+        ],
+        "factor_formula": "rank names by a relative-value spread: negative basis and funding are good only when open interest remains stable, spot relative strength and slope stay healthy, support distance is intact, volatility is contained, and the reset day is mild rather than capitulative",
+        "intended_holding_horizon_bars": 3,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "4043f89a5486bd652a33a361a6a16973f0edd7b899deeb72a2bb532d3f275901"
+    }
+  ]
+}

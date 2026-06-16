@@ -1,0 +1,105 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v78",
+  "entries": [
+    {
+      "candidate_id": "xs_dual_regime_filter_v9_h5d",
+      "base_mechanism_id": "xs_dual_regime_filter_v9",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_dual_regime_filter_v9",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "range_position_20",
+        "return_1",
+        "coinglass_taker_imbalance_5d_sum",
+        "coinglass_global_account_long_pct",
+        "coinglass_liquidation_imbalance_24h",
+        "coinglass_top_trader_long_pct"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_30"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_dual_regime_filter_v9_h5d",
+        "thesis_family": "hypothesis_xs_dual_regime_filter_v9_h5d",
+        "market_mechanism": "isolated test of path B from v76: keep v74 architecture and feature set entirely unchanged, only switch universe from liquid_perp_core_20 (top-20, 0.85 coverage) to liquid_perp_core_30 (top-30, 0.70 coverage relaxed). v76 combined this universe expansion with 4 intraday features and saw 38% rank_ic decline; v77 isolated intraday features and ruled them out as net negative; v78 isolates pure universe-expansion effect to determine whether mid-cap dilution alone destroys the v74 regime profile",
+        "directional_claim": "rank top-30 liquid perp-covered names using v74's exact score (xs_dual_regime_filter_v9_score with composite_weight=0.08, 4-quadrant CoinGlass sign matrix unchanged, no intraday features added); only the cross-sectional sample size grows from 14,420 to ~20,000 rows by including 13 mid-cap names (APT, ARB, CRV, ENA, FET, FIL, OP, TIA, WLD, WIF, PENGU, PUMP, XPL) that displace 3 lower-volume names (ETC, HBAR, TRX) from the original top-20",
+        "universe_rule": {
+          "preset": "liquid_perp_core_30"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.70,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "range_position_20",
+          "return_1",
+          "coinglass_taker_imbalance_5d_sum",
+          "coinglass_global_account_long_pct",
+          "coinglass_liquidation_imbalance_24h",
+          "coinglass_top_trader_long_pct"
+        ],
+        "factor_formula": "v74 architecture (xs_dual_regime_filter_v9_score logic with composite_weight=0.08) on liquid_perp_core_30 universe; no other changes from v74. Score function reuses xs_dual_regime_filter_v9_score from features.py with the same 4-quadrant sign matrix _V8_SIGN_CONFIG and identical CoinGlass composite injection.",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "e393158cc4ad27d80d34c1beced15036e6a8059750993b67f71f11003d2eddbe"
+    }
+  ]
+}

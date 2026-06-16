@@ -1,0 +1,8 @@
+{
+  "case_id": "market_observer_quarantine",
+  "expected_status": "quarantine",
+  "object_id": "golden-quarantine-aix",
+  "scope": "spot+perp",
+  "subject": "AIX",
+  "observation_text": "subject=BTC supportive structure remains intact with a higher low above support and confidence=72."
+}

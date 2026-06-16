@@ -1,0 +1,21 @@
+{
+  "contract_version": "quant_fast_reject_contract.v2",
+  "factor_evidence_lite": {
+    "rank_ic_mean_abs_min": 0.01,
+    "rank_ic_positive_rate_min": 0.5,
+    "top_minus_bottom_return_min_exclusive": 0.0,
+    "positive_regime_count_min": 1,
+    "max_single_quarter_edge_contribution_ratio_max": 0.75
+  },
+  "walk_forward_assessment_lite": {
+    "window_count_min": 12,
+    "median_oos_sharpe_min": 0.30,
+    "loss_window_fraction_max": 0.45
+  },
+  "regime_holdout_lite": {
+    "mode": "advisory",
+    "regime_coverage_min": 2,
+    "positive_regime_fraction_min": 0.34,
+    "worst_regime_median_oos_sharpe_min": -0.75
+  }
+}

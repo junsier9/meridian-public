@@ -1,0 +1,65 @@
+{
+  "provider": "binance-public-cex",
+  "retrieved_at": "2026-04-07T10:15:00Z",
+  "scenario_tag": "missing_field",
+  "instrument": "AIXUSDT",
+  "events": [
+    {
+      "event_id": "bad-missing-field-1",
+      "event_name": "spot_24h_momentum",
+      "payload": {
+        "asset": "AIX",
+        "summary": "broken payload without confidence score"
+      },
+      "mapping": {
+        "claimKind": "measurement",
+        "bias": "bullish",
+        "evidence": "E4",
+        "horizon": "intraday"
+      },
+      "extra": {
+        "venue": "Binance",
+        "market_type": "spot"
+      }
+    }
+  ],
+  "raw_http": {
+    "ticker_24hr": {
+      "symbol": "AIXUSDT",
+      "priceChangePercent": "2.20",
+      "quoteVolume": "200000.00",
+      "lastPrice": "1.1400",
+      "openPrice": "1.1150"
+    },
+    "klines": [
+      [
+        1775556300000,
+        "1.1200",
+        "1.1300",
+        "1.1150",
+        "1.1250",
+        "100",
+        1775556600000,
+        "9000.0",
+        35,
+        "4500.0",
+        "5100.0",
+        "0"
+      ],
+      [
+        1775556600000,
+        "1.1250",
+        "1.1450",
+        "1.1200",
+        "1.1400",
+        "120",
+        1775556900000,
+        "11000.0",
+        40,
+        "5500.0",
+        "6200.0",
+        "0"
+      ]
+    ]
+  }
+}

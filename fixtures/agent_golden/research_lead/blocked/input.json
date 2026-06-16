@@ -1,0 +1,8 @@
+{
+  "case_id": "research_lead_blocked",
+  "directive_text": "Do something next at some point.",
+  "expected_status": "blocked",
+  "object_id": "golden-research-lead-aix",
+  "scope": "spot+perp",
+  "subject": "AIX"
+}

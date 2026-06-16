@@ -1,0 +1,89 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v81",
+  "entries": [
+    {
+      "candidate_id": "xs_minimal_v2_h5d",
+      "base_mechanism_id": "xs_minimal_v2",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_minimal_v2",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "realized_volatility_20",
+        "intraday_realized_vol_4h_to_1d",
+        "distance_to_high_20",
+        "coinglass_top_trader_long_pct",
+        "relative_strength_20",
+        "momentum_20",
+        "range_position_20",
+        "distance_to_low_20",
+        "return_1",
+        "quote_volume_expansion",
+        "ema_slope_5_20"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_minimal_v2_h5d",
+        "thesis_family": "hypothesis_xs_minimal_v2_h5d",
+        "market_mechanism": "v80 minimal-6 alpha core (4 Tier-1 stable-sign IC features + 2 regime-conditional momentum features) augmented with v74-style screening penalties on 5 quality-filter features (range_position, distance_to_low, return_1, quote_volume_expansion, ema_slope_5_20); penalty terms target chase, distress, broken_tape, distress_floor, upper_extension setups that v80 lacked, restoring the regime-holdout robustness while preserving v80's stronger rank IC and lower test loss",
+        "directional_claim": "rank top-20 liquid perp-covered names by v80's 6-feature linear alpha core minus v74-style screening penalties at moderate weights; expected to restore 3/3 regime POS profile while keeping v80's superior rank IC (0.16) and improved test sharpe (-0.32)",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "realized_volatility_20",
+          "intraday_realized_vol_4h_to_1d",
+          "distance_to_high_20",
+          "coinglass_top_trader_long_pct",
+          "relative_strength_20",
+          "momentum_20",
+          "range_position_20",
+          "distance_to_low_20",
+          "return_1",
+          "quote_volume_expansion",
+          "ema_slope_5_20"
+        ],
+        "factor_formula": "alpha_score = -0.30*z(realized_vol) -0.20*z(intraday_vol) +0.20*z(distance_to_high) -0.15*z(top_trader_long) + sign_regime*(0.15*z(relative_strength) + 0.10*z(momentum_20)). Penalties: chase=0.42*max(0, qv_exp-1.12) + 5.51*max(0, return_1∈[0,0.04]); distress=1.20*(-rs∈[0.05,0.40]) + 0.80*(-ema_slope∈[0.02,0.08]); broken_tape=1.20*max(0,-dist_to_low-0.005) + 0.80*(-return_1∈[0.04,0.12]); distress_floor=8.0*max(0,0.10-range_pos); upper_extension=4.5*max(0,range_pos-0.78). raw_score = alpha_score - 0.05*chase - 0.05*distress - 0.04*broken_tape - 0.05*distress_floor - 0.045*upper_extension. Final = tanh((pct_rank(raw_score)-0.5)*1.80).",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "3d041550b8de06f6f3bf58a3851b0ead9a9d4c1524f34509ca026379a107af34"
+    }
+  ]
+}

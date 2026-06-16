@@ -1,0 +1,309 @@
+strategy:
+  label: v5_binance_pit_top_mid_h10d_pruned3_hv_balanced_soft_budget
+  frozen_config_path: config/quant_research/binance_pit_top_mid_h10d_pruned3_hv_balanced_soft_budget.json
+  frozen_config_sha256: 9867437bc74733d46f1a4292c84bbdf4f09c6c49f4862a0616d95ebc43f31938
+  rebalance_interval_days: 10
+  # Owner-approved live scorer state (2026-06-11): the frozen 12-factor frontier + dth60
+  # overlay is the live scorer once an owner arm and fresh budget epoch permit order flow.
+  # Orders still require the SQLite live_delta arm; this block alone never submits anything.
+  frontier:
+    enabled: true
+    weights_contract_path: config/quant_research/frontier_12factor/v5_rw_bridge_no_overlay_h10d__2026-05-02-54814da2622b__frozen_frontier_weights.json
+    weights_file_sha256: 6fc54d74d80dde0db51abed16c84c5bb998a57193c6f1b7973c598b922c26f54
+    weights_spec_hash: 15fec99b3ff07609e4067a4a13f1b84adb4279abdb0f3d4c8ac95f14d5444c3c
+    scoring_config_path: config/quant_research/frontier_12factor/v5_rw_bridge_no_overlay_h10d_12factor_frontier_scoring.json
+    scoring_config_sha256: 9475d43ae1e3cc901dc0471ce44d357a9eb0c02fe30c0e1033bf321dece5b3db
+    overlay:
+      enabled: true
+      contract_path: config/quant_research/frontier_12factor/dth60_hybrid_shock_q90_or_crowded_top20_zero__overlay.frozen.json
+      file_sha256: 0b8a8b17eda6efa99c1b53f65f96cd716f7d48e9aec1c33a57b4b185a2bab622
+      spec_hash: a7229db28d98695586402ce311d020932f7fe5fc1b14029394a9de2c3a898bd4
+      thresholds:
+        # Real PIT q90, re-derived 2026-06-11 on the owner-approved expanded 24-subject
+        # candidate universe (current live 20 + ENA/SUI/WLD/ZEC) over a
+        # ~1000-day (expanding-equivalent) window to match the backtest threshold method.
+        from_input_panel: true
+        train_includes_decision_row: false
+        current_row_excluded: true
+        shock_co_occurrence_index_q90: 0.043478260869565216
+        co_jump_count_3d_q90: 5.0
+
+binance:
+  venue: usdm_futures
+  base_url_env: ENHENGCLAW_BINANCE_USDM_BASE_URL
+  api_key_env: Trade
+  api_secret_env: Secret_Key
+  recv_window_ms: 5000
+  position_mode: one_way
+  margin_type: cross
+  max_leverage: 2
+  auto_prepare_planned_symbol_settings: true
+
+capital:
+  # Owner-approved live sizing trim (2026-06-11): keep dynamic wallet sizing, but
+  # reduce the entry-second book from 2.0x to 1.8x so the capital deployment gate
+  # has margin instead of riding the deployable-budget boundary.
+  sizing_basis: total_wallet_balance_usdt_x_1.80
+  # v2 equity-compounding caps (ported from reserve200 canonical, #4 fix): min() CEILINGS +
+  # k_op(2.3x)/k_abs(4x) wallet-relative hard ceilings REPLACE the legacy max(pin,resolved)
+  # FLOOR caps, which left the x2 book with no true upper bound and made the pinned
+  # 3000.0/600 caps inert. v2 caps overwrite those stale pins, track the wallet down, and
+  # fail closed on a non-positive book. Risk-reducing, sizing-only: orders still require the
+  # SQLite live_delta arm.
+  equity_compounding_v2_enabled: true
+  target_margin_safety_buffer_usdt: 300.0
+  target_operating_buffer_usdt: 50.0
+  auto_truncate_allocated_capital_to_margin_gate: true
+  margin_safe_truncation_tolerance_usdt: 1.0
+  allocated_capital_usdt: 3000.0
+  max_gross_leverage: 2.0
+  dynamic_risk_caps_from_resolved_capital: true
+  max_symbol_weight_cap: 0.35
+  max_order_weight_cap: 0.35
+  max_symbol_notional_usdt: 600.0
+  max_order_notional_usdt: 600.0
+
+capital_topup:
+  enabled: true
+  mode: dynamic_primary_wallet_balance_minus_target_safety_buffer_x_2_entry_all_or_none_gate
+  target_margin_safety_buffer_usdt: 300.0
+  target_operating_buffer_usdt: 50.0
+  min_additional_allocated_capital_usdt: 25.0
+  require_balanced_all_or_none: true
+  allow_dust_residual_noop_in_all_or_none: true
+  enforce_all_or_none_for_dynamic_entries: true
+  dynamic_risk_caps_from_resolved_capital: true
+  max_symbol_weight_cap: 0.35
+  max_order_weight_cap: 0.35
+  allowed_delta_classifications: increase_same_side,new_entry,dust_residual,no_delta
+  live_execution_enabled: true
+
+capital_deployment:
+  enabled: true
+  mode: deploy_only_free_surplus_above_margin_buffer
+  margin_safety_buffer_usdt: 300.0
+  min_deployable_surplus_usdt: 50.0
+  max_deploy_fraction_of_surplus: 0.95
+  defer_if_post_plan_available_below_buffer: true
+  defer_if_all_or_none_has_dust_leg: false
+  defer_if_all_or_none_incomplete_entry: false
+  defer_status: entry_second_all_or_none_deferred_for_margin_or_dust
+
+risk:
+  trading_enabled: false
+  require_manual_live_confirm: true
+  # Per-order notional ceiling gate (#5, ported from reserve200 canonical): caps each
+  # non-reduce-only order at resolved_per_order_cap x per_order_notional_hard_multiplier
+  # (default 1.5). Inert until live_delta is armed (core_loop_runner.py:528 gates execute_delta).
+  per_order_notional_gate_enabled: true
+  max_allocated_capital_usdt: 3000.0
+  max_gross_notional_usdt: 3000.0
+  max_symbol_notional_usdt: 600.0
+  max_order_notional_usdt: 600.0
+  # No daily realized-PnL / loss breaker by owner decision (2026-06-09): strategy
+  # carries its own embedded risk limits; removed_daily_realized_pnl_gate is a
+  # permanent no-op, so any max_daily_realized_loss_* / require_daily_pnl_gate_active
+  # field is dead config (zero readers) and misleading. Do not re-add.
+  min_available_balance_after_plan_usdt: 100.0
+  min_available_balance_ratio_after_plan: 0.05
+  min_margin_cushion_after_plan_usdt: 100.0
+  allow_reduce_only_plan_when_margin_below_min: true
+  max_spread_bps: 20
+  max_market_data_age_seconds: 300
+  max_account_snapshot_age_seconds: 30
+  max_heartbeat_age_seconds: 900
+  allow_new_shorts: true
+  reduce_only_on_gate_failure: true
+
+market_data:
+  public_data_enabled: true
+  symbols: AAVEUSDT,ADAUSDT,APTUSDT,ARBUSDT,AVAXUSDT,BCHUSDT,BNBUSDT,BTCUSDT,DOGEUSDT,DOTUSDT,ENAUSDT,ETCUSDT,ETHUSDT,FILUSDT,LINKUSDT,LTCUSDT,NEARUSDT,SOLUSDT,SUIUSDT,TRXUSDT,UNIUSDT,WLDUSDT,XRPUSDT,ZECUSDT
+  daily_limit: 140
+  four_hour_limit: 840
+
+universe_policy:
+  # Owner-approved live universe mode. This live-config override is intentionally separate
+  # from the research frozen_config selection_mode, so future deploys cannot silently fall
+  # back to the fixed hand-pinned path.
+  live_selection_mode: pit_rolling
+  top_n: 20
+  coverage_threshold: 0.85
+  lookback_days: 30
+  hysteresis_band: 0
+  # Owner-approved staged expansion (2026-06-11): current live 20 + ENA/SUI/WLD/ZEC.
+  # The PIT selector still emits exactly top_n=20 active symbols; churn_gate below limits the
+  # first expanded live universe to at most 4 entries / 4 exits versus the prior live 20.
+  candidate_symbols:
+    - AAVEUSDT
+    - ADAUSDT
+    - APTUSDT
+    - ARBUSDT
+    - AVAXUSDT
+    - BCHUSDT
+    - BNBUSDT
+    - BTCUSDT
+    - DOGEUSDT
+    - DOTUSDT
+    - ENAUSDT
+    - ETCUSDT
+    - ETHUSDT
+    - FILUSDT
+    - LINKUSDT
+    - LTCUSDT
+    - NEARUSDT
+    - SOLUSDT
+    - SUIUSDT
+    - TRXUSDT
+    - UNIUSDT
+    - WLDUSDT
+    - XRPUSDT
+    - ZECUSDT
+  churn_gate:
+    enabled: true
+    max_entered_count: 4
+    max_exited_count: 4
+    max_churn_count: 8
+    max_churn_ratio: 0.4
+    bootstrap_reference_symbols:
+      - AAVEUSDT
+      - ADAUSDT
+      - APTUSDT
+      - ARBUSDT
+      - AVAXUSDT
+      - BCHUSDT
+      - BNBUSDT
+      - BTCUSDT
+      - DOGEUSDT
+      - DOTUSDT
+      - ETCUSDT
+      - ETHUSDT
+      - FILUSDT
+      - LINKUSDT
+      - LTCUSDT
+      - NEARUSDT
+      - SOLUSDT
+      - TRXUSDT
+      - UNIUSDT
+      - XRPUSDT
+
+core_loop:
+  mode: account_reconcile_multiphase_dynamic_capital_delta_risk_execution_reconcile
+  target_engine: multiphase_equal_sleeve
+  target_as_of: latest_closed_rebalance_slot
+  capital_topup_after_static_noop: false
+  max_cycles_per_invocation: 1
+  interval_seconds: 0
+  live_delta_enabled: true
+  allow_multiphase_live_delta: true
+  submit_orders: true
+  auto_confirm_delta_after_preflight: true
+  # Unattended aggregate budget gate (#5, ported from reserve200 canonical): bounds order-flow
+  # blast radius per epoch (cycles + turnover + max-age). True + NO open epoch in the SQLite
+  # budget store -> pre-submit fail-closes (unattended_budget_no_open_epoch); the epoch is
+  # opened & sized small by an operator step at arm time, NOT from this yaml. Inert until armed.
+  unattended_budget_gate_enabled: true
+  allowed_execution_stages: reduce_first,entry_second
+  max_live_delta_order_count_per_cycle: 11
+  live_delta_order_cap_policy:
+    mode: target_leg_aware
+    hard_max_order_count: 20
+    reduce_first_extra_stale_exit_allowance: 5
+    entry_second_cap_basis: target_position_count
+    reduce_first_cap_basis: max_current_or_target_position_count
+  min_seconds_between_live_delta_executions: 300
+  fast_follow_entry_second_enabled: true
+  fast_follow_entry_second_min_delay_seconds: 60
+  fast_follow_entry_second_max_age_seconds: 900
+  min_clean_cycles_before_live_delta: 3
+  require_post_trade_reconcile: true
+  require_data_freshness_gate: true
+  # require_daily_pnl_gate_active removed (2026-06-09 owner decision): no daily-loss
+  # gate exists in code; the field had zero readers and implied a non-existent breaker.
+  require_margin_cushion_gate: true
+  kill_switch_source: sqlite_operator_state
+
+mainnet_live_supervisor:
+  mode: sqlite_armed_multiphase_dynamic_capital_core_loop_timer
+  target_engine: multiphase_equal_sleeve
+  max_cycles_per_invocation: 1
+  interval_seconds: 0
+  allow_live_delta_when_armed: true
+  allow_multiphase_live_delta: true
+  capital_topup_enabled: false
+  live_delta_armed_default: false
+  recover_stale_heartbeats: true
+  disarm_on_blocker: true
+  require_core_loop_stage_policy: true
+  recommended_timer_minutes: 10
+  fast_follow_entry_second_enabled: true
+  fast_follow_entry_second_delay_seconds: 90
+  fast_follow_max_chain_invocations: 3
+  fast_follow_policy:
+    mode: reconcile_aware
+    owner_authorization_required: true
+    runtime_max_seconds: 420
+    entry_after_reduce_delay_seconds: 60
+    residual_reduce_delay_seconds: 30
+    min_delay_seconds: 10
+    max_delay_seconds: 90
+    max_chain_invocations_hard_cap: 4
+  repo_root: /root/meridian_alpha_live_runner/repo
+  env_wrapper: /root/meridian_alpha_live_runner/bin/with-live-env
+  python_path: /root/meridian_alpha_live_runner/venv/bin/python
+  supervisor_script: scripts/live_trading/run_hv_balanced_mainnet_live_supervisor.py
+
+unattended_epoch_controller:
+  mode: fresh_closed_rebalance_slot_single_epoch
+  turnover_budget_mode: proof_buffered
+  turnover_buffer: 2.5
+  max_live_cycles: 2
+  max_age_seconds: 900
+  approval_ttl_seconds: 900
+  timer_window_seconds: 900
+  max_timer_fires: 2
+  fast_follow_entry_second_authorized: true
+  fast_follow_max_chain_depth: 1
+  systemd_timer_name: meridian-alpha-mainnet-supervisor-live.timer
+
+unattended_daily_policy:
+  mode: daily_closed_slot_two_phase_fast_follow
+  turnover_budget_mode: proof_buffered
+  turnover_buffer: 2.5
+  max_live_cycles: 2
+  max_age_seconds: 900
+  approval_ttl_seconds: 900
+  timer_window_seconds: 900
+  max_timer_fires: 2
+  fast_follow_entry_second_authorized: true
+  fast_follow_max_chain_depth: 1
+  supervisor_timer_name: meridian-alpha-mainnet-supervisor-live.timer
+  enable_supervisor_timer: true
+  run_health_monitor_after_supervisor: true
+  wait_for_supervisor_artifact_seconds: 900
+  poll_interval_seconds: 5
+  terminal_cleanup_after_success: true
+  terminal_cleanup_on_failure: true
+
+mainnet_health_monitor:
+  mode: artifact_sqlite_timer_health
+  recent_run_count: 3
+  max_seconds_since_latest_supervisor_run: 1200
+  max_running_heartbeat_age_seconds: 900
+  require_systemd_timer_active: true
+  scope_timer_checks_to_active_unattended_epoch: true
+  systemd_timer_name: meridian-alpha-mainnet-supervisor-live.timer
+  no_order_expected: false
+  disarm_on_alert: true
+  auto_rearm_live_delta: true
+  auto_rearm_requires_live_capable_timer: true
+  auto_rearm_required_clean_supervisor_runs: 1
+  auto_rearm_min_seconds_since_disarm: 60
+  auto_rearm_blocked_alert_codes: heartbeat_residue,live_delta_armed_during_noorder_timer,live_delta_execution_requested,live_order_fill_count_mismatch,live_order_or_fill_without_authorization,open_orders_present,orphan_paper_fills_present,orphan_paper_orders_present,supervisor_order_or_fill_nonzero
+  auto_rearm_blocked_blocker_fragments: heartbeat_residue,open_orders,order_or_fill,position_drift,pnl_breach,unauthorized,unknown_status,unattended_budget,unattended_approval,unattended_timer
+  exit_code_on_alert: 2
+  telegram_bot_token_env: TELEGRAM_BOT_TOKEN
+  telegram_chat_id_env: TELEGRAM_CHAT_ID
+
+state:
+  sqlite_path: artifacts/live_trading/hv_balanced_binance_usdm_live_2x_full_balance_candidate/state/live_trading.sqlite3
+  artifact_root: artifacts/live_trading/hv_balanced_binance_usdm_live_2x_full_balance_candidate/runs

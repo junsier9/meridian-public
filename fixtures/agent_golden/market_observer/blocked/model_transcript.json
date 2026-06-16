@@ -1,0 +1,68 @@
+{
+  "backend_kind": "live",
+  "backend_name": "openai_compatible_chat_completions",
+  "compiler_output": {
+    "blocked_reason": "observation remains too vague to support one bounded market_observer predicate",
+    "candidate_payloads": [],
+    "notes": [
+      "recorded live-style blocked transcript"
+    ],
+    "status": "blocked"
+  },
+  "contract_version": "market_observer_compiler_v3",
+  "input_fingerprint": "81d46dfe290b0b558a89023d56e9f5a222856b05dc45d5bed712aba56628da04",
+  "model_request": {
+    "endpoint": "https://example.invalid/chat/completions",
+    "request_body": {
+      "messages": [
+        {
+          "content": "# Role\nYou compile one bounded market observation into exactly one machine-readable JSON envelope for the `market_observer` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `agent_market_structure_support`, `fresh_supportive_flow`, `fresh_invalidation_risk`, `headline_risk`, `neutral_range_observation`\n- `claim_type`: `fact`, `measurement`, `flow`, `market_structure`, `causal`, `predictive`, `risk_flag`, `invalidation`\n- `direction`: `bullish`, `bearish`, `neutral`, `risk`, `invalidating`\n- `source_family`: `infoflow`, `cex`, `onchain`, `analytics`, `safety`, `official`\n- `evidence_level`: `E1`, `E2`, `E3`, `E4`, `E5`\n- `time_horizon`: `intraday`, `short`, `medium`, `structural`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- `value` must preserve this order:\n  `facts=...; interpretation=...; uncertainty=...`\n- Emit one bounded claim only. Do not bundle multiple observations.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the observation is too vague, conflicting, unsupported, or cannot honestly fill `facts`, `interpretation`, and `uncertainty`.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing entities, scopes, directions, or timeframes.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+          "role": "system"
+        },
+        {
+          "content": "Compile one bounded market observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=market_observer_blocked:1\nobject_id=golden-blocked-aix\nobservation_text:\nAIX stays active, but this note remains vague and does not establish a supported market-observer predicate.",
+          "role": "user"
+        }
+      ],
+      "model": "market-observer-test-model",
+      "temperature": 0.0
+    },
+    "request_headers": {
+      "Authorization": "Bearer ***redacted***",
+      "Content-Type": "application/json"
+    },
+    "timeout_seconds": 30.0
+  },
+  "prompt_context": {
+    "messages": [
+      {
+        "content": "# Role\nYou compile one bounded market observation into exactly one machine-readable JSON envelope for the `market_observer` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `agent_market_structure_support`, `fresh_supportive_flow`, `fresh_invalidation_risk`, `headline_risk`, `neutral_range_observation`\n- `claim_type`: `fact`, `measurement`, `flow`, `market_structure`, `causal`, `predictive`, `risk_flag`, `invalidation`\n- `direction`: `bullish`, `bearish`, `neutral`, `risk`, `invalidating`\n- `source_family`: `infoflow`, `cex`, `onchain`, `analytics`, `safety`, `official`\n- `evidence_level`: `E1`, `E2`, `E3`, `E4`, `E5`\n- `time_horizon`: `intraday`, `short`, `medium`, `structural`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- `value` must preserve this order:\n  `facts=...; interpretation=...; uncertainty=...`\n- Emit one bounded claim only. Do not bundle multiple observations.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the observation is too vague, conflicting, unsupported, or cannot honestly fill `facts`, `interpretation`, and `uncertainty`.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing entities, scopes, directions, or timeframes.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+        "role": "system"
+      },
+      {
+        "content": "Compile one bounded market observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=market_observer_blocked:1\nobject_id=golden-blocked-aix\nobservation_text:\nAIX stays active, but this note remains vague and does not establish a supported market-observer predicate.",
+        "role": "user"
+      }
+    ],
+    "prompt_template_version": "market_observer_prompt_template_v1",
+    "system_prompt": "# Role\nYou compile one bounded market observation into exactly one machine-readable JSON envelope for the `market_observer` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `agent_market_structure_support`, `fresh_supportive_flow`, `fresh_invalidation_risk`, `headline_risk`, `neutral_range_observation`\n- `claim_type`: `fact`, `measurement`, `flow`, `market_structure`, `causal`, `predictive`, `risk_flag`, `invalidation`\n- `direction`: `bullish`, `bearish`, `neutral`, `risk`, `invalidating`\n- `source_family`: `infoflow`, `cex`, `onchain`, `analytics`, `safety`, `official`\n- `evidence_level`: `E1`, `E2`, `E3`, `E4`, `E5`\n- `time_horizon`: `intraday`, `short`, `medium`, `structural`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- `value` must preserve this order:\n  `facts=...; interpretation=...; uncertainty=...`\n- Emit one bounded claim only. Do not bundle multiple observations.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the observation is too vague, conflicting, unsupported, or cannot honestly fill `facts`, `interpretation`, and `uncertainty`.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing entities, scopes, directions, or timeframes.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+    "system_prompt_path": "C:\\Users\\user\\Documents\\Claude\\Projects\\EnhengClaw\\src\\enhengclaw\\agents\\prompts\\market_observer.system.md",
+    "user_prompt": "Compile one bounded market observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=market_observer_blocked:1\nobject_id=golden-blocked-aix\nobservation_text:\nAIX stays active, but this note remains vague and does not establish a supported market-observer predicate."
+  },
+  "prompt_fingerprint": "1f6395b4ab4b7049d156af072ed9a9c028fae13c0bd9da2cdb582ae545b1b3c1",
+  "raw_model_output": {
+    "assistant_text": "{\"blocked_reason\": \"observation remains too vague to support one bounded market_observer predicate\", \"candidate_payloads\": [], \"notes\": [\"recorded live-style blocked transcript\"], \"status\": \"blocked\"}",
+    "response_json": {
+      "choices": [
+        {
+          "message": {
+            "content": "{\"blocked_reason\": \"observation remains too vague to support one bounded market_observer predicate\", \"candidate_payloads\": [], \"notes\": [\"recorded live-style blocked transcript\"], \"status\": \"blocked\"}"
+          }
+        }
+      ]
+    },
+    "response_text": "{\"choices\": [{\"message\": {\"content\": \"{\\\"blocked_reason\\\": \\\"observation remains too vague to support one bounded market_observer predicate\\\", \\\"candidate_payloads\\\": [], \\\"notes\\\": [\\\"recorded live-style blocked transcript\\\"], \\\"status\\\": \\\"blocked\\\"}\"}}]}",
+    "status_code": 200
+  },
+  "transcript_fingerprint": "317e10873004ef6a31046f74bf4c404969a56fcaf0c0c81231764a7305f46010"
+}

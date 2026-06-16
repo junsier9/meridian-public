@@ -1,0 +1,8 @@
+{
+  "attention_text": "Consider resources in some way.",
+  "case_id": "attention_allocator_blocked",
+  "expected_status": "blocked",
+  "object_id": "golden-attention-allocator-aix",
+  "scope": "spot+perp",
+  "subject": "AIX"
+}

@@ -1,0 +1,157 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_pit_universe_eligibility_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze root-facade importability, signatures, and the required behavior-test baseline for PIT universe and eligibility helpers. This contract intentionally excludes source movement and broad behavior snapshots.",
+  "validation_mode": "root_facade_signature_required_behavior_tests_only",
+  "pit_universe_eligibility_targets": {
+    "freeze_binance_ohlcv_universe": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "panel",
+            "required": true
+          },
+          {
+            "annotation": "str | date",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "as_of",
+            "required": true
+          },
+          {
+            "annotation": "int",
+            "default_repr": "20",
+            "kind": "KEYWORD_ONLY",
+            "name": "top_n",
+            "required": false
+          },
+          {
+            "annotation": "float",
+            "default_repr": "0.85",
+            "kind": "KEYWORD_ONLY",
+            "name": "coverage_threshold",
+            "required": false
+          },
+          {
+            "annotation": "int",
+            "default_repr": "30",
+            "kind": "KEYWORD_ONLY",
+            "name": "lookback_days",
+            "required": false
+          }
+        ],
+        "return_annotation": "list[dict[str, Any]]"
+      }
+    },
+    "apply_point_in_time_rolling_universe": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "panel",
+            "required": true
+          },
+          {
+            "annotation": "str | date",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "as_of",
+            "required": true
+          },
+          {
+            "annotation": "int",
+            "default_repr": "20",
+            "kind": "KEYWORD_ONLY",
+            "name": "top_n",
+            "required": false
+          },
+          {
+            "annotation": "float",
+            "default_repr": "0.85",
+            "kind": "KEYWORD_ONLY",
+            "name": "coverage_threshold",
+            "required": false
+          },
+          {
+            "annotation": "int",
+            "default_repr": "30",
+            "kind": "KEYWORD_ONLY",
+            "name": "lookback_days",
+            "required": false
+          }
+        ],
+        "return_annotation": "tuple[pd.DataFrame, list[dict[str, Any]]]"
+      }
+    },
+    "add_pit_strategy_eligibility": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "frame",
+            "required": true
+          },
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "config",
+            "required": true
+          }
+        ],
+        "return_annotation": "pd.DataFrame"
+      }
+    },
+    "_pit_recent_data_eligible": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.DataFrame",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "frame",
+            "required": true
+          },
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "KEYWORD_ONLY",
+            "name": "config",
+            "required": true
+          }
+        ],
+        "return_annotation": "tuple[pd.Series, dict[str, pd.Series]]"
+      }
+    }
+  },
+  "required_behavior_test_file": "tests/test_binance_canonical_h10d.py",
+  "required_behavior_tests": [
+    "test_universe_freeze_uses_quote_volume_without_open_interest",
+    "test_pit_rolling_universe_uses_only_point_in_time_quote_volume",
+    "test_pit_top_mid_eligibility_uses_recent_visible_completeness",
+    "test_pit_mid_short_eligibility_requires_visible_bucket_stability",
+    "test_pit_mid_short_eligibility_can_exclude_edge_rank_symbols",
+    "test_pit_data_eligibility_requires_point_in_time_lifetime_history"
+  ],
+  "excluded_surfaces": [
+    "source migration",
+    "internal module layout",
+    "full universe membership snapshots",
+    "exact prepared backtest-frame schemas",
+    "validation report payloads",
+    "falsification outputs",
+    "funding sync behavior",
+    "risk-brake behavior",
+    "execution ledger behavior",
+    "_truthy_series as a generic utility",
+    "caller counts"
+  ]
+}

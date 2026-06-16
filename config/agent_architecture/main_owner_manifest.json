@@ -1,0 +1,465 @@
+{
+  "contract_version": "main_owner_architecture.v1",
+  "owner": {
+    "agent_id": "rulebook_owner",
+    "role": "Hold user intent, maintain global constraints, choose delegates, require verification, and own the final response.",
+    "final_response_owner": true,
+    "allowed_tools": [
+      "enhengclaw.agents.tools.runtime_session_views.inspect_attention_allocation",
+      "enhengclaw.agents.tools.runtime_session_views.inspect_research_synthesis",
+      "enhengclaw.agents.tools.runtime_session_views.inspect_risk_governance_review",
+      "enhengclaw.agents.tools.runtime_session_views.inspect_validation_review",
+      "enhengclaw.agents.tools.runtime_session_views.inspect_research_lead_directive"
+    ],
+    "input_schema": "enhengclaw.agents.owner_state.OwnerWorkSpec",
+    "output_schema": "enhengclaw.agents.owner_state.FinalOutputRecord",
+    "stop_conditions": [
+      "missing_required_artifact",
+      "delegate_schema_error",
+      "runtime_write_rejected",
+      "verification_incomplete"
+    ],
+    "failure_fallback": "Persist a blocked final output plus verification checklist and return no success verdict."
+  },
+  "public_entrypoint": {
+    "type": "deterministic_orchestrator",
+    "entrypoint": "enhengclaw.orchestration.runtime.GovernedAgentOrchestrator.run_governed_write"
+  },
+  "agents": [
+    {
+      "agent_id": "rulebook_owner",
+      "kind": "owner",
+      "role": "Main owner agent for governed research work.",
+      "when_to_call": [
+        "any governed agent request that may write runtime state",
+        "any request that needs reviewer separation",
+        "any request that needs a final synthesized answer"
+      ],
+      "when_not_to_call": [
+        "pure runtime kernel tests with no agent semantics"
+      ],
+      "allowed_tools": [
+        "enhengclaw.agents.tools.runtime_session_views.inspect_attention_allocation",
+        "enhengclaw.agents.tools.runtime_session_views.inspect_research_synthesis",
+        "enhengclaw.agents.tools.runtime_session_views.inspect_risk_governance_review",
+        "enhengclaw.agents.tools.runtime_session_views.inspect_validation_review",
+        "enhengclaw.agents.tools.runtime_session_views.inspect_research_lead_directive"
+      ],
+      "input_schema": "enhengclaw.agents.owner_state.OwnerWorkSpec",
+      "output_schema": "enhengclaw.agents.owner_state.FinalOutputRecord",
+      "stop_conditions": [
+        "missing_required_artifact",
+        "delegate_schema_error",
+        "runtime_write_rejected",
+        "verification_incomplete"
+      ],
+      "failure_fallback": "Persist a blocked final output plus verification checklist and return to the caller.",
+      "reads_artifacts": [
+        "owner_run_state",
+        "spec",
+        "backlog",
+        "delegate_records",
+        "review_records",
+        "findings",
+        "verification_checklist",
+        "final_output"
+      ],
+      "writes_artifacts": [
+        "owner_run_state",
+        "spec",
+        "backlog",
+        "findings",
+        "verification_checklist",
+        "final_output"
+      ],
+      "final_response_owner": true
+    },
+    {
+      "agent_id": "market_observer_delegate",
+      "kind": "delegate",
+      "runtime_agent_id": "market_observer",
+      "owner_agent_id": "rulebook_owner",
+      "role": "Create one new object from one bounded market observation.",
+      "when_to_call": [
+        "the owner needs a create_new_object ingress",
+        "the request contains one bounded observation for one subject"
+      ],
+      "when_not_to_call": [
+        "an existing object must be resumed",
+        "the owner needs cross-object synthesis"
+      ],
+      "allowed_tools": [
+        "enhengclaw.agents.tools.runtime_signal_intake.submit_market_observer_signal"
+      ],
+      "input_schema": "enhengclaw.agents.schemas.market_observer.MarketObserverSignalDraft",
+      "output_schema": "enhengclaw.orchestration.runtime.AgentIngressRuntimeResult",
+      "stop_conditions": [
+        "after_one_payload",
+        "on_subject_scope_mismatch",
+        "on_tool_failure"
+      ],
+      "failure_fallback": "Return control to the owner with no runtime mutation claimed.",
+      "reads_artifacts": [
+        "spec",
+        "verification_checklist"
+      ],
+      "writes_artifacts": [
+        "delegate_records"
+      ],
+      "final_response_owner": false
+    },
+    {
+      "agent_id": "evidence_agent_delegate",
+      "kind": "delegate",
+      "runtime_agent_id": "evidence_agent",
+      "owner_agent_id": "rulebook_owner",
+      "role": "Attach one follow-up evidence signal to an existing object.",
+      "when_to_call": [
+        "the owner already has an existing object",
+        "the request is a bounded evidence update"
+      ],
+      "when_not_to_call": [
+        "the request must create a new object",
+        "the request is really a reviewer judgment"
+      ],
+      "allowed_tools": [
+        "enhengclaw.agents.tools.runtime_signal_intake.submit_evidence_signal"
+      ],
+      "input_schema": "enhengclaw.agents.schemas.evidence_agent.EvidenceSignalDraft",
+      "output_schema": "enhengclaw.orchestration.runtime.AgentIngressRuntimeResult",
+      "stop_conditions": [
+        "after_one_payload",
+        "on_scope_mismatch",
+        "on_tool_failure"
+      ],
+      "failure_fallback": "Return control to the owner with the quarantine or replay evidence paths.",
+      "reads_artifacts": [
+        "spec",
+        "verification_checklist"
+      ],
+      "writes_artifacts": [
+        "delegate_records"
+      ],
+      "final_response_owner": false
+    },
+    {
+      "agent_id": "risk_signal_delegate",
+      "kind": "delegate",
+      "runtime_agent_id": "risk_signal_agent",
+      "owner_agent_id": "rulebook_owner",
+      "role": "Attach one bounded invalidation or risk signal to an existing object.",
+      "when_to_call": [
+        "the owner needs one new risk observation attached to an existing object"
+      ],
+      "when_not_to_call": [
+        "the request is a governance review judgment",
+        "the request is a publish decision"
+      ],
+      "allowed_tools": [
+        "enhengclaw.agents.tools.runtime_signal_intake.submit_risk_signal"
+      ],
+      "input_schema": "enhengclaw.agents.schemas.risk_signal_agent.RiskSignalDraft",
+      "output_schema": "enhengclaw.orchestration.runtime.AgentIngressRuntimeResult",
+      "stop_conditions": [
+        "after_one_payload",
+        "on_scope_mismatch",
+        "on_tool_failure"
+      ],
+      "failure_fallback": "Return control to the owner with no success claim.",
+      "reads_artifacts": [
+        "spec",
+        "verification_checklist"
+      ],
+      "writes_artifacts": [
+        "delegate_records"
+      ],
+      "final_response_owner": false
+    },
+    {
+      "agent_id": "risk_governance_delegate",
+      "kind": "delegate",
+      "runtime_agent_id": "risk_governance_agent",
+      "owner_agent_id": "rulebook_owner",
+      "role": "Attach one bounded governance-pressure signal to an existing object.",
+      "when_to_call": [
+        "the owner needs a governance-pressure write after or alongside review"
+      ],
+      "when_not_to_call": [
+        "the request only needs read-only governance inspection",
+        "the request should unlock publish"
+      ],
+      "allowed_tools": [
+        "enhengclaw.agents.tools.runtime_signal_intake.submit_risk_governance_signal"
+      ],
+      "required_reviews": [
+        "enhengclaw.agents.tools.runtime_session_views.inspect_risk_governance_review"
+      ],
+      "input_schema": "enhengclaw.agents.schemas.risk_governance_agent.RiskGovernanceSignalDraft",
+      "output_schema": "enhengclaw.orchestration.runtime.AgentIngressRuntimeResult",
+      "stop_conditions": [
+        "after_one_payload",
+        "on_scope_mismatch",
+        "on_tool_failure"
+      ],
+      "failure_fallback": "Return control to the owner with governance review evidence if available.",
+      "reads_artifacts": [
+        "spec",
+        "findings",
+        "verification_checklist"
+      ],
+      "writes_artifacts": [
+        "delegate_records"
+      ],
+      "final_response_owner": false
+    },
+    {
+      "agent_id": "validation_delegate",
+      "kind": "delegate",
+      "runtime_agent_id": "validation_agent",
+      "owner_agent_id": "rulebook_owner",
+      "role": "Attach one bounded validation blocker or hold signal to an existing object.",
+      "when_to_call": [
+        "the owner needs a write-side validation blocker"
+      ],
+      "when_not_to_call": [
+        "the request only needs a publish-gate review",
+        "the request is already fully verified"
+      ],
+      "allowed_tools": [
+        "enhengclaw.agents.tools.runtime_signal_intake.submit_validation_signal"
+      ],
+      "required_reviews": [
+        "enhengclaw.agents.tools.runtime_session_views.inspect_validation_review"
+      ],
+      "input_schema": "enhengclaw.agents.schemas.validation_agent.ValidationBlockerSignalDraft",
+      "output_schema": "enhengclaw.orchestration.runtime.AgentIngressRuntimeResult",
+      "stop_conditions": [
+        "after_one_payload",
+        "on_scope_mismatch",
+        "on_tool_failure"
+      ],
+      "failure_fallback": "Return control to the owner with validation review evidence if available.",
+      "reads_artifacts": [
+        "spec",
+        "findings",
+        "verification_checklist"
+      ],
+      "writes_artifacts": [
+        "delegate_records"
+      ],
+      "final_response_owner": false
+    },
+    {
+      "agent_id": "attention_allocator_delegate",
+      "kind": "delegate",
+      "runtime_agent_id": "attention_allocator",
+      "owner_agent_id": "rulebook_owner",
+      "role": "Attach one bounded attention posture signal to an existing object after review.",
+      "when_to_call": [
+        "the owner needs a single bounded attention posture write"
+      ],
+      "when_not_to_call": [
+        "the request needs multi-step resource planning"
+      ],
+      "allowed_tools": [
+        "enhengclaw.agents.tools.runtime_signal_intake.submit_attention_allocator_signal"
+      ],
+      "input_schema": "enhengclaw.agents.schemas.attention_allocator.AttentionAllocatorSignalDraft",
+      "output_schema": "enhengclaw.orchestration.runtime.AgentIngressRuntimeResult",
+      "stop_conditions": [
+        "after_one_payload",
+        "on_scope_mismatch",
+        "on_tool_failure"
+      ],
+      "failure_fallback": "Return control to the owner with attention review evidence if available.",
+      "reads_artifacts": [
+        "spec",
+        "findings",
+        "verification_checklist"
+      ],
+      "writes_artifacts": [
+        "delegate_records"
+      ],
+      "final_response_owner": false
+    },
+    {
+      "agent_id": "research_synthesizer_delegate",
+      "kind": "delegate",
+      "runtime_agent_id": "research_synthesizer",
+      "owner_agent_id": "rulebook_owner",
+      "role": "Attach one bounded synthesis preview signal and keep the thesis graph read-only.",
+      "when_to_call": [
+        "the owner needs a synthesis preview on an existing object"
+      ],
+      "when_not_to_call": [
+        "the request needs working-thesis selection to become the final answer"
+      ],
+      "allowed_tools": [
+        "enhengclaw.agents.tools.runtime_signal_intake.submit_research_synthesis_signal"
+      ],
+      "input_schema": "enhengclaw.agents.schemas.research_synthesizer.ResearchSynthesisSignalDraft",
+      "output_schema": "enhengclaw.orchestration.runtime.AgentIngressRuntimeResult",
+      "stop_conditions": [
+        "after_one_payload",
+        "on_scope_mismatch",
+        "on_tool_failure"
+      ],
+      "failure_fallback": "Return control to the owner with synthesis review evidence if available.",
+      "reads_artifacts": [
+        "spec",
+        "findings",
+        "verification_checklist"
+      ],
+      "writes_artifacts": [
+        "delegate_records"
+      ],
+      "final_response_owner": false
+    },
+    {
+      "agent_id": "research_lead_delegate",
+      "kind": "delegate",
+      "runtime_agent_id": "research_lead",
+      "owner_agent_id": "rulebook_owner",
+      "role": "Attach one bounded next-stage directive after review, without bypassing state-machine rules.",
+      "when_to_call": [
+        "the owner needs a next-step directive on an existing object"
+      ],
+      "when_not_to_call": [
+        "the request needs direct orchestration or direct publish"
+      ],
+      "allowed_tools": [
+        "enhengclaw.agents.tools.runtime_signal_intake.submit_research_lead_signal"
+      ],
+      "input_schema": "enhengclaw.agents.schemas.research_lead.ResearchLeadSignalDraft",
+      "output_schema": "enhengclaw.orchestration.runtime.AgentIngressRuntimeResult",
+      "stop_conditions": [
+        "after_one_payload",
+        "on_scope_mismatch",
+        "on_tool_failure"
+      ],
+      "failure_fallback": "Return control to the owner with research-lead review evidence if available.",
+      "reads_artifacts": [
+        "spec",
+        "findings",
+        "verification_checklist"
+      ],
+      "writes_artifacts": [
+        "delegate_records"
+      ],
+      "final_response_owner": false
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "owner_run_state",
+      "relative_path": "agent_owner/{run_id}/owner/run_state.json",
+      "owner_agent_id": "rulebook_owner",
+      "readers": [
+        "rulebook_owner"
+      ],
+      "writers": [
+        "rulebook_owner"
+      ],
+      "update_policy": "update on every machine-enforced state transition"
+    },
+    {
+      "artifact_id": "spec",
+      "relative_path": "agent_owner/{run_id}/owner/spec.json",
+      "owner_agent_id": "rulebook_owner",
+      "readers": [
+        "rulebook_owner",
+        "all delegates"
+      ],
+      "writers": [
+        "rulebook_owner"
+      ],
+      "update_policy": "initialize at request start and update only when user intent changes"
+    },
+    {
+      "artifact_id": "backlog",
+      "relative_path": "agent_owner/{run_id}/owner/backlog.json",
+      "owner_agent_id": "rulebook_owner",
+      "readers": [
+        "rulebook_owner"
+      ],
+      "writers": [
+        "rulebook_owner"
+      ],
+      "update_policy": "update when delegation plan or progress changes"
+    },
+    {
+      "artifact_id": "findings",
+      "relative_path": "agent_owner/{run_id}/owner/findings_rollup.json",
+      "owner_agent_id": "rulebook_owner",
+      "readers": [
+        "rulebook_owner",
+        "review delegates"
+      ],
+      "writers": [
+        "rulebook_owner"
+      ],
+      "update_policy": "owner-only synthesis rollup built from delegate and review append-only artifacts"
+    },
+    {
+      "artifact_id": "delegate_records",
+      "relative_path": "agent_owner/{run_id}/delegates/{delegate_name}/{sequence}.json",
+      "owner_agent_id": "rulebook_owner",
+      "readers": [
+        "rulebook_owner"
+      ],
+      "writers": [
+        "delegates"
+      ],
+      "update_policy": "append-only on every bounded delegate execution"
+    },
+    {
+      "artifact_id": "capabilities",
+      "relative_path": "agent_owner/{run_id}/owner/capabilities/{capability_id}.json",
+      "owner_agent_id": "rulebook_owner",
+      "readers": [
+        "rulebook_owner"
+      ],
+      "writers": [
+        "rulebook_owner"
+      ],
+      "update_policy": "owner-issued delegate capabilities are created before delegation and updated when consumed, failed, or stale"
+    },
+    {
+      "artifact_id": "review_records",
+      "relative_path": "agent_owner/{run_id}/reviews/{review_name}/{sequence}.json",
+      "owner_agent_id": "rulebook_owner",
+      "readers": [
+        "rulebook_owner"
+      ],
+      "writers": [
+        "rulebook_owner"
+      ],
+      "update_policy": "append-only on every required or explicit review gate"
+    },
+    {
+      "artifact_id": "verification_checklist",
+      "relative_path": "agent_owner/{run_id}/owner/verification.json",
+      "owner_agent_id": "rulebook_owner",
+      "readers": [
+        "rulebook_owner",
+        "all delegates"
+      ],
+      "writers": [
+        "rulebook_owner"
+      ],
+      "update_policy": "update before and after every runtime write or review gate"
+    },
+    {
+      "artifact_id": "final_output",
+      "relative_path": "agent_owner/{run_id}/owner/final_output.json",
+      "owner_agent_id": "rulebook_owner",
+      "readers": [
+        "rulebook_owner"
+      ],
+      "writers": [
+        "rulebook_owner"
+      ],
+      "update_policy": "write exactly once when the owner finalizes the run"
+    }
+  ]
+}

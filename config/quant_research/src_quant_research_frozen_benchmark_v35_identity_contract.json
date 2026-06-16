@@ -1,0 +1,30 @@
+{
+  "contract_version": "src_quant_research_frozen_benchmark_v35_identity_contract.v1",
+  "source_module": "enhengclaw.quant_research.hypothesis_batch",
+  "source_path": "src/enhengclaw/quant_research/hypothesis_batch.py",
+  "scope": "Freeze only the frozen benchmark v35 identity metadata. This does not restore the root v35 manifest, introduce an archive-aware resolver bridge, reactivate v35, or freeze pair-construction behavior.",
+  "validation_mode": "identity_only_no_resolver",
+  "expected_manifest_filename": "cross_sectional_hypothesis_batch_manifest_v35.json",
+  "expected_source": "hypothesis_batch_manifest_v35",
+  "expected_candidate_ids": [
+    "xs_pair_spread_book_v8_h5d"
+  ],
+  "archive_manifest_path": "src/enhengclaw/quant_research/manifests_archive/phase0_v1_v82/cross_sectional_hypothesis_batch_manifest_v35.json",
+  "expected_archive_contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v35",
+  "assert_root_manifest_exists": false,
+  "excluded_surfaces": [
+    "root manifest path existence",
+    "archive-aware resolver bridge",
+    "active hypothesis-batch runtime loading",
+    "HYPOTHESIS_BATCH_MANIFEST_PATH",
+    "v35 reactivation",
+    "archived manifest lifecycle semantics",
+    "pair-construction formula behavior",
+    "execution_backtest.py quality_bucket_pairs target-weight logic",
+    "lab.py registry or dispatch semantics",
+    "scorer formula output",
+    "alpha quality",
+    "promotion status",
+    "source migration"
+  ]
+}

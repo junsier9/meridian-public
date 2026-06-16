@@ -1,0 +1,127 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_datetime_boundary_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only importability, inspect.signature shape, and small UTC date/timestamp identity samples for low-level date boundary helpers. This contract does not approve source migration or freeze downstream data-sync, validation, funding, PIT universe, or backtest behavior.",
+  "validation_mode": "importability_signature_utc_identity_samples",
+  "datetime_boundary_targets": {
+    "_parse_date": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "str | date",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "value",
+            "required": true
+          }
+        ],
+        "return_annotation": "date"
+      },
+      "sample_cases": {
+        "iso_date_string": {
+          "input_kind": "iso_date_string",
+          "value": "2026-01-02",
+          "expected_iso_date": "2026-01-02"
+        },
+        "date_object": {
+          "input_kind": "date_object",
+          "value": "2026-01-02",
+          "expected_iso_date": "2026-01-02"
+        },
+        "aware_datetime_utc": {
+          "input_kind": "aware_datetime_utc",
+          "value": "2026-01-02T23:00:00+00:00",
+          "expected_iso_date": "2026-01-02"
+        }
+      }
+    },
+    "_date_to_ms": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "date",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "value",
+            "required": true
+          }
+        ],
+        "return_annotation": "int"
+      },
+      "sample_cases": {
+        "jan_01_2026": {
+          "input_iso_date": "2026-01-01",
+          "expected_ms": 1767225600000
+        },
+        "jan_02_2026": {
+          "input_iso_date": "2026-01-02",
+          "expected_ms": 1767312000000
+        }
+      }
+    },
+    "_ms_to_date": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "int",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "value",
+            "required": true
+          }
+        ],
+        "return_annotation": "date"
+      },
+      "sample_cases": {
+        "jan_01_2026": {
+          "input_ms": 1767225600000,
+          "expected_iso_date": "2026-01-01"
+        },
+        "jan_02_2026": {
+          "input_ms": 1767312000000,
+          "expected_iso_date": "2026-01-02"
+        }
+      }
+    },
+    "_date_utc_series": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "pd.Series",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "values",
+            "required": true
+          }
+        ],
+        "return_annotation": "pd.Series"
+      },
+      "sample_case": {
+        "input_values": [
+          1767225600000,
+          1767312000000,
+          null,
+          "bad"
+        ],
+        "expected_values": [
+          "2026-01-01",
+          "2026-01-02",
+          "NaT",
+          "NaT"
+        ]
+      }
+    }
+  },
+  "excluded_surfaces": [
+    "source migration",
+    "naive datetime behavior changes",
+    "missing timestamp behavior changes",
+    "downstream validation metrics",
+    "backtest output",
+    "funding behavior",
+    "PIT universe behavior",
+    "artifact schemas",
+    "caller counts"
+  ]
+}

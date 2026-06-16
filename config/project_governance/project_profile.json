@@ -1,0 +1,26 @@
+{
+  "contract_version": "project_profile.v1",
+  "current_stage": "stage_4_automated_execution",
+  "dependency_rules": {
+    "framework_may_depend_on_research_platform": false,
+    "research_platform_may_depend_on_framework": true,
+    "research_specific_modules_forbidden_under_framework_core": true
+  },
+  "display_name": "Meridian Alpha Platform",
+  "env_prefix": "MERIDIAN_ALPHA_",
+  "legacy_identity": {
+    "compatibility_status": "supported",
+    "default_external_app_dir": "EnhengClaw",
+    "display_name": "EnhengClaw",
+    "env_prefix": "ENHENGCLAW_",
+    "python_package": "enhengclaw"
+  },
+  "operator_host_contract": "windows_wsl_single_host",
+  "project_identity": "institutional_dual_track_governance_platform",
+  "slug": "meridian_alpha",
+  "target_stage": "stage_4_automated_execution",
+  "tracks": [
+    "framework",
+    "research_platform"
+  ]
+}

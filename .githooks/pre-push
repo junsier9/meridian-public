@@ -1,0 +1,2 @@
+#!/bin/sh
+python scripts/verify/run_local_integrity_gates.py

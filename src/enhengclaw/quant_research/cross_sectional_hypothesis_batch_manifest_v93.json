@@ -1,0 +1,86 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v93",
+  "entries": [
+    {
+      "candidate_id": "xs_minimal_v8_h5d",
+      "base_mechanism_id": "xs_minimal_v8",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_minimal_v8",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0,
+        "position_multiplier_overlay_id": "btc_eth_max_iv_aggressive_tanh_v1"
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_minimal_v8_h5d",
+        "thesis_family": "hypothesis_xs_minimal_v8_h5d",
+        "market_mechanism": "v91 baseline (xs_minimal_v6 9-factor IC-pruned z-score combination) overlaid with portfolio-level position multiplier driven by BTC+ETH DVOL regime. Multiplier formula 'btc_eth_max_iv_aggressive_tanh_v1' (registered in multiplier_overlay.py): clip(1 - tanh((max(btc_dvol_z90, eth_dvol_z90) - 0.5) * 3), 0.2, 1.0); applied to raw_target_weights before turnover scaling in execution_backtest._cross_sectional_period. Overlay selection from BTC options spike (2026-04-28, artifacts/quant_research/shadow_oos/btc_options_spike_2026-04-26.json): m7 picked from 10 multiplier formulae because (a) in-sample worst-quarter sharpe delta = +0.664 STRONG, (b) ETH DVOL adds +0.128 marginal value vs BTC alone (m5 +0.536 -> m7 +0.664), (c) reverse-split holdout confirmed multiplier idles in calm regimes (no harm). DVOL data: Deribit free public endpoint, synced via scripts/quant_research/sync_deribit_dvol_history.py to artifacts/external_market_data/deribit_dvol/. v91 baseline factor weights kept unchanged; overlay is pure portfolio-level sizing modulator and does NOT alter per-asset cross-section ranking (mathematically: scaling all weights uniformly preserves percentile_rank). Selection-bias-adjusted OOS estimate of overlay delta: +0.40 to +0.50 worst-quarter sharpe; production cycle 32-window walk-forward is the gold-standard validation.",
+        "directional_claim": "rank top-3 liquid perp-covered names by v91 9-factor z-score combo, then scale all positions by DVOL regime multiplier (in [0.2, 1.0]). Calibrated expectations after 2026-04-26 cycle validation: rank IC ~0.165 (multiplier preserves cross-section ranking, confirmed flat), WF median sharpe ~0.80 (~5% regression vs v91 0.846 is the deliberate upside-cap cost of regime throttle), worst regime sharpe ~-2.7 to -2.8 (improvement of +0.3 from v91 -3.08, matches spike forward-test estimate +0.40-0.50 after selection-bias discount). v93 ACCEPTED as baseline based on these calibrated expectations: WF sharpe trade-off is the deliberate cost of risk reduction. Cycle 2026-04-26 confirmed: max drawdown halved 41.8% -> 22.4%, max trade participation cut 67% from 0.033 to 0.011, net return improved +17pp from -27% to -9.8%. Falsification triggers rollback ONLY if: rank IC < 0.155 (signal degradation), OR WF median sharpe < 0.75 (multiplier hurts more than helps), OR worst regime sharpe < -2.9 (regime modulation backfires). Strict validation gates (validation_contract.json) remain unchanged; v93 still flags 'fail' on participation cap (0.011 > strict cap 0.005) and net-return-negative tests, same as v91 baseline. Strict pass requires Roadmap Phase 2 (portfolio construction with risk model + capacity-aware sizing).",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi"
+        ],
+        "factor_formula": "raw = -0.20*z(iv_smooth_60) -0.10*z(rv_5) +0.18*z(dh_60) +0.15*z(dh_5) -0.07*z(tt_smooth_5) -0.10*z(liquidity_stress_qv_iv) -0.06*z(momentum_decay_5_20) +0.05*z(taker_imb_dispersion) -0.05*z(quality_funding_oi); final = tanh((percentile_rank(raw)-0.5)*1.80); position_multiplier_overlay = clip(1 - tanh((max(btc_dvol_z90, eth_dvol_z90) - 0.5) * 3), 0.2, 1.0) applied at portfolio sizing layer (not in raw_score)",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "d25909ea5734066d68176e0612a1e0f8e52dd7cbc2f0275f5b4739f5faaa2c29"
+    }
+  ]
+}

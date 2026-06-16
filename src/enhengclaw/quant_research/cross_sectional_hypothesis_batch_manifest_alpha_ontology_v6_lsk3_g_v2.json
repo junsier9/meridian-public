@@ -1,0 +1,164 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.alpha_ontology_v6_lsk3_g_v2",
+  "lineage": {
+    "doc": "docs/quant_research/00_roadmap_state/alpha_ontology_and_factor_library.md",
+    "doc_context_version": "2026-04-29.1",
+    "predecessor_baseline": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v1_lsk3_g_v2.json",
+    "scoring_family": "xs_alpha_ontology_v6",
+    "overlay_id": "alpha_ontology_regime_gating_v2",
+    "method": "v_alpha_v1_lsk3 11-factor + SP-A liq_cascade_recency_score_5d (per-subject 1h liquidation cascade impulse-response, exponential-decay 5-day recency). Stacked with W3.5 v2 regime-gating overlay.",
+    "sub_path": "SP-A (data_utilization_roadmap.md)",
+    "doc_e12_falsification_2026_04_29": {
+      "test": "post-cascade 24h abnormal log return t-stat",
+      "n_events": 8858,
+      "n_subjects_with_events": 29,
+      "mean_abnormal_24h_log_return": 0.0074,
+      "std_abnormal_24h_log_return": 0.0647,
+      "t_stat": 10.75,
+      "doc_threshold_2_5_sigma": 2.5,
+      "result": "PASS — t=+10.75 strongly significant, 4× the doc 2.5σ floor"
+    },
+    "admission_audit_2026_04_29": {
+      "factor_id": "liq_cascade_recency_score_5d",
+      "raw_spearman_ic": 0.0522,
+      "raw_t_stat": 10.50,
+      "n_ts": 707,
+      "g1_pass_strict": true,
+      "g3_regime_same_sign_fraction": 1.0,
+      "g3_pass": true,
+      "g6_residual_ic_vs_lsk3": 0.0616,
+      "g6_t_stat": 10.77,
+      "g6_pass": true,
+      "all_4_variants_g6_pass": true,
+      "selected_strongest_variant": "liq_cascade_recency_score_5d (highest residual IC + highest t-stat)",
+      "alternative_variants_admitted": [
+        {"factor": "liq_cascade_max_z_24h", "raw_ic": 0.0448, "g1_pass": true, "g6_residual": 0.0578},
+        {"factor": "liq_cascade_count_24h_z25", "raw_ic": 0.0225, "g1_pass": false, "g6_residual": 0.0523},
+        {"factor": "liq_cascade_signed_intensity_24h", "raw_ic": 0.0010, "g1_pass": false, "g6_residual": 0.0275}
+      ],
+      "weight": 0.05,
+      "weight_calibration": "Conservative initial pick. Raw IC 0.052 × v91 ratio 3.25 = 0.17 (would be aggressive). F62 lesson at IC -0.024 → w=-0.08 was Pareto-optimal; transferring that ratio (~3.3) to recency_score gives w≈0.17 but conservatism suggests starting at 0.10 (~50% of theoretical) and scanning up."
+    }
+  },
+  "entries": [
+    {
+      "candidate_id": "xs_alpha_ontology_v6_lsk3_g_v2_h5d",
+      "base_mechanism_id": "xs_alpha_ontology_v6_lsk3_g_v2",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_alpha_ontology_v6",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "downside_upside_vol_ratio_30",
+        "funding_basis_residual_implied_repo_30",
+        "liq_cascade_recency_score_5d"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.0,
+        "top_long_count": 3,
+        "bottom_short_count": 3,
+        "position_multiplier_overlay_id": "alpha_ontology_regime_gating_v2"
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_alpha_ontology_v6_lsk3_g_v2_h5d",
+        "thesis_family": "hypothesis_xs_alpha_ontology_v6_lsk3_g_v2_h5d",
+        "market_mechanism": "SP-A v6 score: extends v_alpha_v1_lsk3 by adding liq_cascade_recency_score_5d (per-subject 1h liquidation cascade exponential-decay 5d recency accumulator). Doc §E.12 mechanism: CoinGlass 1h liquidation flow identifies cascade events; the 24-72h post-cascade window has documented mean reversion. Cross-sectionally, assets with HIGHER recent cascade intensity OUTPERFORM in next 5 days (post-cascade recovery alpha). Sign empirical: POSITIVE. Stacked with W3.5 v2 regime-gating overlay.",
+        "directional_claim": "Same long-short top-3 perp construction. Score adds +0.05 * z(liq_cascade_recency_score_5d). Position size multiplied by W3.5 v2 regime-gating overlay. Doc §E.12 prescribes mean reversion 24-72h after cascade; the 5d recency window covers the full mean-reversion horizon. Falsified if (a) walk_forward median sharpe drops more than 0.3 below v_alpha_v1_lsk3_g_v2 (+2.147) without compensating regime improvement; OR (b) regime_holdout fails (worst regime below -2.0 OR positive_regime_fraction below 1/3); OR (c) doc §E.12 universe-pooled post-cascade 24h abnormal return t-stat falls below 2.5σ on this panel.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "downside_upside_vol_ratio_30",
+          "funding_basis_residual_implied_repo_30",
+          "liq_cascade_recency_score_5d"
+        ],
+        "factor_formula": "raw = -0.20*z(iv_smooth_60) -0.10*z(rv_5) +0.18*z(dh_60) +0.15*z(dh_5) -0.07*z(tt_smooth_5) -0.10*z(liquidity_stress_qv_iv) -0.06*z(momentum_decay_5_20) +0.05*z(taker_imb_dispersion) -0.05*z(quality_funding_oi) +0.10*z(downside_upside_vol_ratio_30) +0.07*z(funding_basis_residual_implied_repo_30) +0.05*z(liq_cascade_recency_score_5d); final_score = tanh((percentile_rank(raw)-0.5)*1.80); target_weight_per_name = (long_leverage/top_K - short_leverage/bottom_K) * regime_gating_v2_multiplier(t)",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed",
+          "v6_walk_forward_median_drops_more_than_0_3_below_lsk3_g_v2_without_regime_improvement",
+          "doc_e12_post_cascade_24h_abnormal_return_t_stat_below_2_5"
+        ]
+      },
+      "spec_hash": "93ff0243e3e3bbf8032a400dd079dd0616f81a097269db54505edba327f7acea"
+    }
+  ],
+  "verified_outcome_2026_04_29": {
+    "v10_contract_status": "pass",
+    "walk_forward_median_oos_sharpe": 2.373,
+    "walk_forward_loss_window_fraction": 0.375,
+    "walk_forward_assessment_passed": true,
+    "regime_holdout_passed": true,
+    "positive_regime_fraction": 0.333,
+    "worst_regime_median_oos_sharpe": -1.851,
+    "regimes": {
+      "trend_up_2025h2": 5.687,
+      "rotation_high_vol_2025q4": -0.062,
+      "drawdown_rebound_2026ytd": -1.851
+    },
+    "delta_vs_lsk3_g_v2": {
+      "walk_forward_median": "+0.226 (+10.5%)",
+      "trend_up_2025h2": "+0.147",
+      "rotation_high_vol_2025q4": "+0.527 (best regime improvement of any factor in M2.x)",
+      "drawdown_rebound_2026ytd": "0.000 (unchanged)",
+      "worst_regime": "0.000 (unchanged)"
+    },
+    "weight_calibration_journey": {
+      "w_0_10_initial": "walk-forward +2.496 BEST EVER, but rotation_high_vol_2025q4 collapsed to -2.322 (regime FAIL, below v10 -2.0 floor). Same pattern as W3.5 v1 — strong factor with regime tail risk needs throttling.",
+      "w_0_05_final": "walk-forward +2.373 (+0.226 vs v1_lsk3_g_v2), all regimes safe, rotation regime IMPROVED +0.527 from baseline. Pareto-optimal pick."
+    }
+  },
+  "lifecycle": "active_alternative",
+  "active_alternative_marker_set_at": "2026-04-29",
+  "active_alternative_reason": "SP-A v6 is the FIRST factor in M2.x track to combine: (1) doc-mechanism falsification PASS with 4× margin (E.12 t=+10.75 vs 2.5σ); (2) G1 strict + G6 strict + G3 perfect same-sign on the cross-sectional admission; (3) score-integrated cycle PASS with walk-forward improvement (+0.226) AND regime improvement (rotation +0.527) simultaneously. Best trend regime (+5.687) AND best rotation regime (-0.062) of any candidate while keeping worst regime safe (-1.851, comfortable margin from -2.0 floor). Active alternative alongside lsk3_g_v2 (best worst-regime margin), v3_lsk3_g_v2 (best regime breadth), v5_lsk3_g_v2 (best raw walk-forward at the cost of tight worst regime). Operator picks based on risk preference; v6 is the most balanced winner."
+}

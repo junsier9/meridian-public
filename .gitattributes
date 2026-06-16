@@ -1,0 +1,12 @@
+# Frozen 12-factor frontier contracts are sha256-pinned over their EXACT working-tree bytes
+# in the CRLF form (see strategy.frontier.weights_file_sha256 / scoring_config_sha256 /
+# overlay.file_sha256). The live resolver hashes the RAW file bytes
+# (frozen_frontier_contract.file_sha256 / frozen_frontier_overlay.file_sha256), so the
+# checked-out EOL must be identical on every platform or the pin breaks (fail-closed,
+# frontier_file_sha256_mismatch). Force CRLF on checkout everywhere so the raw sha always
+# equals the pinned value regardless of a clone's core.autocrlf. The blob stays LF-normalized;
+# only the working-tree EOL is fixed. (The baseline frozen_config is read via read_text, which
+# normalizes EOL, so it is EOL-robust and intentionally not pinned here.)
+config/quant_research/frontier_12factor/v5_rw_bridge_no_overlay_h10d__2026-05-02-54814da2622b__frozen_frontier_weights.json text eol=crlf
+config/quant_research/frontier_12factor/v5_rw_bridge_no_overlay_h10d_12factor_frontier_scoring.json text eol=crlf
+config/quant_research/frontier_12factor/dth60_hybrid_shock_q90_or_crowded_top20_zero__overlay.frozen.json text eol=crlf

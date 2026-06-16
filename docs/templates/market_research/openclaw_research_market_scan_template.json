@@ -1,0 +1,67 @@
+{
+  "scan_id": "market-scan-20260420-am",
+  "scan_date": "2026-04-20",
+  "generated_at_utc": "2026-04-20T01:05:00Z",
+  "candidates": [
+    {
+      "subject": "BTC",
+      "spot_symbol": "BTCUSDT",
+      "usdm_symbol": "BTCUSDT",
+      "market_cap_rank": 1,
+      "scope": "spot+perp",
+      "structure_clarity_score": 86,
+      "liquidity_score": 98,
+      "catalyst_score": 58,
+      "risk_boundary_score": 84,
+      "volatility_score": 42,
+      "observation": "BTC is holding above the latest higher-low and remains structurally constructive.",
+      "evidence": "Exchange-side participation stayed healthy while leverage remained controlled.",
+      "risk": "A clean loss of the local higher-low would invalidate the current constructive read.",
+      "next_step": "Review whether relative strength persists into the next major session.",
+      "is_stablecoin": false,
+      "is_pegged_asset": false,
+      "pain_log": {
+        "gap_category": "ohlcv_history",
+        "blocking": false,
+        "missing_question": "I still cannot compare the current structure cleanly to the last three multi-week breakouts.",
+        "notes": "If this gap repeats across several thesis cycles, add one external historical-data API instead of widening the realtime system."
+      }
+    },
+    {
+      "subject": "ARB",
+      "spot_symbol": "ARBUSDT",
+      "usdm_symbol": "ARBUSDT",
+      "market_cap_rank": 45,
+      "scope": "spot+perp",
+      "structure_clarity_score": 78,
+      "liquidity_score": 74,
+      "catalyst_score": 73,
+      "risk_boundary_score": 69,
+      "volatility_score": 63,
+      "observation": "ARB is trying to hold reclaimed support while catalyst flow remains active.",
+      "evidence": "The latest market snapshot still shows aligned structure and narrative support.",
+      "risk": "A failed retest into the prior range would invalidate the current setup.",
+      "next_step": "Check whether the reclaimed level still holds after the next active session.",
+      "is_stablecoin": false,
+      "is_pegged_asset": false
+    },
+    {
+      "subject": "JTO",
+      "spot_symbol": "JTOUSDT",
+      "usdm_symbol": "JTOUSDT",
+      "market_cap_rank": 140,
+      "scope": "spot+perp",
+      "structure_clarity_score": 72,
+      "liquidity_score": 56,
+      "catalyst_score": 87,
+      "risk_boundary_score": 60,
+      "volatility_score": 81,
+      "observation": "JTO remains catalyst-rich but volatile, with a still-defined local support shelf.",
+      "evidence": "Momentum remains event-driven and the setup still has a bounded invalidation level.",
+      "risk": "A failed breakout or rapid loss of support would invalidate the aggressive setup.",
+      "next_step": "Re-check catalyst persistence and whether volatility stays tradeable.",
+      "is_stablecoin": false,
+      "is_pegged_asset": false
+    }
+  ]
+}

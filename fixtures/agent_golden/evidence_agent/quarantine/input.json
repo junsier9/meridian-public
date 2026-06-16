@@ -1,0 +1,8 @@
+{
+  "case_id": "evidence_agent_quarantine",
+  "expected_status": "quarantine",
+  "object_id": "golden-evidence-quarantine-aix",
+  "scope": "spot+perp",
+  "subject": "AIX",
+  "evidence_text": "A follow-up desk note says the renewed buying pressure now belongs to subject=BTC instead of the host object."
+}

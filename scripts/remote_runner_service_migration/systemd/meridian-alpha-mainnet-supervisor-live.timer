@@ -1,0 +1,15 @@
+# Draft only. Install disabled in a future approved remote apply window.
+[Unit]
+Description=Run Meridian Alpha hv_balanced Binance USD-M mainnet live-capable supervisor every 10 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=10min
+AccuracySec=30s
+RandomizedDelaySec=30s
+Persistent=false
+Unit=meridian-alpha-mainnet-supervisor-live.service
+
+[Install]
+WantedBy=timers.target
+

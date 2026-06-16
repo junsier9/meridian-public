@@ -1,0 +1,343 @@
+{
+  "contract_version": "scheduled_tasks_manifest.v2",
+  "tasks": [
+    {
+      "task_key": "binance_ohlcv_sync",
+      "task_name": "OpenClaw Binance OHLCV Sync",
+      "registration_script": "scripts/market_data/register_openclaw_binance_ohlcv_sync_task.ps1",
+      "runner_script": "scripts/market_data/run_openclaw_binance_ohlcv_sync_runner.ps1",
+      "registration": {
+        "principal_mode": "password",
+        "run_level": "limited"
+      },
+      "resilience": {
+        "wake_to_run": true,
+        "restart_count": 3,
+        "restart_interval_minutes": 5,
+        "startup_catchup_enabled": true,
+        "startup_delay_minutes": 2
+      },
+      "expected_interval": "hourly",
+      "schedule": {
+        "type": "once_repeating",
+        "start_time": "00:00",
+        "repeat_minutes": 60,
+        "repeat_duration_days": 3650,
+        "extra_daily_times": [
+          "02:30"
+        ]
+      },
+      "upstream_dependencies": [],
+      "produces_artifact_family": "binance_ohlcv_sync",
+      "freshness_budget_hours": 2,
+      "success_discovery_command": "Get-Content \"$env:LOCALAPPDATA\\EnhengClaw\\market_history\\binance_ohlcv\\binance_ohlcv_sync.last_run_summary.json\""
+    },
+    {
+      "task_key": "quant_derivatives_sync",
+      "task_name": "OpenClaw Quant Derivatives Sync",
+      "registration_script": "scripts/quant_research/register_openclaw_quant_derivatives_sync_task.ps1",
+      "runner_script": "scripts/quant_research/run_openclaw_quant_derivatives_sync_runner.ps1",
+      "registration": {
+        "principal_mode": "password",
+        "run_level": "limited"
+      },
+      "resilience": {
+        "wake_to_run": true,
+        "restart_count": 3,
+        "restart_interval_minutes": 5,
+        "startup_catchup_enabled": true,
+        "startup_delay_minutes": 8
+      },
+      "expected_interval": "daily",
+      "schedule": {
+        "type": "daily",
+        "time": "03:05"
+      },
+      "upstream_dependencies": [],
+      "produces_artifact_family": "quant_derivatives_sync",
+      "freshness_budget_hours": 24,
+      "success_discovery_command": "Get-Content \"$env:LOCALAPPDATA\\EnhengClaw\\quant_research\\quant_derivatives_sync.last_run_summary.json\""
+    },
+    {
+      "task_key": "quant_deribit_options_chain_snapshot",
+      "task_name": "OpenClaw Quant Deribit Options Snapshot",
+      "registration_script": "scripts/quant_research/register_openclaw_quant_deribit_options_chain_snapshot_task.ps1",
+      "runner_script": "scripts/quant_research/run_openclaw_quant_deribit_options_chain_snapshot_runner.ps1",
+      "registration": {
+        "principal_mode": "password",
+        "run_level": "limited"
+      },
+      "resilience": {
+        "wake_to_run": true,
+        "restart_count": 3,
+        "restart_interval_minutes": 5,
+        "startup_catchup_enabled": false,
+        "startup_delay_minutes": 0
+      },
+      "expected_interval": "daily",
+      "schedule": {
+        "type": "daily",
+        "time": "08:30"
+      },
+      "upstream_dependencies": [],
+      "produces_artifact_family": "quant_deribit_options_chain_snapshot",
+      "freshness_budget_hours": 24,
+      "success_discovery_command": "Get-Content \"$env:LOCALAPPDATA\\EnhengClaw\\quant_research\\quant_deribit_options_chain_snapshot.last_run_summary.json\""
+    },
+    {
+      "task_key": "quant_stablecoin_ethereum_sync",
+      "task_name": "OpenClaw Quant Stablecoin Onchain Sync",
+      "registration_script": "scripts/quant_research/register_openclaw_quant_stablecoin_ethereum_sync_task.ps1",
+      "runner_script": "scripts/quant_research/run_openclaw_quant_stablecoin_ethereum_sync_runner.ps1",
+      "registration": {
+        "principal_mode": "password",
+        "run_level": "limited"
+      },
+      "resilience": {
+        "wake_to_run": true,
+        "restart_count": 3,
+        "restart_interval_minutes": 5,
+        "startup_catchup_enabled": false,
+        "startup_delay_minutes": 0
+      },
+      "expected_interval": "daily",
+      "schedule": {
+        "type": "daily",
+        "time": "09:15"
+      },
+      "upstream_dependencies": [],
+      "produces_artifact_family": "quant_stablecoin_ethereum_sync",
+      "freshness_budget_hours": 24,
+      "success_discovery_command": "Get-Content \"$env:LOCALAPPDATA\\EnhengClaw\\quant_research\\quant_stablecoin_ethereum_sync.last_run_summary.json\""
+    },
+    {
+      "task_key": "quant_universe_input_producer",
+      "task_name": "OpenClaw Quant Universe Input Producer",
+      "registration_script": "scripts/quant_research/register_openclaw_quant_universe_input_producer_task.ps1",
+      "runner_script": "scripts/quant_research/run_openclaw_quant_universe_input_producer_runner.ps1",
+      "registration": {
+        "principal_mode": "password",
+        "run_level": "limited"
+      },
+      "resilience": {
+        "wake_to_run": true,
+        "restart_count": 3,
+        "restart_interval_minutes": 5,
+        "startup_catchup_enabled": true,
+        "startup_delay_minutes": 5
+      },
+      "expected_interval": "daily",
+      "schedule": {
+        "type": "daily",
+        "time": "02:50"
+      },
+      "upstream_dependencies": [],
+      "produces_artifact_family": "quant_universe_input_producer",
+      "freshness_budget_hours": 24,
+      "success_discovery_command": "Get-Content \"$env:LOCALAPPDATA\\EnhengClaw\\quant_research\\quant_universe_input_producer.last_run_summary.json\""
+    },
+    {
+      "task_key": "quant_coinapi_spot_sync",
+      "task_name": "OpenClaw Quant CoinAPI Spot Sync",
+      "registration_script": "scripts/quant_research/register_openclaw_quant_coinapi_spot_sync_task.ps1",
+      "runner_script": "scripts/quant_research/run_openclaw_quant_coinapi_spot_sync_runner.ps1",
+      "registration": {
+        "principal_mode": "password",
+        "run_level": "limited"
+      },
+      "resilience": {
+        "wake_to_run": true,
+        "restart_count": 3,
+        "restart_interval_minutes": 5,
+        "startup_catchup_enabled": true,
+        "startup_delay_minutes": 6
+      },
+      "expected_interval": "daily",
+      "schedule": {
+        "type": "daily",
+        "time": "03:00"
+      },
+      "upstream_dependencies": [
+        "quant_universe_input_producer"
+      ],
+      "produces_artifact_family": "quant_coinapi_spot_sync",
+      "freshness_budget_hours": 24,
+      "success_discovery_command": "Get-Content \"$env:LOCALAPPDATA\\EnhengClaw\\quant_research\\quant_coinapi_spot_sync.last_run_summary.json\""
+    },
+    {
+      "task_key": "quant_universe_freeze",
+      "task_name": "OpenClaw Quant Universe Freeze",
+      "registration_script": "scripts/quant_research/register_openclaw_quant_universe_freeze_task.ps1",
+      "runner_script": "scripts/quant_research/run_openclaw_quant_universe_freeze_runner.ps1",
+      "registration": {
+        "principal_mode": "password",
+        "run_level": "limited"
+      },
+      "resilience": {
+        "wake_to_run": true,
+        "restart_count": 3,
+        "restart_interval_minutes": 5,
+        "startup_catchup_enabled": true,
+        "startup_delay_minutes": 12
+      },
+      "expected_interval": "daily",
+      "schedule": {
+        "type": "daily",
+        "time": "03:20"
+      },
+      "upstream_dependencies": [
+        "quant_universe_input_producer"
+      ],
+      "produces_artifact_family": "quant_universe_freeze",
+      "freshness_budget_hours": 24,
+      "success_discovery_command": "Get-Content \"$env:LOCALAPPDATA\\EnhengClaw\\quant_research\\quant_universe_freeze.last_run_summary.json\""
+    },
+    {
+      "task_key": "quant_research_daily_cycle",
+      "task_name": "OpenClaw Quant Monitoring Daily Cycle",
+      "registration_script": "scripts/quant_research/register_openclaw_quant_research_task.ps1",
+      "runner_script": "scripts/quant_research/run_openclaw_quant_research_daily_cycle_runner.ps1",
+      "registration": {
+        "principal_mode": "password",
+        "run_level": "limited"
+      },
+      "resilience": {
+        "wake_to_run": true,
+        "restart_count": 3,
+        "restart_interval_minutes": 5,
+        "startup_catchup_enabled": true,
+        "startup_delay_minutes": 16
+      },
+      "expected_interval": "daily",
+      "schedule": {
+        "type": "daily",
+        "time": "03:45"
+      },
+      "upstream_dependencies": [
+        "binance_ohlcv_sync",
+        "quant_derivatives_sync",
+        "quant_coinapi_spot_sync",
+        "quant_universe_input_producer",
+        "quant_universe_freeze"
+      ],
+      "produces_artifact_family": "quant_research_cycle",
+      "freshness_budget_hours": 24,
+      "success_discovery_command": "Get-Content \"$env:LOCALAPPDATA\\EnhengClaw\\quant_research\\quant_research_daily_cycle.last_run_summary.json\""
+    },
+    {
+      "task_key": "quant_repo_health_guard",
+      "task_name": "OpenClaw Quant Repo Health Guard",
+      "registration_script": "scripts/quant_research/register_openclaw_quant_repo_health_guard_task.ps1",
+      "runner_script": "scripts/quant_research/run_openclaw_quant_repo_health_guard_runner.ps1",
+      "registration": {
+        "principal_mode": "password",
+        "run_level": "limited"
+      },
+      "resilience": {
+        "wake_to_run": true,
+        "restart_count": 3,
+        "restart_interval_minutes": 5,
+        "startup_catchup_enabled": true,
+        "startup_delay_minutes": 18
+      },
+      "expected_interval": "daily",
+      "schedule": {
+        "type": "daily",
+        "time": "04:10"
+      },
+      "upstream_dependencies": [
+        "quant_research_daily_cycle"
+      ],
+      "produces_artifact_family": "quant_repo_health_guard",
+      "freshness_budget_hours": 24,
+      "success_discovery_command": "Get-Content \"$env:LOCALAPPDATA\\EnhengClaw\\quant_research\\quant_repo_health_guard.last_run_summary.json\""
+    },
+    {
+      "task_key": "structural_research_scan",
+      "task_name": "OpenClaw Structural Research Scan",
+      "registration_script": "scripts/openclaw/register_openclaw_structural_research_scan_task.ps1",
+      "runner_script": "scripts/openclaw/run_openclaw_structural_research_scan_runner.ps1",
+      "registration": {
+        "principal_mode": "password",
+        "run_level": "limited"
+      },
+      "resilience": {
+        "wake_to_run": false,
+        "restart_count": 3,
+        "restart_interval_minutes": 5,
+        "startup_catchup_enabled": false,
+        "startup_delay_minutes": 0
+      },
+      "expected_interval": "20_minutes",
+      "schedule": {
+        "type": "once_repeating",
+        "start_time": "00:05",
+        "repeat_minutes": 20,
+        "repeat_duration_days": 3650
+      },
+      "upstream_dependencies": [],
+      "produces_artifact_family": "openclaw_structural_research_scan",
+      "freshness_budget_hours": 1,
+      "success_discovery_command": "Get-Content \"$env:LOCALAPPDATA\\EnhengClaw\\openclaw_research_workbench\\structural_research_scan.last_run_summary.json\""
+    },
+    {
+      "task_key": "research_intake_cycle",
+      "task_name": "OpenClaw Research Intake Cycle",
+      "registration_script": "scripts/openclaw/register_openclaw_research_intake_task.ps1",
+      "runner_script": "scripts/openclaw/run_openclaw_research_intake_cycle_runner.ps1",
+      "registration": {
+        "principal_mode": "password",
+        "run_level": "limited"
+      },
+      "resilience": {
+        "wake_to_run": false,
+        "restart_count": 3,
+        "restart_interval_minutes": 5,
+        "startup_catchup_enabled": false,
+        "startup_delay_minutes": 0
+      },
+      "expected_interval": "20_minutes",
+      "schedule": {
+        "type": "once_repeating",
+        "start_time": "00:15",
+        "repeat_minutes": 20,
+        "repeat_duration_days": 3650
+      },
+      "upstream_dependencies": [
+        "quant_repo_health_guard",
+        "structural_research_scan"
+      ],
+      "produces_artifact_family": "openclaw_research_intake_cycle",
+      "freshness_budget_hours": 1,
+      "success_discovery_command": "Get-Content \"$env:LOCALAPPDATA\\EnhengClaw\\openclaw_research_workbench\\research_intake_cycle.last_run_summary.json\""
+    },
+    {
+      "task_key": "quant_strategy_proposal_cycle",
+      "task_name": "OpenClaw Quant Exploration Daily Full Cycle",
+      "registration_script": "scripts/quant_research/register_openclaw_quant_strategy_proposal_task.ps1",
+      "runner_script": "scripts/quant_research/run_openclaw_quant_strategy_proposal_cycle_runner.ps1",
+      "registration": {
+        "principal_mode": "password",
+        "run_level": "limited"
+      },
+      "resilience": {
+        "wake_to_run": true,
+        "restart_count": 3,
+        "restart_interval_minutes": 5,
+        "startup_catchup_enabled": true,
+        "startup_delay_minutes": 25
+      },
+      "expected_interval": "daily",
+      "schedule": {
+        "type": "daily",
+        "time": "05:00"
+      },
+      "upstream_dependencies": [
+        "quant_repo_health_guard"
+      ],
+      "produces_artifact_family": "quant_strategy_proposal_cycle",
+      "freshness_budget_hours": 24,
+      "success_discovery_command": "Get-Content \"$env:LOCALAPPDATA\\EnhengClaw\\quant_research\\quant_strategy_proposal_cycle.last_run_summary.json\""
+    }
+  ]
+}

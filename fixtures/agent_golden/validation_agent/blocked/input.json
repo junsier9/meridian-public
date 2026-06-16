@@ -1,0 +1,8 @@
+{
+  "case_id": "validation_agent_blocked",
+  "expected_status": "blocked",
+  "object_id": "golden-validation-agent-aix",
+  "scope": "spot+perp",
+  "subject": "AIX",
+  "validation_text": "Validation is vague right now."
+}

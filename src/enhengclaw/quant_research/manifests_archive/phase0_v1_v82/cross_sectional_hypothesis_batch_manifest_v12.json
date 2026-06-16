@@ -1,0 +1,75 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v12",
+  "entries": [
+    {
+      "candidate_id": "xs_quality_pullback_v2_h3d",
+      "base_mechanism_id": "xs_quality_pullback_v2",
+      "horizon_id": "h3d",
+      "target_horizon_bars": 3,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_quality_pullback_v2",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "range_position_20",
+        "distance_to_low_20",
+        "momentum_5",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_quality_pullback_v2_h3d",
+        "thesis_family": "hypothesis_xs_quality_pullback_v2_h3d",
+        "market_mechanism": "the original quality pullback direction may be backwards, with the cleanest strength-on-reset names already crowded while names that fail the tidy reset setup mean-revert over the next three days",
+        "directional_claim": "own liquid names that look worst on the quality-pullback template: weaker recent quality reset, hotter short-horizon moves, and less orderly structure, as an explicit sign-flip test of the previous hypothesis",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "range_position_20",
+          "distance_to_low_20",
+          "momentum_5",
+          "return_1"
+        ],
+        "factor_formula": "negative of xs_quality_pullback_v1: flip the sign of the same quality-pullback score to test whether the prior hypothesis direction was simply backwards on the h3d label",
+        "intended_holding_horizon_bars": 3,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "30e53ce88f3f2f94b8981534fa2410476305fee448941a01365313b76460fd9f"
+    }
+  ]
+}

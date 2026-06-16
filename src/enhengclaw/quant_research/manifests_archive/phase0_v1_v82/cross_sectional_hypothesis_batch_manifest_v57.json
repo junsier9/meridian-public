@@ -1,0 +1,95 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v57",
+  "entries": [
+    {
+      "candidate_id": "xs_relative_value_spread_v7_h5d",
+      "base_mechanism_id": "xs_relative_value_spread_v7",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_relative_value_spread_v7",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_relative_value_spread_v7_h5d",
+        "thesis_family": "hypothesis_xs_relative_value_spread_v7_h5d",
+        "market_mechanism": "inside the liquid perp-covered core, the better medium-horizon longs should be strong leaders that have already completed an orderly reset window; carry only matters as a narrow fair-value tie-breaker, and names that are either too frothy or too distressed should be pushed down",
+        "directional_claim": "rank liquid perp-covered names higher when leadership remains intact, the name sits in a clean leader-reset window just below highs, participation is stable, and derivatives are only mildly discounted rather than richly priced or capitulative",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "return_1"
+        ],
+        "factor_formula": "make leadership and the leader-reset window a gated conjunction, keep carry as a narrow balanced-discount tie-breaker, and penalize froth, stress, broken support, rich carry, and deep capitulation",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "a17ff78bb045487d996829aff6334da909eb66516def17f16ef58a27ebae2a84"
+    }
+  ]
+}

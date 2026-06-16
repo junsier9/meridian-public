@@ -1,0 +1,195 @@
+execution_authority_model:
+
+  batch_execution_authority:
+    batch_1:
+      scope: "tests/test_shadow_ingestion.py"
+      executor:
+        - "designated test compatibility executor"
+      approver:
+        - "test compatibility owner"
+        - "governance gate owner"
+      stop_authority:
+        - "executor"
+        - "test compatibility owner"
+        - "governance gate owner"
+      executor_may_continue_on_ambiguity: false
+
+    batch_2:
+      scope: "governance tooling scripts"
+      executor:
+        - "designated governance tooling executor"
+      approver:
+        - "governance tooling owner"
+        - "runtime evidence owner"
+      stop_authority:
+        - "executor"
+        - "governance tooling owner"
+        - "runtime evidence owner"
+        - "governance gate owner"
+      executor_may_continue_on_ambiguity: false
+
+    batch_3:
+      scope: "src/enhengclaw/ingress/shadow_schema.py"
+      executor:
+        - "designated ingress/schema executor"
+      approver:
+        - "ingress/schema owner"
+        - "rule verification owner"
+      stop_authority:
+        - "executor"
+        - "ingress/schema owner"
+        - "rule verification owner"
+        - "governance gate owner"
+      executor_may_continue_on_ambiguity: false
+
+    batch_4:
+      scope: "src/enhengclaw/ingress/live_replay_writer.py"
+      executor:
+        - "designated ingress/artifact executor"
+      approver:
+        - "ingress/artifact owner"
+        - "timestamp governance owner"
+      stop_authority:
+        - "executor"
+        - "ingress/artifact owner"
+        - "timestamp governance owner"
+        - "governance gate owner"
+      executor_may_continue_on_ambiguity: false
+
+    batch_5:
+      scope: "health/downstream time logic"
+      executor:
+        - "designated health/governance executor"
+      approver:
+        - "health/governance owner"
+        - "runtime evidence owner"
+      stop_authority:
+        - "executor"
+        - "health/governance owner"
+        - "runtime evidence owner"
+        - "governance gate owner"
+      executor_may_continue_on_ambiguity: false
+
+    batch_6:
+      scope: "src/enhengclaw/orchestration/shadow_ingestion_runner.py"
+      executor:
+        - "designated orchestration executor"
+      approver:
+        - "orchestration owner"
+        - "env/fail-fast governance owner"
+      stop_authority:
+        - "executor"
+        - "orchestration owner"
+        - "env/fail-fast governance owner"
+        - "governance gate owner"
+      executor_may_continue_on_ambiguity: false
+
+    batch_8:
+      scope: "src/enhengclaw/providers/binance_shadow_provider.py"
+      executor:
+        - "designated Binance provider executor"
+      approver:
+        - "Binance provider owner"
+        - "async/backoff governance owner"
+      stop_authority:
+        - "executor"
+        - "Binance provider owner"
+        - "async/backoff governance owner"
+        - "governance gate owner"
+      executor_may_continue_on_ambiguity: false
+
+    batch_7:
+      scope: "src/enhengclaw/providers/alchemy_shadow_provider.py"
+      executor:
+        - "designated Alchemy provider executor"
+      approver:
+        - "Alchemy provider owner"
+        - "errors/transport governance owner"
+        - "runtime evidence owner"
+      stop_authority:
+        - "executor"
+        - "Alchemy provider owner"
+        - "errors/transport governance owner"
+        - "runtime evidence owner"
+        - "governance gate owner"
+      executor_may_continue_on_ambiguity: false
+
+  stop_decision_rule_clarification:
+    stop_criteria_mode: "strict_trigger"
+    strict_trigger_definition:
+      - "任何已定义 stop criteria 命中，必须立即停止当前 batch。"
+      - "停止不是建议动作，而是强制动作。"
+    interpretive_bypass_allowed: false
+    explanatory_override_allowed: false
+    unexpected_classification_rule:
+      unexpected_star_is_non_interpretable: true
+      unexpected_star_examples:
+        - "unexpected_success"
+        - "unexpected_exception:*"
+        - "unexpected_fatal:*"
+      required_action:
+        - "立即停止当前 batch"
+        - "执行当前 batch rollback"
+        - "回到 owner review"
+    schema_or_status_unknown_rule:
+      - "若验证输出 status / classification 不在已定义集合内，视同 ambiguity，必须停止。"
+      - "不得以人工解释替代 stop。"
+
+  ambiguous_case_handling:
+    ambiguous_case_definition:
+      - "classification 不在已定义集合"
+      - "输出 schema 与既定 schema 不一致"
+      - "同一批次验证结果互相冲突"
+      - "出现 unexpected_*"
+      - "证据字段缺失，导致无法判定 pass/fail"
+    continue_allowed: false
+    mandatory_action_sequence:
+      - "停止当前 batch"
+      - "冻结后续 batch 进入"
+      - "保留日志、stdout/stderr、collector 输出、watchdog 输出"
+      - "执行当前 batch rollback"
+      - "回到 owner review 重新裁决"
+    return_level:
+      default: "owner review"
+      immediate_operational_level: "current batch rollback"
+    note:
+      - "ambiguity 不能由 executor 自行解释后继续。"
+
+  rollback_responsibility:
+    rollback_executor:
+      - "由触发该 batch 的同一 executor 执行"
+    rollback_must_be_observable_by:
+      - "对应 batch approver"
+      - "governance gate owner"
+    rollback_failure_escalation:
+      escalate_to:
+        - "对应 batch approver"
+        - "governance gate owner"
+      escalation_effect:
+        - "触发全局执行冻结"
+        - "回到 owner review"
+    automatic_retry_after_rollback_allowed: false
+    retry_reentry_rule:
+      - "rollback 完成后，不允许自动重试当前 batch。"
+      - "必须重新获得该 batch approver 明示批准后才可再次进入。"
+
+  execution_freeze_condition:
+    global_freeze_triggered_if_any:
+      - "任一 batch 命中 stop criteria"
+      - "任一 validation 输出出现 unexpected_*"
+      - "任一 validation 输出 schema 不一致或 infrastructure_failure"
+      - "authoritative true-rule evidence 漂移"
+      - "records_checked != records_scanned 且 execution draft 将其定义为必须全覆盖"
+      - "secret leakage 被检测到"
+      - "replay pollution risk 被检测到"
+      - "watchdog 出现 P0 或 P1"
+      - "exception identity mismatch 或 raise/catch source 不一致"
+      - "rollback 失败"
+      - "缺少必需 approver 却启动 batch"
+      - "脱离推荐 batch 顺序执行"
+      - "executor 试图在 ambiguity 下继续"
+    freeze_effect:
+      - "所有 batch 立即停止"
+      - "禁止进入下一个 batch"
+      - "必须回到 owner review"
+      - "approved_for_import_switch 维持不变"

@@ -1,0 +1,134 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_root_surface_classification_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only AST-level classification coverage for root-defined functions in binance_canonical_h10d.py. Every root-level FunctionDef must appear in exactly one owner bucket. This contract does not freeze signatures, formulas, caller counts, line numbers, runtime behavior, artifact schemas, validation metrics, or source migration.",
+  "validation_mode": "ast_root_function_classification_only",
+  "approved_by_matrix": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_remaining_root_surfaces_owner_gated_matrix_2026_05_15.md",
+  "expected_root_function_count": 70,
+  "root_surface_groups": {
+    "config_and_provider_entrypoints": [
+      "load_strategy_config",
+      "default_strategy_config",
+      "discover_usdm_perp_symbols"
+    ],
+    "score_surface_and_feature_manifest": [
+      "validate_alpha_feature_columns",
+      "assert_alpha_feature_purity",
+      "assert_alpha_feature_subset_purity",
+      "_allow_feature_subset",
+      "build_feature_manifest",
+      "score_binance_ohlcv_core",
+      "prepare_scored_backtest_frame"
+    ],
+    "archive_data_foundation_and_feature_panel": [
+      "aggregate_1m_klines",
+      "build_binance_canonical_dataset",
+      "build_symbol_feature_frame",
+      "_daily_bars_to_feature_panel",
+      "add_binance_ohlcv_core_features",
+      "_intraday_realized_vol_by_day",
+      "_settlement_premium_by_day"
+    ],
+    "pit_universe_and_eligibility": [
+      "freeze_binance_ohlcv_universe",
+      "apply_point_in_time_rolling_universe",
+      "add_pit_strategy_eligibility",
+      "_pit_recent_data_eligible",
+      "_truthy_series"
+    ],
+    "funding_facade_entrypoints": [
+      "sync_funding_cost_history",
+      "fetch_funding_rate_rows",
+      "write_funding_cost_rows",
+      "load_funding_cost_daily",
+      "attach_funding_cost_to_panel"
+    ],
+    "validation_orchestration_and_artifacts": [
+      "run_binance_canonical_validation",
+      "write_validation_artifacts",
+      "_validation_status",
+      "_funding_cost_status"
+    ],
+    "backtest_and_gap_policy": [
+      "_run_backtest",
+      "apply_selected_path_gap_symbol_exclusion",
+      "_execution_data_gap_blockers_for_frame",
+      "_subjects_from_data_gap_blockers"
+    ],
+    "attribution_and_paper_shadow": [
+      "compute_position_attribution",
+      "compute_factor_leave_one_out_attribution",
+      "build_paper_shadow_execution_ledger",
+      "_empty_position_attribution",
+      "_empty_factor_leave_one_out",
+      "_empty_paper_shadow_execution_ledger",
+      "_row_float",
+      "_paper_shadow_action",
+      "_summarize_paper_shadow_ledger",
+      "_apply_short_position_multiplier",
+      "_decision_rank_by_subject",
+      "_summarize_position_attribution",
+      "_factor_position_delta",
+      "_aggregate_position_contribution",
+      "_records"
+    ],
+    "ablations_and_feature_subset_rescore": [
+      "run_binance_core_ablations",
+      "add_core20_ablation_eligibility",
+      "_reference_core20_subjects",
+      "_rescore_for_feature_subset"
+    ],
+    "risk_brake_behavior": [
+      "add_short_squeeze_veto_multiplier",
+      "add_binance_risk_brake_columns",
+      "_add_high_vol_rebound_short_brake"
+    ],
+    "falsification_and_holdout": [
+      "_run_falsification_suite",
+      "_decision_time_liquidity_bucket_frame",
+      "_run_stratified_repeated_symbol_holdout",
+      "_stratified_holdout_policy",
+      "_symbol_stratification_frame",
+      "_stratified_two_way_subject_split",
+      "_stratum_counts"
+    ],
+    "reporting_metric_sanitation": [
+      "_rank_ic_summary",
+      "_strip_periods",
+      "_drop_periods_from_metrics",
+      "_split_contract"
+    ],
+    "root_local_partition_boundary": [
+      "_symbol_partition_paths",
+      "_partition_month"
+    ]
+  },
+  "owner_approval_required_before_source_move_groups": [
+    "archive_data_foundation_and_feature_panel",
+    "pit_universe_and_eligibility",
+    "funding_facade_entrypoints",
+    "validation_orchestration_and_artifacts",
+    "backtest_and_gap_policy",
+    "attribution_and_paper_shadow",
+    "ablations_and_feature_subset_rescore",
+    "risk_brake_behavior",
+    "falsification_and_holdout",
+    "reporting_metric_sanitation",
+    "root_local_partition_boundary"
+  ],
+  "excluded_surfaces": [
+    "source migration",
+    "inspect.signature freeze",
+    "formula behavior",
+    "runtime execution",
+    "caller counts",
+    "line numbers",
+    "artifact schemas",
+    "markdown report content",
+    "validation metrics",
+    "backtest output",
+    "strategy pass/fail status",
+    "live-readiness authorization"
+  ]
+}

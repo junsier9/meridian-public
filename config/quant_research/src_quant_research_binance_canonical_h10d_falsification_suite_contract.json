@@ -1,0 +1,79 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_falsification_suite_contract.v1",
+  "source_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "source_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only root-facade importability, inspect.signature shape, and direct suite-smoke test presence for _run_falsification_suite. This contract intentionally excludes suite payload schemas, exact metric values, fold assignment snapshots, strata payloads, validation report payloads, and source movement.",
+  "validation_mode": "root_facade_signature_required_behavior_test_presence_only",
+  "approved_by_owner_delegated_status": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_owner_delegated_terminal_contracts_2026_05_16.md",
+  "required_classification_contract": {
+    "path": "config/quant_research/src_quant_research_binance_canonical_h10d_root_surface_classification_contract.json",
+    "contract_version": "src_quant_research_binance_canonical_h10d_root_surface_classification_contract.v1",
+    "required_group": "falsification_and_holdout"
+  },
+  "falsification_suite_target": {
+    "helper_name": "_run_falsification_suite",
+    "signature": {
+      "parameters": [
+        {
+          "annotation": "pd.DataFrame",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "frame",
+          "required": true
+        },
+        {
+          "annotation": "dict[str, Any]",
+          "default_repr": null,
+          "kind": "KEYWORD_ONLY",
+          "name": "config",
+          "required": true
+        }
+      ],
+      "return_annotation": "dict[str, Any]"
+    }
+  },
+  "required_behavior_test_file": "tests/test_binance_canonical_h10d.py",
+  "required_behavior_tests": [
+    "test_liquidity_bucket_falsification_filters_decisions_not_execution_path",
+    "test_falsification_suite_marks_legacy_holdout_diagnostic"
+  ],
+  "required_adjacent_contracts": [
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_decision_time_liquidity_bucket_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_decision_time_liquidity_bucket_contract.v1",
+      "must_exclude_surface": "suite-level payload schemas"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_stratified_holdout_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_stratified_holdout_contract.v1",
+      "must_exclude_surface": "broad falsification suite behavior"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_run_backtest_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_run_backtest_contract.v1",
+      "must_exclude_surface": "exact falsification metrics"
+    }
+  ],
+  "deferred_surfaces": [
+    "_symbol_stratification_frame",
+    "_stratified_two_way_subject_split",
+    "_stratum_counts",
+    "suite-level payload schemas"
+  ],
+  "excluded_surfaces": [
+    "source migration",
+    "internal module layout",
+    "suite-level payload schemas",
+    "time-shuffle metric values",
+    "label-shuffle metric values",
+    "cost-stress metric values",
+    "legacy symbol holdout split assignments",
+    "exact stratified fold subject membership",
+    "exact strata payload schemas",
+    "validation report payloads",
+    "report text output",
+    "strategy promotion status",
+    "live-readiness authorization",
+    "caller counts"
+  ]
+}

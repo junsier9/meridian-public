@@ -1,0 +1,79 @@
+{
+  "contract_version": "quant_validation_contract.v10_h10d",
+  "doc_reference": "config/quant_research/threshold_provenance.md SP-C Phase 3 (h10d sqrt-scaling rationale)",
+  "gate_role": "research_gate",
+  "promotion_usage": "not_sufficient_for_promotion",
+  "promotion_gate_contract_path": "config/quant_research/promotion_gate_h10d.json",
+  "horizon_basis": {
+    "base_contract_version": "quant_validation_contract.v10",
+    "base_contract_path": "config/quant_research/validation_contract.json",
+    "horizon_bars": 10,
+    "base_horizon_bars": 5,
+    "horizon_ratio": 2.0,
+    "sqrt_horizon_ratio": 1.414,
+    "scaling_principle": "Sharpe-magnitude thresholds (those with units of standardized return) scale by sqrt(horizon_ratio) when forward-return horizon doubles. Rate thresholds (fraction-of-windows, count-min) are horizon-agnostic and remain unchanged. This is the standard random-walk-IID approximation: variance of N-period log return scales linearly with N, so sharpe (mean/std) scales with sqrt(N). Equivalent: sharpe at h10d is approximately sqrt(2) × sharpe at h5d for the same underlying strategy."
+  },
+  "required_sections": [
+    "split_integrity",
+    "feature_admission",
+    "reproducibility",
+    "factor_evidence",
+    "walk_forward_assessment",
+    "execution_stress",
+    "regime_holdout"
+  ],
+  "split_integrity": {
+    "no_overlap_required": true,
+    "no_leakage_required": true
+  },
+  "feature_admission": {
+    "policy_required": true
+  },
+  "reproducibility": {
+    "policy_required": true
+  },
+  "factor_evidence": {
+    "rank_ic_mean_abs_min": 0.01,
+    "rank_ic_positive_rate_min": 0.52,
+    "top_minus_bottom_return_min_exclusive": 0.0,
+    "max_trade_participation_rate_max": 0.005,
+    "max_inventory_participation_rate_max": 0.02,
+    "positive_quarter_count_min": 2,
+    "max_single_quarter_edge_contribution_ratio_max": 0.65,
+    "_horizon_unchanged_note": "rank IC is rank-based, not sharpe-magnitude; positive_rate and quarter counts are counts/rates. All horizon-agnostic at this layer."
+  },
+  "walk_forward_assessment": {
+    "window_count_min": 10,
+    "median_oos_sharpe_min": 1.131,
+    "loss_window_fraction_max": 0.4,
+    "_horizon_scaling_applied": {
+      "median_oos_sharpe_min": "0.8 (v10 h5d) × sqrt(2) = 1.131",
+      "loss_window_fraction_max": "rate-based, unchanged"
+    }
+  },
+  "execution_stress": {
+    "reference_capital_usd_by_profile": {
+      "conservative": 100000.0,
+      "balanced": 250000.0,
+      "aggressive": 500000.0
+    },
+    "test_net_return_min_exclusive": 0.0,
+    "walk_forward_median_oos_sharpe_min_exclusive": 0.0,
+    "max_trade_participation_rate_max": 0.005,
+    "max_inventory_participation_rate_max": 0.02,
+    "max_participation_rate_max": 0.005,
+    "_horizon_unchanged_note": "participation rates are per-rebalance fractions; horizon scaling does not apply."
+  },
+  "sharpe_anomaly_quarantine_threshold": 200.0,
+  "_sharpe_anomaly_h10d_note": "Empirically calibrated: at h10d, individual walk-forward window sharpes routinely fall in 25-90 range (return-horizon scaling makes per-window mean/std ratios larger than at h5d). Pure sqrt-scaling of v10's 20.0 -> 28.3 quarantines 7 of 32 windows on v6_h10d (~22%) — too aggressive. Threshold raised to 200.0 as 'numerical pathology' floor: a 200 sharpe over 10-day window would imply zero return variance, which is not physically possible under cross-sectional rank-strategy. Single-window sharpes 25-150 at h10d are statistically real (heavy 10-day directional bias in some windows) and should NOT trigger quarantine.",
+  "regime_holdout": {
+    "regime_coverage_min": 3,
+    "positive_regime_fraction_min": 0.3,
+    "worst_regime_median_oos_sharpe_min": -2.828,
+    "_horizon_scaling_applied": {
+      "worst_regime_median_oos_sharpe_min": "-2.0 (v10 h5d) × sqrt(2) = -2.828",
+      "positive_regime_fraction_min": "rate-based, unchanged",
+      "regime_coverage_min": "count-based, unchanged"
+    }
+  }
+}

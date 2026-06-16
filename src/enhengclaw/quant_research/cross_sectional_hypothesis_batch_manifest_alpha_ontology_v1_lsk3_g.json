@@ -1,0 +1,140 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.alpha_ontology_v1_lsk3_g",
+  "lineage": {
+    "doc": "docs/quant_research/00_roadmap_state/alpha_ontology_and_factor_library.md",
+    "doc_context_version": "2026-04-29.1",
+    "predecessor_baseline": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v1_lsk3.json",
+    "overlay_id": "alpha_ontology_regime_gating_v1",
+    "overlay_module": "src/enhengclaw/quant_research/regime_gating.py",
+    "overlay_components": [
+      {
+        "factor_id": "F49_shock_co_occurrence_index",
+        "role": "point-in-time vol shock fraction"
+      },
+      {
+        "factor_id": "F26_co_jump_count_3d",
+        "role": "3-day cluster shock count"
+      },
+      {
+        "factor_id": "F44_dispersion_of_returns",
+        "role": "cross-asset return std vs rolling-60 median"
+      }
+    ],
+    "multiplier_distribution_2026_04_29": {
+      "n_dates": 1117,
+      "mean": 0.713,
+      "median": 0.755,
+      "min": 0.3,
+      "max": 1.0,
+      "fraction_at_full": 0.12,
+      "fraction_at_floor": 0.107,
+      "fraction_below_0_75": 0.489
+    },
+    "selection_rule": "Identical to v_alpha_v1_lsk3 in score / signs / required_feature_columns / portfolio construction. Differs only in profile_constraints.position_multiplier_overlay_id: when set to \"alpha_ontology_regime_gating_v1\", the universe-wide regime multiplier in [0.30, 1.00] is multiplied into raw_target_weights at the portfolio sizing layer (execution_backtest._cross_sectional_period). Score function and gates are unchanged.",
+    "v10_contract_status": "fail (regime_holdout worst -2.243 < -2.0)",
+    "walk_forward_delta_vs_lsk3": {
+      "median_oos_sharpe": "+0.46",
+      "loss_window_fraction": "-6.3pp",
+      "window_stdev": "-1.29"
+    },
+    "regime_delta_vs_lsk3": {
+      "positive_regime_fraction": "+33.3pp (1/3 -> 2/3)",
+      "worst_regime_median_oos_sharpe": "-0.64 (regression)"
+    }
+  },
+  "entries": [
+    {
+      "candidate_id": "xs_alpha_ontology_v1_lsk3_g_h5d",
+      "base_mechanism_id": "xs_alpha_ontology_v1_lsk3_g",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_alpha_ontology_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "downside_upside_vol_ratio_30",
+        "funding_basis_residual_implied_repo_30"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.0,
+        "top_long_count": 3,
+        "bottom_short_count": 3,
+        "position_multiplier_overlay_id": "alpha_ontology_regime_gating_v1"
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_alpha_ontology_v1_lsk3_g_h5d",
+        "thesis_family": "hypothesis_xs_alpha_ontology_v1_lsk3_g_h5d",
+        "market_mechanism": "W3.5 regime-gated lsk3: same xs_alpha_ontology_v1_score (v91 9 + F33 + F12) and same long-short top-3 perp construction as v_alpha_v1_lsk3, with a position-size multiplier overlay applied at the portfolio sizing layer. The multiplier in [0.30, 1.00] is built from the three universe-wide regime gauges F49 + F26 + F44 (W3.1 / W3.2 / W3.3). Hypothesis: by reducing exposure during shock-cluster windows and low-dispersion periods (when idiosyncratic alpha is least extractable), the gated variant should improve regime_holdout worst-regime sharpe and walk_forward loss_window_fraction relative to the un-gated v_alpha_v1_lsk3. The multiplier average is ~0.71 over 2023-04 to 2026-04, so the gated variant runs at ~71% average exposure; absolute returns are expected to be lower but risk-adjusted metrics (worst regime, drawdown depth) should improve.",
+        "directional_claim": "Same long-short top-3 perp signed-z-score construction as v_alpha_v1_lsk3. Position size is then multiplied by the W3.5 regime gating multiplier in [0.30, 1.00]. Falsified if walk_forward median sharpe drops more than 0.5 below v_alpha_v1_lsk3 (+1.748) without a matching improvement in regime_holdout worst-regime sharpe (current -1.608 vs strict cap -2.00) OR if execution_stress max_trade_participation_rate stays below 0.005 cap (already cleanly under at lsk3 baseline) but the strategy fails strict_validation on any other section due to overlay throttling.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "downside_upside_vol_ratio_30",
+          "funding_basis_residual_implied_repo_30"
+        ],
+        "factor_formula": "raw = -0.20*z(iv_smooth_60) -0.10*z(rv_5) +0.18*z(dh_60) +0.15*z(dh_5) -0.07*z(tt_smooth_5) -0.10*z(liquidity_stress_qv_iv) -0.06*z(momentum_decay_5_20) +0.05*z(taker_imb_dispersion) -0.05*z(quality_funding_oi) +0.10*z(downside_upside_vol_ratio_30) +0.07*z(funding_basis_residual_implied_repo_30); final_score = tanh((percentile_rank(raw)-0.5)*1.80); target_weight_per_name = (long_leverage / top_K - short_leverage / bottom_K) * regime_gating_multiplier(t)",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed",
+          "combined_ic_uplift_below_0_005_vs_v91_baseline",
+          "either_new_factor_rolling_60d_residual_ic_below_0_02_for_90d",
+          "gated_walk_forward_median_drops_more_than_0_5_below_lsk3_without_regime_improvement"
+        ]
+      },
+      "spec_hash": "d314a3a17eab20caeba462e5634b073ecdaed497e536cb3e116908bd3025b6c1"
+    }
+  ],
+  "lifecycle": "experimental",
+  "experimental_marker_set_at": "2026-04-30",
+  "experimental_reason": "W3.5 regime gating overlay v1 produces material walk-forward improvements (median +0.46 sharpe, loss_frac -6.3pp, stdev -1.29) and regime sign-consistency gain (positive_regime_fraction 33.3% -> 66.7%, 1/3 -> 2/3 regimes positive). However, worst-regime median OOS sharpe regresses from -1.608 to -2.243, dropping below the v10 contract floor of -2.0 and triggering strict_validation FAIL on regime_holdout. Diagnosis: the v1 overlay components (F49 shock fraction, F26 3-day cluster count, F44 return dispersion) are SHOCK-based and do not fire during slow-grinding regime windows (e.g. rotation_high_vol_2025q4). The strategy maintains full exposure during sustained-vol regimes and accumulates the loss without throttling. v2 of the overlay should add F55 (BTC vol regime quantile) and/or a trailing-strategy-drawdown gauge to capture sustained-vol patterns that shock-based metrics miss. lsk3_g remains preserved as audit evidence; v_alpha_v1_lsk3 stays the active strict-passing candidate."
+}

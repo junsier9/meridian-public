@@ -1,0 +1,80 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v18",
+  "entries": [
+    {
+      "candidate_id": "xs_absorption_recovery_v1_h5d",
+      "base_mechanism_id": "xs_absorption_recovery_v1",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_absorption_recovery_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "atr_proxy_20",
+        "quote_volume_expansion",
+        "range_position_20",
+        "distance_to_low_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "tail_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {},
+      "thesis_profile": {
+        "thesis_id": "xs_absorption_recovery_v1_h5d",
+        "thesis_family": "hypothesis_xs_absorption_recovery_v1_h5d",
+        "market_mechanism": "spot names that hold up on relative strength while digesting a mild pullback in the lower-middle part of the local range can outperform over five days when volatility and intraday churn stay muted and participation remains balanced rather than euphoric",
+        "directional_claim": "own spot names showing absorption after a small reset: relative strength and slope stay positive, price sits in a controlled reset zone, one-day pullback is mild, and both intraday volatility and volume expansion remain orderly enough to suggest accumulation instead of panic or breakout overheating",
+        "universe_rule": {},
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": false,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "atr_proxy_20",
+          "quote_volume_expansion",
+          "range_position_20",
+          "distance_to_low_20",
+          "return_1"
+        ],
+        "factor_formula": "favor names with strong cross-sectional trend quality, lower-middle reset positioning, near-low absorption, balanced volume, and calm drift after a mild pullback, while penalizing hot participation, high intraday churn, and panic-like downside impulses",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "7ca29933f5a6cf8efb05f093006d4f0571878216e7f0c5d5023810292a1a7e2f"
+    }
+  ]
+}

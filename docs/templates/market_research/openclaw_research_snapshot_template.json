@@ -1,0 +1,23 @@
+{
+  "cycle_id": "sol-breakout-20260419-am",
+  "cycle_date": "2026-04-19",
+  "object_id": "sol-breakout-20260419",
+  "subject": "SOL",
+  "scope": "spot+perp",
+  "strategy_profile": "balanced",
+  "asset_bucket": "large_cap",
+  "market_symbols": {
+    "spot_symbol": "SOLUSDT",
+    "usdm_symbol": "SOLUSDT"
+  },
+  "observation": "SOL is still holding above the prior breakout area and has not yet lost the local higher-low structure.",
+  "evidence": "Spot volume expanded on the rebound, perp positioning stayed controlled, and the current narrative flow still supports continuation.",
+  "risk": "A clean loss of the breakout shelf or a rapid leverage-led rejection would invalidate the setup.",
+  "next_step": "Re-check whether relative strength persists into the next major session and whether funding stays constructive.",
+  "pain_log": {
+    "gap_category": "ohlcv_history",
+    "blocking": false,
+    "missing_question": "I still cannot compare the current structure cleanly to the last three multi-week breakouts.",
+    "notes": "If this gap repeats across several thesis cycles, add one external historical-data API instead of widening the realtime system."
+  }
+}

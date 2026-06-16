@@ -1,0 +1,231 @@
+{
+  "contract_version": "src_quant_research_binance_canonical_h10d_reporting_render_contract.v1",
+  "source_module": "enhengclaw.quant_research._binance_canonical_reporting",
+  "source_path": "src/enhengclaw/quant_research/_binance_canonical_reporting.py",
+  "facade_module": "enhengclaw.quant_research.binance_canonical_h10d",
+  "facade_path": "src/enhengclaw/quant_research/binance_canonical_h10d.py",
+  "scope": "Freeze only internal-module importability, root-facade re-export identity, inspect.signature shape, and tiny rendering samples for _render_markdown_report and _metric_row. This contract intentionally excludes full markdown report golden snapshots, real artifact roots, full validation payload schemas, exact research metrics, promotion decisions, and source movement.",
+  "validation_mode": "internal_module_facade_signature_tiny_render_samples",
+  "approved_by_dry_run": "docs/quant_research/00_roadmap_state/src_quant_research_binance_canonical_h10d_reporting_render_contract_dry_run_2026_05_15.md",
+  "reporting_render_targets": {
+    "_render_markdown_report": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "validation_report",
+            "required": true
+          },
+          {
+            "annotation": "dict[str, Path]",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "paths",
+            "required": true
+          }
+        ],
+        "return_annotation": "str"
+      },
+      "minimal_report_sample": {
+        "validation_report": {
+          "strategy_label": "contract_sample_strategy",
+          "parent_label": "contract_sample_parent",
+          "status": "passed",
+          "metrics": {
+            "base": {
+              "net_return": 0.1,
+              "sharpe": 1.2,
+              "max_drawdown": 0.05,
+              "rebalance_count": 3,
+              "max_trade_participation_rate": 0.001
+            },
+            "stress": {
+              "net_return": -0.02,
+              "sharpe": -0.3,
+              "max_drawdown": 0.07,
+              "rebalance_count": 2,
+              "max_trade_participation_rate": 0.0025
+            }
+          },
+          "blockers": [],
+          "execution_gap_policy": {
+            "mode": "none",
+            "excluded_symbols": [],
+            "residual_data_gap_blockers": []
+          },
+          "risk_overlay_policy": {},
+          "attribution": {
+            "side_summary": []
+          },
+          "factor_attribution": {
+            "method": "contract_sample",
+            "baseline": {
+              "base": {
+                "net_return": 0.1
+              }
+            },
+            "top_positive_contributors": [],
+            "negative_contributors": []
+          },
+          "paper_shadow_execution": {
+            "execution_mode": "contract_sample",
+            "ledger_row_count": 0,
+            "order_row_count": 0,
+            "net_contribution": 0.0,
+            "max_trade_participation_rate": 0.0,
+            "data_gap_blockers": []
+          },
+          "ablations": {},
+          "falsification": {
+            "symbol_holdout": {},
+            "stratified_repeated_symbol_holdout": {
+              "summary": {
+                "fold_count": 2,
+                "positive_fold_count": 2,
+                "positive_fraction": 1.0,
+                "gap_free_fold_count": 2,
+                "min_net_return": 0.01,
+                "median_net_return": 0.02,
+                "max_net_return": 0.03
+              },
+              "policy": {
+                "repeat_count": 3,
+                "min_positive_fraction": 0.5,
+                "require_gap_free": true
+              }
+            }
+          },
+          "gate_results": {
+            "legacy_holdout_positive_count": 0,
+            "legacy_holdout_positive_gate_diagnostic": false,
+            "stratified_holdout_gate": true
+          }
+        },
+        "paths": {
+          "validation_report": "contract/validation_report.json",
+          "dataset_manifest": "contract/dataset_manifest.json",
+          "gap_audit": "contract/gap_audit.json",
+          "feature_manifest": "contract/feature_manifest.json",
+          "aligned_period_returns": "contract/aligned_period_returns.csv",
+          "universe_membership": "contract/universe_membership.csv",
+          "position_attribution": "contract/position_attribution.csv",
+          "attribution_by_side_year": "contract/attribution_by_side_year.csv",
+          "attribution_by_symbol_year": "contract/attribution_by_symbol_year.csv",
+          "factor_leave_one_out": "contract/factor_leave_one_out.csv",
+          "factor_leave_one_out_summary": "contract/factor_leave_one_out_summary.json",
+          "factor_leave_one_out_by_side": "contract/factor_leave_one_out_by_side.csv",
+          "factor_leave_one_out_by_year": "contract/factor_leave_one_out_by_year.csv",
+          "factor_leave_one_out_by_side_year": "contract/factor_leave_one_out_by_side_year.csv",
+          "paper_shadow_execution_ledger": "contract/paper_shadow_execution_ledger.csv",
+          "paper_shadow_execution_summary": "contract/paper_shadow_execution_summary.json",
+          "ablation_summary": "contract/ablation_summary.json",
+          "ablation_period_returns": "contract/ablation_period_returns.csv"
+        },
+        "expected_contains": [
+          "# Binance-Canonical H10D Validation",
+          "`Strategy: contract_sample_strategy`",
+          "`Parent: contract_sample_parent`",
+          "`Status: passed`",
+          "## Metrics",
+          "| base | 0.100000 | 1.200 | 0.050000 | 3 | 0.001000 |",
+          "- none",
+          "## Holdout Gates",
+          "- stratified_repeated_hard_gate: `True`",
+          "## Artifact Paths",
+          "## Sidecar Policy",
+          "CoinGlass, OI, liquidation, orderbook, top-trader, taker, funding, and basis columns are excluded from core alpha."
+        ]
+      }
+    },
+    "_metric_row": {
+      "signature": {
+        "parameters": [
+          {
+            "annotation": "str",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "name",
+            "required": true
+          },
+          {
+            "annotation": "dict[str, Any]",
+            "default_repr": null,
+            "kind": "POSITIONAL_OR_KEYWORD",
+            "name": "metrics",
+            "required": true
+          }
+        ],
+        "return_annotation": "str"
+      },
+      "format_sample": {
+        "name": "sample",
+        "metrics": {
+          "net_return": 0.1234567,
+          "sharpe": 1.23456,
+          "max_drawdown": 0.0456789,
+          "rebalance_count": 12,
+          "max_trade_participation_rate": 0.00123456
+        },
+        "expected_line": "| sample | 0.123457 | 1.235 | 0.045679 | 12 | 0.001235 |"
+      }
+    }
+  },
+  "required_path_labels": [
+    "validation_report",
+    "dataset_manifest",
+    "gap_audit",
+    "feature_manifest",
+    "aligned_period_returns",
+    "universe_membership",
+    "position_attribution",
+    "attribution_by_side_year",
+    "attribution_by_symbol_year",
+    "factor_leave_one_out",
+    "factor_leave_one_out_summary",
+    "factor_leave_one_out_by_side",
+    "factor_leave_one_out_by_year",
+    "factor_leave_one_out_by_side_year",
+    "paper_shadow_execution_ledger",
+    "paper_shadow_execution_summary",
+    "ablation_summary",
+    "ablation_period_returns"
+  ],
+  "required_adjacent_contracts": [
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_artifact_writer_helpers_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_artifact_writer_helpers_contract.v2",
+      "must_exclude_surface": "markdown report content"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_run_metadata_helpers_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_run_metadata_helpers_contract.v1",
+      "must_exclude_surface": "markdown report content"
+    },
+    {
+      "path": "config/quant_research/src_quant_research_binance_canonical_h10d_reporting_metric_sanitation_contract.json",
+      "contract_version": "src_quant_research_binance_canonical_h10d_reporting_metric_sanitation_contract.v1",
+      "must_exclude_surface": "full validation report payloads"
+    }
+  ],
+  "excluded_surfaces": [
+    "source migration",
+    "package layout expansion",
+    "full markdown report golden snapshots",
+    "exact artifact path roots",
+    "exact platform path separators",
+    "full validation report payload schemas",
+    "full blocker ordering",
+    "full falsification outputs",
+    "exact research metrics",
+    "exact attribution tables",
+    "artifact writer behavior",
+    "report path selection",
+    "run metadata behavior",
+    "validation pass/fail status",
+    "promotion status",
+    "live-readiness authorization",
+    "caller counts"
+  ]
+}

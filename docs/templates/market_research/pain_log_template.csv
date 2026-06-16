@@ -1,0 +1,4 @@
+object_id,cycle_id,cycle_date,gap_category,blocking,missing_question,notes,candidate_api_type
+sol-breakout-20260419,cycle-01,2026-04-19,ohlcv_history,false,Need a cleaner higher-timeframe candle comparison to verify the breakout context,Skills were enough for a provisional thesis,market_history_api
+btc-range-resolution-20260419,cycle-01,2026-04-19,onchain_timeseries,false,Want wallet flow over time instead of one-off address snapshots,Not a blocker yet,onchain_data_api
+eth-relative-strength-20260419,cycle-01,2026-04-19,structured_news_archive,false,Need a cleaner event timeline across multiple sources,Current narrative snapshot was still usable,news_archive_api

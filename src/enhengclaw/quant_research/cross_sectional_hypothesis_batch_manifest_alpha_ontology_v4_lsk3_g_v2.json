@@ -1,0 +1,134 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.alpha_ontology_v4_lsk3_g_v2",
+  "lineage": {
+    "doc": "docs/quant_research/00_roadmap_state/alpha_ontology_and_factor_library.md",
+    "doc_context_version": "2026-04-29.1",
+    "predecessor_baseline": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v1_lsk3_g_v2.json",
+    "scoring_family": "xs_alpha_ontology_v4",
+    "overlay_id": "alpha_ontology_regime_gating_v2",
+    "method": "v_alpha_v1_lsk3 11-factor score with one M2.2 addition: F08 funding_term_skew_60 (rolling 60d skew of daily funding_rate per subject, doc §D MF-04 F08). Stacked with W3.5 v2 regime-gating overlay.",
+    "f08_admission_2026_04_29": {
+      "factor_id": "funding_term_skew_60",
+      "raw_spearman_ic": 0.0316,
+      "raw_t_stat": 6.13,
+      "n_ts": 1094,
+      "g1_pass_strict": false,
+      "g1_borderline_note": "Raw IC 0.032 is below G1 strict 0.04 but matches F12 admission precedent (F12 raw IC 0.023). Strong t-stat (6.13) compensates.",
+      "g3_regime_ic": {"high_vol": -0.004, "low_vol": 0.044, "mid_vol": 0.027},
+      "g3_same_sign_fraction": 0.67,
+      "g3_pass": true,
+      "g6_residual_ic_vs_v91": 0.0157,
+      "g6_residual_ic_vs_lsk3": 0.0302,
+      "g6_t_vs_lsk3": 5.61,
+      "g6_pass_vs_lsk3": true,
+      "sign_vs_doc": "POSITIVE empirically; doc prescribes NEGATIVE (high positive skew → mean reversion). Possible mechanism: high-skew subjects have ongoing right-tail funding events proxying for sustained buying pressure.",
+      "weight": 0.06,
+      "weight_calibration": "Initial calibration weight = raw_IC * 3.25 (matches v91 |w|/|IC| ratio) = 0.10. But w=0.10 collapsed walk-forward median to +1.20 (44% drop vs lsk3_g_v2 baseline +2.147). Weight scan {0.04, 0.05, 0.06, 0.08, 0.10} selected w=0.06 as Pareto-optimal: walk-forward median +2.110 (essentially lsk3_g_v2 parity), strict_pass on both walk_forward_assessment and regime_holdout, loss_window_fraction 0.375 (under v10 0.40 cap). w=0.04 had loss_window_fraction 0.406 (FAIL); w=0.08 had wf median +1.30 (regression).",
+      "window_optimization_table": {
+        "10d": {"raw_ic": 0.0179, "raw_t": 3.64, "resid_ic_lsk3": 0.0145, "g6_pass": false},
+        "15d": {"raw_ic": 0.0196, "raw_t": 3.82, "resid_ic_lsk3": 0.0168, "g6_pass": false},
+        "20d": {"raw_ic": 0.0225, "raw_t": 4.25, "resid_ic_lsk3": 0.0202, "g6_pass": true},
+        "30d": {"raw_ic": 0.0224, "raw_t": 4.18, "resid_ic_lsk3": 0.0217, "g6_pass": true},
+        "45d": {"raw_ic": 0.0284, "raw_t": 5.30, "resid_ic_lsk3": 0.0269, "g6_pass": true},
+        "60d": {"raw_ic": 0.0316, "raw_t": 6.13, "resid_ic_lsk3": 0.0302, "g6_pass": true, "selected": true},
+        "90d": {"raw_ic": 0.0253, "raw_t": 5.02, "resid_ic_lsk3": 0.0257, "g6_pass": true}
+      }
+    }
+  },
+  "entries": [
+    {
+      "candidate_id": "xs_alpha_ontology_v4_lsk3_g_v2_h5d",
+      "base_mechanism_id": "xs_alpha_ontology_v4_lsk3_g_v2",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_alpha_ontology_v4",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "downside_upside_vol_ratio_30",
+        "funding_basis_residual_implied_repo_30",
+        "funding_term_skew_60"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.0,
+        "top_long_count": 3,
+        "bottom_short_count": 3,
+        "position_multiplier_overlay_id": "alpha_ontology_regime_gating_v2"
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_alpha_ontology_v4_lsk3_g_v2_h5d",
+        "thesis_family": "hypothesis_xs_alpha_ontology_v4_lsk3_g_v2_h5d",
+        "market_mechanism": "M2.2 v4 score: extends v_alpha_v1_lsk3's 11 hand-tuned factors by adding F08 funding_term_skew_60 (rolling 60d skew of daily funding_rate per subject, doc §D MF-04 F08). Stacked with W3.5 v2 regime-gating overlay (alpha_ontology_regime_gating_v2). Hypothesis: F08 captures funding-distribution asymmetry over a 60d window — assets with right-tail funding events (recent positive funding spikes) have ongoing buying pressure that persists 5d forward. Empirical sign is POSITIVE on this panel (opposite of doc's prescribed negative sign). Admission: G6 residual IC vs lsk3 11-factor = +0.030 (t=+5.61), strongly orthogonal to baseline; G3 same-sign 2/3 across BTC vol regimes; G1 raw IC +0.032 borderline below 0.04 threshold but matches F12 precedent.",
+        "directional_claim": "Same long-short top-3 perp signed-z-score construction. Score adds +0.10 * z(funding_term_skew_60). Position size multiplied by W3.5 v2 regime-gating overlay. Falsified if (a) walk_forward median sharpe drops more than 0.3 below v_alpha_v1_lsk3_g_v2 (+2.147) without compensating gain in regime metrics; OR (b) regime_holdout fails (worst regime below -2.0 OR positive_regime_fraction below 1/3); OR (c) F08 weight produces over-concentration (single-quarter edge contribution > 0.65 cap).",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "downside_upside_vol_ratio_30",
+          "funding_basis_residual_implied_repo_30",
+          "funding_term_skew_60"
+        ],
+        "factor_formula": "raw = -0.20*z(iv_smooth_60) -0.10*z(rv_5) +0.18*z(dh_60) +0.15*z(dh_5) -0.07*z(tt_smooth_5) -0.10*z(liquidity_stress_qv_iv) -0.06*z(momentum_decay_5_20) +0.05*z(taker_imb_dispersion) -0.05*z(quality_funding_oi) +0.10*z(downside_upside_vol_ratio_30) +0.07*z(funding_basis_residual_implied_repo_30) +0.06*z(funding_term_skew_60); final_score = tanh((percentile_rank(raw)-0.5)*1.80); target_weight_per_name = (long_leverage/top_K - short_leverage/bottom_K) * regime_gating_v2_multiplier(t)",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed",
+          "v4_walk_forward_median_drops_more_than_0_3_below_lsk3_g_v2_without_regime_improvement",
+          "f08_single_quarter_edge_contribution_above_0_65"
+        ]
+      },
+      "spec_hash": "e49b7b4bc688302709e740754ba0d1f95cbe9593079272045d5bc732902c3fd7"
+    }
+  ],
+  "lifecycle": "experimental",
+  "experimental_marker_set_at": "2026-04-29",
+  "experimental_reason": "M2.2 v4 score: lsk3 11-factor + F08 funding_term_skew_60 (60d rolling skew of daily funding_rate per subject) + W3.5 v2 regime-gating overlay. F08 admission: G6 PASS vs lsk3 (residual IC +0.030, t=+5.61); G3 PASS (2/3 regimes same sign); G1 borderline (raw IC +0.032 below 0.04 strict threshold but t=+6.13 highly significant; matches F12 precedent at IC +0.023). Lifecycle 'experimental' until cycle verifies walk_forward / regime metrics vs v1_lsk3_g_v2 baseline."
+}

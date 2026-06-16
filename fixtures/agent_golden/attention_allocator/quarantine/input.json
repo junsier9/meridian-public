@@ -1,0 +1,8 @@
+{
+  "attention_text": "Monitor this object for now instead of expanding attention.",
+  "case_id": "attention_allocator_quarantine",
+  "expected_status": "quarantine",
+  "object_id": "golden-attention-allocator-aix",
+  "scope": "spot+perp",
+  "subject": "AIX"
+}

@@ -1,0 +1,8 @@
+{
+  "case_id": "market_observer_success",
+  "expected_status": "success",
+  "object_id": "golden-success-aix",
+  "scope": "spot+perp",
+  "subject": "AIX",
+  "observation_text": "AIX still shows supportive structure with a higher low above intraday support and no immediate breakdown signal."
+}

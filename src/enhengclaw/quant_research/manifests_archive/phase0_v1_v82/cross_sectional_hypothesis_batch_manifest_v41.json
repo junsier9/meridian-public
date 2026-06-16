@@ -1,0 +1,94 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v41",
+  "entries": [
+    {
+      "candidate_id": "xs_pair_spread_book_v14_h5d",
+      "base_mechanism_id": "xs_pair_spread_book_v14",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_pair_spread_book_v8",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 0.5,
+        "pair_construction": "quality_bucket_pairs",
+        "pair_bucket_count": 3,
+        "pair_count": 1,
+        "pair_score_spread_min": 0.12,
+        "pair_quality_floor": 0.35,
+        "pair_short_trend_crowding_soft_threshold": 0.80,
+        "pair_short_trend_crowding_soft_scale": 0.72
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_pair_spread_book_v14_h5d",
+        "thesis_family": "hypothesis_xs_pair_spread_book_v14_h5d",
+        "market_mechanism": "inside the liquid perp-covered core, keep the v35 flipped single-pair book and its current thresholds, but softly scale down only those selected pairs whose short leg is itself trend-crowded, so trend-up damage and strict sharpe spikes can compress without flattening every pair",
+        "directional_claim": "if the remaining strict failures come from shorting still-crowded names inside trend-up tapes, a mild short-leg crowding scale should improve regime stability without giving up the broader pair-book edge",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "return_1"
+        ],
+        "factor_formula": "reuse the v35 pair-book score unchanged, but when the chosen short leg is still trend-crowded, scale the pair down modestly instead of blocking the whole pair",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "8d7feab7de8e591e2c226dcb4efd947060310ce357656e597c08b484fd393717"
+    }
+  ]
+}

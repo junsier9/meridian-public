@@ -1,0 +1,70 @@
+{
+  "contract_version": "src_quant_research_features_f3b2_residualized_pair_book_scorer_family_contract.v1",
+  "source_module": "enhengclaw.quant_research.features",
+  "source_path": "src/enhengclaw/quant_research/features.py",
+  "scope": "Freeze only importability and inspect.signature shape for the F3-B2 residualized_pair_book scorer family. This does not approve scorer migration, formula freeze, golden-output tests, lab dispatch freeze, archived-manifest lifecycle freeze, caller-count freeze, or a broader features.py scorer-family contract.",
+  "validation_mode": "importability_signature_only",
+  "scorer_family": "f3b2_residualized_pair_book",
+  "required_behavior_smoke": "tests/test_quant_hypothesis_batch.py::QuantHypothesisBatchTests::test_residualized_pair_book_scores_prefer_clean_cheap_over_broken_cheap",
+  "coverage_notes": {
+    "xs_residualized_pair_book_v1_score": "import/signature frozen; minimal behavior smoke coverage exists in tests/test_quant_hypothesis_batch.py",
+    "xs_residualized_pair_book_v2_score": "import/signature frozen; minimal behavior smoke coverage exists in tests/test_quant_hypothesis_batch.py"
+  },
+  "scorer_targets": {
+    "xs_residualized_pair_book_v1_score": {
+      "parameters": [
+        {
+          "annotation": "pd.DataFrame",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "frame",
+          "required": true
+        },
+        {
+          "annotation": "Iterable[str] | None",
+          "default_repr": "None",
+          "kind": "KEYWORD_ONLY",
+          "name": "feature_columns",
+          "required": false
+        }
+      ],
+      "return_annotation": "pd.Series"
+    },
+    "xs_residualized_pair_book_v2_score": {
+      "parameters": [
+        {
+          "annotation": "pd.DataFrame",
+          "default_repr": null,
+          "kind": "POSITIONAL_OR_KEYWORD",
+          "name": "frame",
+          "required": true
+        },
+        {
+          "annotation": "Iterable[str] | None",
+          "default_repr": "None",
+          "kind": "KEYWORD_ONLY",
+          "name": "feature_columns",
+          "required": false
+        }
+      ],
+      "return_annotation": "pd.Series"
+    }
+  },
+  "excluded_surfaces": [
+    "scorer formula output",
+    "exact score values",
+    "complete score ordering",
+    "alpha quality",
+    "promotion status",
+    "golden-output scorer snapshots",
+    "lab.py registry or dispatch semantics",
+    "archived manifest lifecycle semantics",
+    "caller counts",
+    "pair book scorer family",
+    "relative value spread scorer family",
+    "relative strength base scorers",
+    "hypothesis_batch.py pair-construction normalization",
+    "feature-bundle sidecar merge behavior",
+    "source migration"
+  ]
+}

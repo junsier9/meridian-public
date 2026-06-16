@@ -1,0 +1,125 @@
+{
+  "backend_kind": "live",
+  "backend_name": "openai_compatible_chat_completions",
+  "compiler_output": {
+    "blocked_reason": null,
+    "candidate_payloads": [
+      {
+        "claim_type": "invalidation",
+        "confidence_hint": 71,
+        "direction": "invalidating",
+        "evidence_level": "E4",
+        "input_id": "validation_agent_success:1",
+        "predicate": "publish_gate_hold",
+        "scope": "spot+perp",
+        "source_family": "analytics",
+        "subject": "BADX",
+        "time_horizon": "short",
+        "value": "the bounded validation note requires a publish-gate hold until outstanding checks are cleared"
+      }
+    ],
+    "notes": [
+      "deterministic compiler emitted one candidate payload",
+      "recorded quarantine fixture",
+      "recorded quarantine fixture for validation_agent"
+    ],
+    "status": "success"
+  },
+  "contract_version": "validation_agent_compiler_v1",
+  "input_fingerprint": "d7b0c85f07cf540194fab6317d7a983fadf02399be6888222fea3a7ecee8872e",
+  "model_request": {
+    "endpoint": "https://example.invalid/chat/completions",
+    "request_body": {
+      "messages": [
+        {
+          "content": "# Role\nYou compile one bounded validation-blocker observation into exactly one machine-readable JSON envelope for the `validation_agent` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `publish_gate_hold`, `unresolved_thesis_conflict`, `validation_blocker_present`, `evidence_gap_hold`\n- `claim_type`: `risk_flag`, `invalidation`\n- `direction`: `risk`, `invalidating`\n- `source_family`: `analytics`, `official`, `safety`\n- `evidence_level`: `E2`, `E3`, `E4`, `E5`\n- `time_horizon`: `short`, `medium`, `structural`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- Emit one bounded blocker/hold claim only.\n- Do not generate approve-publish or unlock-publish semantics.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the validation text is too vague, unsupported, or would require inventing thesis or publish-gate facts.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing subjects, scopes, thesis ids, or publish decisions.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+          "role": "system"
+        },
+        {
+          "content": "Compile one bounded validation-blocker observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=validation_agent_quarantine:1\nobject_id=golden-validation-agent-aix\nobject_context_fingerprint=1e2860dff1a6944fa85b273556d1fd5157cfb60dff2caa5162049673af9fb909\nexisting_object_context_json:\n{\"claim_count\": 2, \"object_id\": \"golden-validation-agent-aix\", \"processing_state\": \"monitoring\", \"recent_claims\": [{\"confidence\": 82, \"direction\": \"bullish\", \"predicate\": \"spot_breakout\", \"scope\": \"spot+perp\", \"source_family\": \"cex\", \"time_horizon\": \"intraday\", \"value\": \"AIX spot structure remains constructive\"}, {\"confidence\": 78, \"direction\": \"bullish\", \"predicate\": \"wallet_buy\", \"scope\": \"spot+perp\", \"source_family\": \"onchain\", \"time_horizon\": \"intraday\", \"value\": \"AIX still shows supportive flow from large buyers\"}], \"risk_state\": \"normal\", \"scope\": \"spot+perp\", \"subject\": \"AIX\", \"validation_context\": {\"decision\": \"monitoring\", \"gate_status\": \"pass\", \"publish_gate_checked\": false, \"reasons\": [\"publish_gate is not legal in monitoring\"], \"thesis_count\": 1, \"working_opposing_thesis_id\": null, \"working_primary_thesis_id\": \"golden-validation-agent-aix:primary\"}}\nvalidation_text:\nPublish hold stays in place because this still needs validation.",
+          "role": "user"
+        }
+      ],
+      "model": "fixture-test-model",
+      "temperature": 0.0
+    },
+    "request_headers": {
+      "Authorization": "Bearer ***redacted***",
+      "Content-Type": "application/json"
+    },
+    "timeout_seconds": 30.0
+  },
+  "object_context_fingerprint": "1e2860dff1a6944fa85b273556d1fd5157cfb60dff2caa5162049673af9fb909",
+  "prompt_context": {
+    "contract_version": "validation_agent_compiler_v1",
+    "messages": [
+      {
+        "content": "# Role\nYou compile one bounded validation-blocker observation into exactly one machine-readable JSON envelope for the `validation_agent` slice.\n\n# Hard Output Contract\nReturn exactly one JSON object and nothing else.\n\nThe only allowed top-level shape is:\n\n```json\n{\n  \"status\": \"success | blocked\",\n  \"blocked_reason\": \"string or null\",\n  \"candidate_payloads\": [],\n  \"notes\": []\n}\n```\n\nRules:\n- No markdown fences.\n- No prose before or after the JSON object.\n- No extra top-level keys.\n- `notes` must be an array of strings.\n- `candidate_payloads` must be an array.\n\n# Success Envelope Rules\nIf `status` is `success`:\n- `blocked_reason` must be `null`.\n- `candidate_payloads` must contain exactly one JSON object.\n- That object must use exactly these keys:\n\n```json\n{\n  \"input_id\": \"\",\n  \"subject\": \"\",\n  \"predicate\": \"\",\n  \"value\": \"\",\n  \"claim_type\": \"\",\n  \"direction\": \"\",\n  \"source_family\": \"\",\n  \"evidence_level\": \"\",\n  \"confidence_hint\": 0,\n  \"scope\": \"\",\n  \"time_horizon\": \"\"\n}\n```\n\nAllowed enum values:\n- `predicate`: `publish_gate_hold`, `unresolved_thesis_conflict`, `validation_blocker_present`, `evidence_gap_hold`\n- `claim_type`: `risk_flag`, `invalidation`\n- `direction`: `risk`, `invalidating`\n- `source_family`: `analytics`, `official`, `safety`\n- `evidence_level`: `E2`, `E3`, `E4`, `E5`\n- `time_horizon`: `short`, `medium`, `structural`\n\nAdditional success constraints:\n- `subject` must match the host subject exactly.\n- `scope` must match the host scope exactly.\n- `confidence_hint` must be an integer between 60 and 100.\n- Emit one bounded blocker/hold claim only.\n- Do not generate approve-publish or unlock-publish semantics.\n\n# Blocked Envelope Rules\nIf `status` is `blocked`:\n- `candidate_payloads` must be an empty array.\n- `blocked_reason` must be a non-empty string.\n- Use `blocked` when the validation text is too vague, unsupported, or would require inventing thesis or publish-gate facts.\n\n# Decision Discipline\n- Prefer `blocked` over guessing.\n- Do not invent missing subjects, scopes, thesis ids, or publish decisions.\n- Do not emit more than one candidate.\n- Do not return `quarantine`; local validators decide quarantine after parsing.\n- Keep `notes` short and factual.",
+        "role": "system"
+      },
+      {
+        "content": "Compile one bounded validation-blocker observation into exactly one JSON compiler envelope.\nhost_subject=AIX\nhost_scope=spot+perp\ninput_id=validation_agent_quarantine:1\nobject_id=golden-validation-agent-aix\nobject_context_fingerprint=1e2860dff1a6944fa85b273556d1fd5157cfb60dff2caa5162049673af9fb909\nexisting_object_context_json:\n{\"claim_count\": 2, \"object_id\": \"golden-validation-agent-aix\", \"processing_state\": \"monitoring\", \"recent_claims\": [{\"confidence\": 82, \"direction\": \"bullish\", \"predicate\": \"spot_breakout\", \"scope\": \"spot+perp\", \"source_family\": \"cex\", \"time_horizon\": \"intraday\", \"value\": \"AIX spot structure remains constructive\"}, {\"confidence\": 78, \"direction\": \"bullish\", \"predicate\": \"wallet_buy\", \"scope\": \"spot+perp\", \"source_family\": \"onchain\", \"time_horizon\": \"intraday\", \"value\": \"AIX still shows supportive flow from large buyers\"}], \"risk_state\": \"normal\", \"scope\": \"spot+perp\", \"subject\": \"AIX\", \"validation_context\": {\"decision\": \"monitoring\", \"gate_status\": \"pass\", \"publish_gate_checked\": false, \"reasons\": [\"publish_gate is not legal in monitoring\"], \"thesis_count\": 1, \"working_opposing_thesis_id\": null, \"working_primary_thesis_id\": \"golden-validation-agent-aix:primary\"}}\nvalidation_text:\nPublish hold stays in place because this still needs validation.",
+        "role": "user"
+      }
+    ],
+    "object_context": {
+      "claim_count": 2,
+      "object_id": "golden-validation-agent-aix",
+      "processing_state": "monitoring",
+      "recent_claims": [
+        {
+          "confidence": 82,
+          "direction": "bullish",
+          "predicate": "spot_breakout",
+          "scope": "spot+perp",
+          "source_family": "cex",
+          "time_horizon": "intraday",
+          "value": "AIX spot structure remains constructive"
+        },
+        {
+          "confidence": 78,
+          "direction": "bullish",
+          "predicate": "wallet_buy",
+          "scope": "spot+perp",
+          "source_family": "onchain",
+          "time_horizon": "intraday",
+          "value": "AIX still shows supportive flow from large buyers"
+        }
+      ],
+      "risk_state": "normal",
+      "scope": "spot+perp",
+      "subject": "AIX",
+      "validation_context": {
+        "decision": "monitoring",
+        "gate_status": "pass",
+        "publish_gate_checked": false,
+        "reasons": [
+          "publish_gate is not legal in monitoring"
+        ],
+        "thesis_count": 1,
+        "working_opposing_thesis_id": null,
+        "working_primary_thesis_id": "golden-validation-agent-aix:primary"
+      }
+    },
+    "object_context_fingerprint": "1e2860dff1a6944fa85b273556d1fd5157cfb60dff2caa5162049673af9fb909",
+    "prompt_fingerprint": "72c79b639ee916b6a0a9e8ffd8a644a3575db624ef862f6f7838382affa9330b",
+    "prompt_path": "C:\\Users\\user\\Documents\\Claude\\Projects\\EnhengClaw\\src\\enhengclaw\\agents\\prompts\\validation_agent.system.md",
+    "prompt_template_version": "validation_agent_prompt_template_v1"
+  },
+  "prompt_fingerprint": "72c79b639ee916b6a0a9e8ffd8a644a3575db624ef862f6f7838382affa9330b",
+  "raw_model_output": {
+    "assistant_text": "{\"blocked_reason\": null, \"candidate_payloads\": [{\"claim_type\": \"invalidation\", \"confidence_hint\": 71, \"direction\": \"invalidating\", \"evidence_level\": \"E4\", \"input_id\": \"validation_agent_success:1\", \"predicate\": \"publish_gate_hold\", \"scope\": \"spot+perp\", \"source_family\": \"analytics\", \"subject\": \"BADX\", \"time_horizon\": \"short\", \"value\": \"the bounded validation note requires a publish-gate hold until outstanding checks are cleared\"}], \"notes\": [\"deterministic compiler emitted one candidate payload\", \"recorded quarantine fixture\", \"recorded quarantine fixture for validation_agent\"], \"status\": \"success\"}",
+    "response_json": {
+      "choices": [
+        {
+          "message": {
+            "content": "{\"blocked_reason\": null, \"candidate_payloads\": [{\"claim_type\": \"invalidation\", \"confidence_hint\": 71, \"direction\": \"invalidating\", \"evidence_level\": \"E4\", \"input_id\": \"validation_agent_success:1\", \"predicate\": \"publish_gate_hold\", \"scope\": \"spot+perp\", \"source_family\": \"analytics\", \"subject\": \"BADX\", \"time_horizon\": \"short\", \"value\": \"the bounded validation note requires a publish-gate hold until outstanding checks are cleared\"}], \"notes\": [\"deterministic compiler emitted one candidate payload\", \"recorded quarantine fixture\", \"recorded quarantine fixture for validation_agent\"], \"status\": \"success\"}"
+          }
+        }
+      ]
+    },
+    "response_text": "{\"choices\": [{\"message\": {\"content\": \"{\\\"blocked_reason\\\": null, \\\"candidate_payloads\\\": [{\\\"claim_type\\\": \\\"invalidation\\\", \\\"confidence_hint\\\": 71, \\\"direction\\\": \\\"invalidating\\\", \\\"evidence_level\\\": \\\"E4\\\", \\\"input_id\\\": \\\"validation_agent_success:1\\\", \\\"predicate\\\": \\\"publish_gate_hold\\\", \\\"scope\\\": \\\"spot+perp\\\", \\\"source_family\\\": \\\"analytics\\\", \\\"subject\\\": \\\"BADX\\\", \\\"time_horizon\\\": \\\"short\\\", \\\"value\\\": \\\"the bounded validation note requires a publish-gate hold until outstanding checks are cleared\\\"}], \\\"notes\\\": [\\\"deterministic compiler emitted one candidate payload\\\", \\\"recorded quarantine fixture\\\", \\\"recorded quarantine fixture for validation_agent\\\"], \\\"status\\\": \\\"success\\\"}\"}}]}",
+    "status_code": 200
+  },
+  "transcript_fingerprint": "50052836ee28344e046e0685d1e7167e3a3afc25bb924546a6df6757b42ec8cb"
+}

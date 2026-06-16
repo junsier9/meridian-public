@@ -1,0 +1,172 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.alpha_ontology_v1",
+  "lineage": {
+    "doc": "docs/quant_research/00_roadmap_state/alpha_ontology_and_factor_library.md",
+    "doc_context_version": "2026-04-29.1",
+    "predecessor_baseline": "cross_sectional_hypothesis_batch_manifest_v91.json",
+    "factor_report_cards_root": "artifacts/quant_research/factor_reports/2026-04-29",
+    "selection_rule": "v91 9 baseline + W1.1 candidates passing strict G6 (residual IC vs admitted baseline >= 0.02) AND G3 (per-regime IC same-sign fraction >= 60%)",
+    "candidates_admitted": [
+      {
+        "factor_id": "F33_downside_upside_vol_ratio",
+        "column": "downside_upside_vol_ratio_30",
+        "mechanism_family": "MF-10",
+        "ic_mean": 0.031,
+        "residual_ic_vs_baseline": 0.025,
+        "regime_same_sign_fraction": 1.0,
+        "gates_passed": "9/11"
+      },
+      {
+        "factor_id": "F12_basis_funding_implied_repo",
+        "column": "funding_basis_residual_implied_repo_30",
+        "mechanism_family": "MF-04",
+        "ic_mean": 0.023,
+        "residual_ic_vs_baseline": 0.0195,
+        "residual_ic_vs_baseline_rounded": 0.02,
+        "regime_same_sign_fraction": 1.0,
+        "gates_passed": "7/11",
+        "admission_classification": "boundary",
+        "admission_classification_note": "G6 strict floor is 0.020; F12 unrounded residual IC is 0.0195, below floor by 0.0005. Admitted on the basis of the displayed-rounded value at W1.4 sign-off; re-classified as boundary by the Week 2 exit verifier on 2026-04-29. See threshold_provenance.md 'Alpha Ontology Week 2 exit verification' entry. Cycle-level evidence will determine retention vs demotion."
+      }
+    ],
+    "candidates_deferred_with_reason": [
+      {
+        "factor_id": "F20_capitulation_amplification",
+        "reason": "G6 PASS but G3 FAIL (33% same-sign); sparse-event factor; residual IC suspected of zero-observation inflation"
+      },
+      {
+        "factor_id": "F09_funding_basis_residual",
+        "reason": "G6 FAIL (residual IC = -0.015, |.| < 0.02)"
+      },
+      {
+        "factor_id": "F11_perp_spot_basis_velocity",
+        "reason": "G6 FAIL (residual IC = +0.003, < 0.02)"
+      },
+      {
+        "factor_id": "F13_basis_carry_convexity",
+        "reason": "G6 FAIL (residual IC = +0.013, < 0.02)"
+      },
+      {
+        "factor_id": "F16_qv_acceleration_residual",
+        "reason": "G6 FAIL (residual IC = -0.009, < 0.02)"
+      },
+      {
+        "factor_id": "F18_flow_persistence_against_price",
+        "reason": "G6 FAIL (residual IC = -0.006, < 0.02)"
+      },
+      {
+        "factor_id": "F19_absorption_score",
+        "reason": "G6 FAIL (residual IC = +0.007, < 0.02)"
+      },
+      {
+        "factor_id": "F31_realized_skew_20",
+        "reason": "G6 FAIL (residual IC = -0.013, < 0.02)"
+      },
+      {
+        "factor_id": "F32_realized_kurt_20",
+        "reason": "G6 FAIL (residual IC = -0.001, < 0.02)"
+      },
+      {
+        "factor_id": "F35_vol_of_vol",
+        "reason": "G6 FAIL (residual IC = +0.008, < 0.02); slow-variable, candidate for regime gating layer rather than score"
+      },
+      {
+        "factor_id": "F36_abnormal_range_z",
+        "reason": "G6 FAIL (residual IC = +0.011, < 0.02)"
+      }
+    ]
+  },
+  "entries": [
+    {
+      "candidate_id": "xs_alpha_ontology_v1_h5d",
+      "base_mechanism_id": "xs_alpha_ontology_v1",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": false,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_alpha_ontology_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_60",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "downside_upside_vol_ratio_30",
+        "funding_basis_residual_implied_repo_30"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_alpha_ontology_v1_h5d",
+        "thesis_family": "hypothesis_xs_alpha_ontology_v1_h5d",
+        "market_mechanism": "Alpha Ontology W1.4: extends the v91 IC-pruned baseline with two W1.1 candidates that survived the strict G6+G3 11-gate report card. F33 downside_upside_vol_ratio_30 (MF-10 fragility): 30d ratio of conditional std on negative-return days to that on positive-return days. Larger ratio = pricing of asymmetric tail = downside risk premium = mean reverts upward. F12 funding_basis_residual_implied_repo_30 (MF-04 carry residual): 30d implied repo from funding minus 30d basis carry, vol-normalized. Larger residual = perp carry inconsistent with funding-implied carry = arbitrage friction that tends to revert. Both factors carry positive IC sign and 100% per-regime sign consistency. Strict G6 admission (residual IC >= 0.02 vs the v91 9-factor baseline) is the load-bearing test for additivity: factors that did not clear it would have produced redundant information at the score level, violating the alpha-ontology \u00a7G.6 'combined IC uplift >= 0.005' exit criterion.",
+        "directional_claim": "rank top-20 liquid perp-covered names by an 11-factor signed z-score score (v91 9 + F33 + F12). Expected: rank IC >= v91 baseline rank IC (0.21) plus additivity from new factors; walk-forward median sharpe >= v91 baseline (0.85); regime worst >= v91 baseline (-2.0); F33 + F12 contribution to combined IC >= 0.005 vs v91 alone (per alpha-ontology \u00a7G.6). Falsified if combined IC drops below 0.18 or if either new factor's rolling 60d residual IC stays below 0.02 for 90 consecutive days.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_60",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "downside_upside_vol_ratio_30",
+          "funding_basis_residual_implied_repo_30"
+        ],
+        "factor_formula": "raw = -0.20*z(iv_smooth_60) -0.10*z(rv_5) +0.18*z(dh_60) +0.15*z(dh_5) -0.07*z(tt_smooth_5) -0.10*z(liquidity_stress_qv_iv) -0.06*z(momentum_decay_5_20) +0.05*z(taker_imb_dispersion) -0.05*z(quality_funding_oi) +0.10*z(downside_upside_vol_ratio_30) +0.07*z(funding_basis_residual_implied_repo_30); final = tanh((percentile_rank(raw)-0.5)*1.80)",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed",
+          "combined_ic_uplift_below_0_005_vs_v91_baseline",
+          "either_new_factor_rolling_60d_residual_ic_below_0_02_for_90d"
+        ]
+      },
+      "spec_hash": "b8a4c427e800c8dc443fc9012fb6bbb2d51c9640b1ff5230defddb06c0e90a08"
+    }
+  ],
+  "lifecycle": "superseded",
+  "superseded_by": "cross_sectional_hypothesis_batch_manifest_alpha_ontology_v1_lsk3.json",
+  "archived_at": "2026-04-29",
+  "archived_reason": "Superseded by xs_alpha_ontology_v1_lsk3_h5d on 2026-04-29 after the W2-A iteration 2 cycle showed long-short top-3 perp construction fully resolves the execution_stress capacity_breach (8/32 -> 0/32) and majorly reduces regime_holdout worst sharpe (-3.05 -> -1.61), enabling lsk3 to pass strict_validation under v10 contract while v_alpha_v1 (top-3 long-only spot) remains structurally blocked by capacity binding and worst-regime drawdown depth. The score function (xs_alpha_ontology_v1_score) is unchanged between the two; v_alpha_v1 is preserved as audit evidence for the W1.4 -> Week 2 cycle path.",
+  "enabled": false
+}

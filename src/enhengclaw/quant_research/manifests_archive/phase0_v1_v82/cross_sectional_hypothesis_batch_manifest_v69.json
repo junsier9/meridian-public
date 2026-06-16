@@ -1,0 +1,97 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v69",
+  "entries": [
+    {
+      "candidate_id": "xs_tier2_dual_regime_v1_h5d",
+      "base_mechanism_id": "xs_tier2_dual_regime_v1",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_tier2_dual_regime_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "basis_zscore_20",
+        "funding_zscore_20",
+        "oi_change_5",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "momentum_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "distance_to_high_20",
+        "range_position_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_tier2_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_tier2_dual_regime_v1_h5d",
+        "thesis_family": "hypothesis_xs_tier2_dual_regime_v1_h5d",
+        "market_mechanism": "alpha extraction in cross-sectional crypto requires a universe matched to the regime: the top-20 liquid perp core systematically underperforms in broad-up regimes (e.g. 2025 H2 trend_up) because retail-driven flows favor mid-cap names; switching to a tier-2 mid-cap universe (perp ranks 20-40) should expose the cross-sectional alpha that the v9-style leader plus carry-dislocation blend can capture in regimes where top-20 names structurally underperform",
+        "directional_claim": "rank tier-2 (perp rank 20-40) liquid mid-cap names higher using the v67 four-quadrant regime-adaptive blend of leader-continuation and carry-dislocation with strictly-gated contrarian tilt; the change versus the locked v64 baseline is purely the universe scope, isolating the contribution of universe redefinition to per-regime performance",
+        "universe_rule": {
+          "preset": "liquid_perp_tier2_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "basis_zscore_20",
+          "funding_zscore_20",
+          "oi_change_5",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "momentum_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "distance_to_high_20",
+          "range_position_20",
+          "return_1"
+        ],
+        "factor_formula": "compute the v67 dual-regime-filter blend (leader-continuation, carry-dislocation, gated contrarian) over a tier-2 mid-cap perp universe (ranks 20-40 by median perp quote volume) instead of the top-20 core; weight allocation follows the four-quadrant per-timestamp scheme with leader 0.85 in dispersed-up, carry 0.75 in dispersed-down, leader-def 0.55 in broad-up, leader-carry-contrarian 0.20-0.40-0.40 in broad-down",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "c56671cf1e218f4958cad75220a67e1c68e523f0ac784c2ab575169fcd15eea1"
+    }
+  ]
+}

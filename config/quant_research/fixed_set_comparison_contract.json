@@ -1,0 +1,55 @@
+{
+  "contract_version": "quant_fixed_set_comparison_contract.v1",
+  "applicability": {
+    "shape": "cross_sectional",
+    "bar_interval_ms": 86400000,
+    "target_horizon_bars": 10,
+    "label_contract_ids": [
+      "forward_return_execution_aligned.v1"
+    ],
+    "required_research_lanes": [
+      "hypothesis_factor"
+    ]
+  },
+  "reference_set": [
+    {
+      "label": "lsk3_g_v2_h10d",
+      "experiment_id": "2026-04-29-xs_alpha_ontology_v1_lsk3_g_v2_h10d",
+      "strategy_id": "xs_alpha_ontology_v1_lsk3_g_v2_h10d",
+      "role": "control_baseline"
+    },
+    {
+      "label": "v5_h10d",
+      "experiment_id": "2026-04-29-xs_alpha_ontology_v5_lsk3_g_v2_h10d",
+      "strategy_id": "xs_alpha_ontology_v5_lsk3_g_v2_h10d",
+      "role": "best_static_baseline"
+    },
+    {
+      "label": "v6_h10d",
+      "experiment_id": "2026-04-29-xs_alpha_ontology_v6_lsk3_g_v2_h10d",
+      "strategy_id": "xs_alpha_ontology_v6_lsk3_g_v2_h10d",
+      "role": "legacy_comparator"
+    },
+    {
+      "label": "v5_rw_bridge_no_overlay_h10d",
+      "experiment_id": "2026-04-29-xs_alpha_ontology_v5_rw_bridge_no_overlay_lsk3_g_v2_h10d",
+      "strategy_id": "xs_alpha_ontology_v5_rw_bridge_no_overlay_lsk3_g_v2_h10d",
+      "role": "canonical_rolling_weight_no_overlay"
+    }
+  ],
+  "bootstrap": {
+    "seed": 20260502,
+    "iterations": 4000
+  },
+  "promotion_gate": {
+    "control_label": "lsk3_g_v2_h10d",
+    "best_static_baseline_label": "v5_h10d",
+    "best_methodology_baseline_label": "v5_rw_bridge_no_overlay_h10d",
+    "control_observed_cumulative_return_diff_min": 0.0,
+    "control_probability_a_beats_b_on_cumulative_return_min": 0.8,
+    "best_static_baseline_max_cumulative_return_underperformance": 0.05,
+    "best_static_baseline_max_sharpe_underperformance": 0.1,
+    "best_methodology_baseline_max_cumulative_return_underperformance": 0.05,
+    "best_methodology_baseline_max_sharpe_underperformance": 0.1
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v24",
+  "entries": [
+    {
+      "candidate_id": "xs_residualized_pair_book_v2_h3d",
+      "base_mechanism_id": "xs_residualized_pair_book_v2",
+      "horizon_id": "h3d",
+      "target_horizon_bars": 3,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_residualized_pair_book_v2",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_residualized_pair_book_v2_h3d",
+        "thesis_family": "hypothesis_xs_residualized_pair_book_v2_h3d",
+        "market_mechanism": "inside the liquid perp-covered core, the book should rank names by raw basis and funding cheapness only after applying a spot-quality floor, so the long book owns clean spot tapes that are cheap relative to peers rather than distressed names with sparse derivatives history",
+        "directional_claim": "buy names whose raw basis and funding are cheap inside their spot-quality cohort, but only when their spot tape remains structurally intact enough to survive trend-up, rotation, and rebound regimes",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "return_1"
+        ],
+        "factor_formula": "compute raw derivatives cheapness from basis and funding, residualize that cheapness inside coarse spot-quality cohorts, then only reward residual cheapness when the spot-quality floor is high enough and the tape is not stressed or structurally broken",
+        "intended_holding_horizon_bars": 3,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "defd92fffcb026c4abba0838e648875bb314f409719f7a5fc8ad26a34f653460"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "contract_version": "openclaw-evidence-agent.v1",
+  "entrypoint_module": "enhengclaw.integrations.openclaw.evidence_agent",
+  "lane_id": "evidence_agent",
+  "request_fields": [
+    "contract_version",
+    "subject",
+    "scope",
+    "object_id",
+    "evidence_text",
+    "execution_permit_path"
+  ],
+  "optional_request_fields": [
+    "input_id",
+    "artifacts_root",
+    "compiler_backend",
+    "recorded_transcript_path"
+  ],
+  "recorded_replay_required_fields": [
+    "input_id",
+    "recorded_transcript_path"
+  ],
+  "response_statuses": [
+    "success",
+    "blocked",
+    "quarantine",
+    "failed"
+  ],
+  "resume_only": true,
+  "live_backend_env": [
+    "ENHENGCLAW_EVIDENCE_AGENT_MODEL_BASE_URL",
+    "ENHENGCLAW_EVIDENCE_AGENT_MODEL_NAME",
+    "ENHENGCLAW_EVIDENCE_AGENT_API_KEY",
+    "ENHENGCLAW_EVIDENCE_AGENT_MODEL_TIMEOUT_SECONDS"
+  ]
+}

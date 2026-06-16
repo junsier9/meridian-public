@@ -1,0 +1,90 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v25",
+  "entries": [
+    {
+      "candidate_id": "xs_pair_spread_book_v1_h3d",
+      "base_mechanism_id": "xs_pair_spread_book_v1",
+      "horizon_id": "h3d",
+      "target_horizon_bars": 3,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_pair_spread_book_v1",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "derivatives",
+        "trend",
+        "volume",
+        "volatility",
+        "structure"
+      ],
+      "required_feature_columns": [
+        "basis_proxy",
+        "funding_rate",
+        "relative_strength_20",
+        "ema_slope_5_20",
+        "quote_volume_expansion",
+        "intraday_realized_vol_4h_to_1d",
+        "realized_volatility_20",
+        "distance_to_low_20",
+        "return_1"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": false,
+        "long_only": false,
+        "short_allowed": true,
+        "execution_venue": "perp",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 0.5,
+        "short_leverage": 0.5,
+        "max_turnover_per_rebalance": 1.0,
+        "pair_construction": "quality_bucket_pairs",
+        "pair_bucket_count": 4,
+        "pair_count": 2,
+        "pair_score_spread_min": 0.08,
+        "pair_quality_floor": 0.35
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_pair_spread_book_v1_h3d",
+        "thesis_family": "hypothesis_xs_pair_spread_book_v1_h3d",
+        "market_mechanism": "inside the liquid perp-covered core, construct explicit long-short pairs within similar spot-quality cohorts by buying the cheapest basis/funding names and shorting the richest peers, so the hypothesis is tested as a spread book instead of a compressed single-name long-only rank",
+        "directional_claim": "the pair should monetize relative derivatives dislocation while neutralizing most common spot-quality exposure, because long and short legs are explicitly matched inside the same quality cohort",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "perp",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "basis_proxy",
+          "funding_rate",
+          "relative_strength_20",
+          "ema_slope_5_20",
+          "quote_volume_expansion",
+          "intraday_realized_vol_4h_to_1d",
+          "realized_volatility_20",
+          "distance_to_low_20",
+          "return_1"
+        ],
+        "factor_formula": "score names by raw basis/funding cheapness residualized inside spot-quality cohorts, then express the thesis as cohort-matched long-short pairs rather than a one-sided rank",
+        "intended_holding_horizon_bars": 3,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "6acc272b24e032fd82ba017a5b019ba79f3a5de6c7fa670ff07f7edaa064fd6e"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "contract_version": "quant_cross_sectional_hypothesis_batch_manifest.v97",
+  "entries": [
+    {
+      "candidate_id": "xs_minimal_v12_h5d",
+      "base_mechanism_id": "xs_minimal_v12",
+      "horizon_id": "h5d",
+      "target_horizon_bars": 5,
+      "label_contract_id": "forward_return_ranking.v1",
+      "enabled": true,
+      "shape": "cross_sectional",
+      "dataset_profile": "cross_sectional_daily_4h",
+      "model_family": "xs_minimal_v12",
+      "strategy_profile": "conservative",
+      "feature_groups": [
+        "volatility",
+        "structure",
+        "derivatives",
+        "trend",
+        "volume"
+      ],
+      "required_feature_columns": [
+        "intraday_realized_vol_4h_to_1d_smooth_20",
+        "realized_volatility_5",
+        "distance_to_high_60",
+        "distance_to_high_5",
+        "distance_to_high_20",
+        "coinglass_top_trader_long_pct_smooth_5",
+        "liquidity_stress_qv_iv",
+        "momentum_decay_5_20",
+        "coinglass_taker_imb_intraday_dispersion_24h",
+        "quality_funding_oi",
+        "stress_liq_conc_iv"
+      ],
+      "profile_constraints": {
+        "allowed_liquidity_buckets": [
+          "mid_liquidity",
+          "top_liquidity"
+        ],
+        "spot_only": true,
+        "long_only": true,
+        "short_allowed": false,
+        "execution_venue": "",
+        "max_gross_leverage": 1.0,
+        "long_leverage": 1.0,
+        "short_leverage": 0.0,
+        "max_turnover_per_rebalance": 1.0,
+        "position_multiplier_overlay_id": "btc_eth_max_iv_aggressive_tanh_v1"
+      },
+      "universe_filter": {
+        "preset": "liquid_perp_core_20"
+      },
+      "thesis_profile": {
+        "thesis_id": "xs_minimal_v12_h5d",
+        "thesis_family": "hypothesis_xs_minimal_v12_h5d",
+        "market_mechanism": "v96-B only-add isolation experiment. Single-variable test versus v94 (xs_minimal_v9): ADD stress_liq_conc_iv at -0.11 (matching v95's IC-proportional weight for this factor), keep ALL 10 v94 weights UNCHANGED. Tests the second half of v95's causal decomposition. v95 cycle showed -0.28 WF sharpe regression vs v94. v96-A (drop 4 weak only) confirmed -0.155 of that regression came from removing weak factors. v96-B (this) confirms or refutes whether the remaining -0.125 came from stress_liq_conc_iv coverage NaN-fill noise. Hypothesis: stress_liq_conc_iv has only n=715 valid days (CoinGlass intraday data starts mid-2024 vs panel from 2023-04), ~400 days NaN-fillna(0); per-window IC diagnostic looks stable (-0.064, sign 89%) only because diagnostic skips NaN windows; portfolio behavior across full panel degraded. Expected v96-B WF sharpe ~0.83 (v94 0.955 - 0.125) if coverage hypothesis confirmed. v93 multiplier overlay preserved.",
+        "directional_claim": "rank top-3 liquid perp-covered names by 11 z-score factors (v94 10 + stress_liq_conc_iv added at -0.11), then scale all positions by DVOL regime multiplier. Coverage hypothesis confirmed if WF median sharpe drops to ~0.83 (v94 0.955 - 0.125 expected from causal decomposition). Coverage hypothesis refuted if WF sharpe stays ~0.95 (then v95 regression was interaction effect, not separable). Falsification triggers v96-B rejection if WF sharpe < 0.75 (worse than v95's already-rolled-back 0.675); this would indicate stress_liq_conc_iv is even more harmful in combination than alone, suggesting NaN-fill issue is severe.",
+        "universe_rule": {
+          "preset": "liquid_perp_core_20"
+        },
+        "dataset_profile": "cross_sectional_daily_4h",
+        "execution_venue": "spot",
+        "requires_derivatives_features": true,
+        "minimum_executable_history_days": 180,
+        "minimum_executable_coverage_ratio": 0.85,
+        "required_feature_columns": [
+          "intraday_realized_vol_4h_to_1d_smooth_20",
+          "realized_volatility_5",
+          "distance_to_high_60",
+          "distance_to_high_5",
+          "distance_to_high_20",
+          "coinglass_top_trader_long_pct_smooth_5",
+          "liquidity_stress_qv_iv",
+          "momentum_decay_5_20",
+          "coinglass_taker_imb_intraday_dispersion_24h",
+          "quality_funding_oi",
+          "stress_liq_conc_iv"
+        ],
+        "factor_formula": "raw = -0.20*z(iv_smooth_20) -0.10*z(rv_5) +0.11*z(dh_60) +0.10*z(dh_5) +0.13*z(dh_20) -0.07*z(tt_smooth_5) -0.10*z(liquidity_stress_qv_iv) -0.06*z(momentum_decay_5_20) +0.05*z(taker_imb_dispersion) -0.05*z(quality_funding_oi) -0.11*z(stress_liq_conc_iv); final = tanh((percentile_rank(raw)-0.5)*1.80); position_multiplier_overlay = clip(1 - tanh((max(btc_dvol_z90, eth_dvol_z90) - 0.5) * 3), 0.2, 1.0) applied at portfolio sizing layer (not in raw_score)",
+        "intended_holding_horizon_bars": 5,
+        "falsification_conditions": [
+          "validation_return_negative",
+          "walk_forward_median_oos_sharpe_non_positive",
+          "regime_holdout_failed"
+        ]
+      },
+      "spec_hash": "c891d5d9721348b3642b1adb1bbd1e4c075c54fac22597bd5fd6035d43456051"
+    }
+  ]
+}

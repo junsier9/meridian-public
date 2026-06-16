@@ -1,0 +1,36 @@
+{
+  "contract_version": "openclaw-research-lead.v1",
+  "entrypoint_module": "enhengclaw.integrations.openclaw.research_lead",
+  "lane_id": "research_lead",
+  "request_fields": [
+    "contract_version",
+    "subject",
+    "scope",
+    "object_id",
+    "directive_text",
+    "execution_permit_path"
+  ],
+  "optional_request_fields": [
+    "input_id",
+    "artifacts_root",
+    "compiler_backend",
+    "recorded_transcript_path"
+  ],
+  "recorded_replay_required_fields": [
+    "input_id",
+    "recorded_transcript_path"
+  ],
+  "response_statuses": [
+    "success",
+    "blocked",
+    "quarantine",
+    "failed"
+  ],
+  "resume_only": true,
+  "live_backend_env": [
+    "ENHENGCLAW_RESEARCH_LEAD_MODEL_BASE_URL",
+    "ENHENGCLAW_RESEARCH_LEAD_MODEL_NAME",
+    "ENHENGCLAW_RESEARCH_LEAD_API_KEY",
+    "ENHENGCLAW_RESEARCH_LEAD_MODEL_TIMEOUT_SECONDS"
+  ]
+}
