@@ -23,6 +23,42 @@
 
 # Meridian Alpha Platform
 
+[![CI](https://github.com/junsier9/meridian-public/actions/workflows/boundary-gates.yml/badge.svg)](https://github.com/junsier9/meridian-public/actions/workflows/boundary-gates.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.13](https://img.shields.io/badge/python-3.13-blue.svg)](https://www.python.org/)
+[![Code style: contract-tested](https://img.shields.io/badge/contracts-fail--closed-success.svg)](#)
+
+> **A dual-track quantitative platform** — a governance-gated agent-execution framework paired with a
+> systematic crypto alpha-research engine for Binance USD-M perpetual futures. Built **fail-closed**,
+> **contract-pinned**, and **evidence-driven**.
+
+### ✨ Highlights
+
+- 🛡️ **Fail-closed governance** — a five-stage gate model (sandbox → automated execution) where every
+  promotion is contract-pinned and *computed from evidence*, never hand-edited to pass.
+- 🤖 **Agent control framework** — controlled shadow ingestion, governed runtime execution, lease/permit
+  boundaries, and operator verification gates.
+- 📈 **Systematic alpha research** — point-in-time-safe feature pipelines, a 12-factor cross-sectional
+  scoring frontier, walk-forward validation, leakage audits, and governance-backed promotion.
+- ⚙️ **Live-trading engine** — a Binance USD-M perp execution planner, an unattended epoch controller with
+  layered budget/terminal-disarm safety, and a wallet-compounding risk policy.
+- ✅ **Contract-tested** — deterministic Linux CI gates over static, document, dependency, and research
+  contracts.
+
+### 📦 Repository layout
+
+| Path | What lives here |
+|---|---|
+| `src/enhengclaw/` | Core packages — `live_trading`, `quant_research`, `agents`, `orchestration`, `providers`, `governance` |
+| `scripts/` | Runnable entrypoints — research cycles, live-trading runners, verification gates |
+| `config/` | Strategy, governance, and live-trading configuration contracts |
+| `tests/` | Contract + behavior test suite |
+| `docs/` | Architecture, research-design docs, and the governance model |
+
+> ℹ️ This is a **sanitized public mirror** — see the banner above and [`PUBLIC_MIRROR.md`](PUBLIC_MIRROR.md).
+
+---
+
 `Meridian Alpha Platform` is a Python project for institutional-style dual-track governance. It was formerly named
 `EnhengClaw`; the legacy `enhengclaw` Python package, `ENHENGCLAW_*` environment variables, and existing external
 artifact directories remain supported during the compatibility migration.
