@@ -11,6 +11,7 @@ engineering and architecture. It is **not** runnable as a live trading strategy 
 | Research weight/IC ontology (`alpha_ontology_v3_weights.json`) | Numeric research stats zeroed | Proprietary research output |
 | `artifacts/` (alpha cards, backtests, governance/registry/assessments) | Excluded (kept a stub `README.md`) | Research evidence / strategy IP |
 | `docs/live_trading/` operational logs (runbooks, arm handoffs, owner attestations, balance snapshots) | Excluded (kept a stub `README.md`) | Operator-private operational records |
+| Modular live-state / governance registries (`current_state.json`, `live_strategy_baseline_registry.json`, `remote_endpoint_registry.json`, `run_log_index.json`, `live_gate_registry.json`, and the other `config/project_governance/*_registry.json`) | Excluded | Carry live endpoints/IPs, run history, config hashes, and current live-strategy identity — operator-private current state, not architecture |
 | Production host IP, internal/VPS IPs, SSH targets | Replaced with RFC 5737 documentation IPs (`203.0.113.x`, `198.51.100.x`) | Real infrastructure |
 | Wallet / equity / allocated-capital balances | Replaced with round placeholders | Real account data |
 | Operator username and GitHub handle | Genericized in paths and ownership lines | Personal identifiers |
@@ -34,3 +35,12 @@ intentionally blank).
 The deterministic Linux contract gates in [`.github/workflows/boundary-gates.yml`](.github/workflows/boundary-gates.yml)
 pass on this mirror. Contract tests that validate the excluded research artifacts skip themselves when those
 artifacts are absent.
+
+## Mirror refreshes
+
+- **v0.2.0 (2026-07-01)** — Added a sanitized plain-language methodology overview of the current live
+  cross-sectional strategy ([`docs/strategy/current24_dynamic_lpf_overview.md`](docs/strategy/current24_dynamic_lpf_overview.md))
+  and documented the exclusion of the modular live-state / governance registries. The repository remains a
+  point-in-time **architecture** snapshot; live current-state, performance, fitted weights, and infrastructure
+  stay operator-private.
+- **v0.1.0 (2026-06-17)** — Initial sanitized public mirror.

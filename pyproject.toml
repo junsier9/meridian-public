@@ -1,6 +1,6 @@
 [project]
 name = "meridian-alpha-platform"
-version = "0.1.0"
+version = "0.2.0"
 description = "Controlled shadow-ingestion and runtime-governance toolkit for Meridian Alpha Platform."
 requires-python = ">=3.11"
 dependencies = [
