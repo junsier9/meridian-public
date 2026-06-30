@@ -45,6 +45,9 @@
 - ✅ **Contract-tested** — deterministic Linux CI gates over static, document, dependency, and research
   contracts.
 
+> 📑 **New:** a plain-language methodology overview of the live cross-sectional strategy —
+> [`docs/strategy/current24_dynamic_lpf_overview.md`](docs/strategy/current24_dynamic_lpf_overview.md).
+
 ### 📦 Repository layout
 
 | Path | What lives here |
